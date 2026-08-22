@@ -1,9 +1,8 @@
 "use client"
 
 import Image from "next/image"
-import { useParams, useEffect, useState } from "react/navigation"
+import { useParams, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { prisma } from "@/lib/prisma"
 
 interface ProductDetailsProps {
   params: { slug: string }
@@ -90,7 +89,7 @@ export default function ProductPage({ params }: ProductDetailsProps) {
               <div className="flex items-baseline gap-2 mb-6">
                 <span className="text-3xl font-bold text-zinc-900">{product.price}</span>
                 {product.discountPrice && (
-                  <s className="line-through text-zinc-400 text-sm">₹{product.discountPrice}</span>
+                  <s className="line-through text-zinc-400 text-sm">₹{product.discountPrice}</s>
                 )}
               </div>
 

@@ -2,28 +2,21 @@
   "name": "website-sales",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
+    "install-all": "npm install && npm run --workspace=frontend install && npm run --workspace=backend install",
+    "dev": "npm run --workspace=frontend dev & npm run --workspace=backend dev",
+    "build": "npm run --workspace=frontend build & npm run --workspace=backend build",
+    "test": "npm run --workspace=frontend test & npm run --workspace=backend test",
+    "lint": "npm run --workspace=frontend lint & npm run --workspace=backend lint"
   },
   "dependencies": {
-    "@prisma/client": "^7.9.1",
-    "next": "16.3.2",
-    "next-auth": "^4.24.15",
-    "prisma": "^7.9.1",
-    "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "prisma": "^7.9.1"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.3.2",
-    "tailwindcss": "^4",
     "typescript": "^5"
   }
 }

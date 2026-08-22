@@ -1,16 +1,9 @@
 import { NextResponse } from "next/server"
-import { prisma } from "@/lib/prisma"
 
 export async function GET() {
-  const categories = await prisma.category.findMany({
-    include: {
-      products: {
-        take: 3,
-        where: { status: "ACTIVE" },
-      },
-    },
-    orderBy: { name: "asc" },
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:4000'}/api/categories`, {
+    cache: 'no-store',
   })
-
+  const categories = await res.json()
   return NextResponse.json(categories)
 }
