@@ -1,0 +1,77 @@
+export declare const Role: {
+    readonly CUSTOMER: "CUSTOMER";
+    readonly ADMIN: "ADMIN";
+    readonly DEVELOPER: "DEVELOPER";
+};
+export type Role = (typeof Role)[keyof typeof Role];
+export declare const Status: {
+    readonly ACTIVE: "ACTIVE";
+    readonly INACTIVE: "INACTIVE";
+    readonly PENDING: "PENDING";
+};
+export type Status = (typeof Status)[keyof typeof Status];
+export declare const OrderStatus: {
+    readonly PENDING: "PENDING";
+    readonly PAID: "PAID";
+    readonly FAILED: "FAILED";
+    readonly REFUNDED: "REFUNDED";
+    readonly CANCELLED: "CANCELLED";
+};
+export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus];
+export declare const PaymentStatus: {
+    readonly PENDING: "PENDING";
+    readonly SUCCESS: "SUCCESS";
+    readonly FAILED: "FAILED";
+    readonly CANCELLED: "CANCELLED";
+    readonly REFUNDED: "REFUNDED";
+};
+export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus];
+export declare const ProjectStatus: {
+    readonly SUBMITTED: "SUBMITTED";
+    readonly REVIEWING: "REVIEWING";
+    readonly REQUIREMENTS_CONFIRMED: "REQUIREMENTS_CONFIRMED";
+    readonly PROPOSAL: "PROPOSAL";
+    readonly DEVELOPMENT: "DEVELOPMENT";
+    readonly TESTING: "TESTING";
+    readonly CUSTOMER_REVIEW: "CUSTOMER_REVIEW";
+    readonly REVISIONS: "REVISIONS";
+    readonly DEPLOYMENT: "DEPLOYMENT";
+    readonly COMPLETED: "COMPLETED";
+};
+export type ProjectStatus = (typeof ProjectStatus)[keyof typeof ProjectStatus];
+export declare const ProjectRequirementType: {
+    readonly WEBSITE_TYPE: "WEBSITE_TYPE";
+    readonly INDUSTRY: "INDUSTRY";
+    readonly BUSINESS_DESCRIPTION: "BUSINESS_DESCRIPTION";
+    readonly TARGET_AUDIENCE: "TARGET_AUDIENCE";
+    readonly REQUIRED_PAGES: "REQUIRED_PAGES";
+    readonly REQUIRED_FEATURES: "REQUIRED_FEATURES";
+    readonly DESIGN_PREFERENCES: "DESIGN_PREFERENCES";
+    readonly REFERENCE_WEBSITES: "REFERENCE_WEBSITES";
+    readonly EXISTING_WEBSITE: "EXISTING_WEBSITE";
+    readonly DOMAIN: "DOMAIN";
+    readonly HOSTING: "HOSTING";
+    readonly AUTHENTICATION: "AUTHENTICATION";
+    readonly USER_ACCOUNTS: "USER_ACCOUNTS";
+    readonly ECOMMERCE: "ECOMMERCE";
+    readonly SHOPPING_CART: "SHOPPING_CART";
+    readonly PAYMENTS: "PAYMENTS";
+    readonly BOOKING: "BOOKING";
+    readonly CMS: "CMS";
+    readonly BLOG: "BLOG";
+    readonly SEARCH: "SEARCH";
+    readonly NOTIFICATIONS: "NOTIFICATIONS";
+    readonly EMAIL: "EMAIL";
+    readonly FILE_UPLOADS: "FILE_UPLOADS";
+    readonly ANALYTICS: "ANALYTICS";
+    readonly SEO: "SEO";
+    readonly MULTI_LANGUAGE: "MULTI_LANGUAGE";
+    readonly API_INTEGRATIONS: "API_INTEGRATIONS";
+    readonly SOCIAL_MEDIA: "SOCIAL_MEDIA";
+    readonly DATABASE: "DATABASE";
+    readonly CUSTOM_FUNCTIONALITY: "CUSTOM_FUNCTIONALITY";
+    readonly BUDGET: "BUDGET";
+    readonly TIMELINE: "TIMELINE";
+    readonly ADDITIONAL_INFO: "ADDITIONAL_INFO";
+};
+export type ProjectRequirementType = (typeof ProjectRequirementType)[keyof typeof ProjectRequirementType];

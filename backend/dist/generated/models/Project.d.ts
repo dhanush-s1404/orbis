@@ -1,0 +1,1895 @@
+import type * as runtime from "@prisma/client/runtime/client";
+import type * as $Enums from "../enums";
+import type * as Prisma from "../internal/prismaNamespace";
+/**
+ * Model Project
+ *
+ */
+export type ProjectModel = runtime.Types.Result.DefaultSelection<Prisma.$ProjectPayload>;
+export type AggregateProject = {
+    _count: ProjectCountAggregateOutputType | null;
+    _avg: ProjectAvgAggregateOutputType | null;
+    _sum: ProjectSumAggregateOutputType | null;
+    _min: ProjectMinAggregateOutputType | null;
+    _max: ProjectMaxAggregateOutputType | null;
+};
+export type ProjectAvgAggregateOutputType = {
+    budget: runtime.Decimal | null;
+    progress: number | null;
+};
+export type ProjectSumAggregateOutputType = {
+    budget: runtime.Decimal | null;
+    progress: number | null;
+};
+export type ProjectMinAggregateOutputType = {
+    id: string | null;
+    projectId: string | null;
+    userId: string | null;
+    name: string | null;
+    description: string | null;
+    budget: runtime.Decimal | null;
+    timeline: string | null;
+    status: $Enums.ProjectStatus | null;
+    progress: number | null;
+    assignedDeveloper: string | null;
+    createdAt: Date | null;
+    updatedAt: Date | null;
+};
+export type ProjectMaxAggregateOutputType = {
+    id: string | null;
+    projectId: string | null;
+    userId: string | null;
+    name: string | null;
+    description: string | null;
+    budget: runtime.Decimal | null;
+    timeline: string | null;
+    status: $Enums.ProjectStatus | null;
+    progress: number | null;
+    assignedDeveloper: string | null;
+    createdAt: Date | null;
+    updatedAt: Date | null;
+};
+export type ProjectCountAggregateOutputType = {
+    id: number;
+    projectId: number;
+    userId: number;
+    name: number;
+    description: number;
+    budget: number;
+    timeline: number;
+    status: number;
+    progress: number;
+    assignedDeveloper: number;
+    createdAt: number;
+    updatedAt: number;
+    _all: number;
+};
+export type ProjectAvgAggregateInputType = {
+    budget?: true;
+    progress?: true;
+};
+export type ProjectSumAggregateInputType = {
+    budget?: true;
+    progress?: true;
+};
+export type ProjectMinAggregateInputType = {
+    id?: true;
+    projectId?: true;
+    userId?: true;
+    name?: true;
+    description?: true;
+    budget?: true;
+    timeline?: true;
+    status?: true;
+    progress?: true;
+    assignedDeveloper?: true;
+    createdAt?: true;
+    updatedAt?: true;
+};
+export type ProjectMaxAggregateInputType = {
+    id?: true;
+    projectId?: true;
+    userId?: true;
+    name?: true;
+    description?: true;
+    budget?: true;
+    timeline?: true;
+    status?: true;
+    progress?: true;
+    assignedDeveloper?: true;
+    createdAt?: true;
+    updatedAt?: true;
+};
+export type ProjectCountAggregateInputType = {
+    id?: true;
+    projectId?: true;
+    userId?: true;
+    name?: true;
+    description?: true;
+    budget?: true;
+    timeline?: true;
+    status?: true;
+    progress?: true;
+    assignedDeveloper?: true;
+    createdAt?: true;
+    updatedAt?: true;
+    _all?: true;
+};
+export type ProjectAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Filter which Project to aggregate.
+     */
+    where?: Prisma.ProjectWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Projects to fetch.
+     */
+    orderBy?: Prisma.ProjectOrderByWithRelationInput | Prisma.ProjectOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: Prisma.ProjectWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Projects from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Projects.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned Projects
+    **/
+    _count?: true | ProjectCountAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to average
+    **/
+    _avg?: ProjectAvgAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to sum
+    **/
+    _sum?: ProjectSumAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+    **/
+    _min?: ProjectMinAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+    **/
+    _max?: ProjectMaxAggregateInputType;
+};
+export type GetProjectAggregateType<T extends ProjectAggregateArgs> = {
+    [P in keyof T & keyof AggregateProject]: P extends '_count' | 'count' ? T[P] extends true ? number : Prisma.GetScalarType<T[P], AggregateProject[P]> : Prisma.GetScalarType<T[P], AggregateProject[P]>;
+};
+export type ProjectGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.ProjectWhereInput;
+    orderBy?: Prisma.ProjectOrderByWithAggregationInput | Prisma.ProjectOrderByWithAggregationInput[];
+    by: Prisma.ProjectScalarFieldEnum[] | Prisma.ProjectScalarFieldEnum;
+    having?: Prisma.ProjectScalarWhereWithAggregatesInput;
+    take?: number;
+    skip?: number;
+    _count?: ProjectCountAggregateInputType | true;
+    _avg?: ProjectAvgAggregateInputType;
+    _sum?: ProjectSumAggregateInputType;
+    _min?: ProjectMinAggregateInputType;
+    _max?: ProjectMaxAggregateInputType;
+};
+export type ProjectGroupByOutputType = {
+    id: string;
+    projectId: string;
+    userId: string;
+    name: string;
+    description: string | null;
+    budget: runtime.Decimal | null;
+    timeline: string;
+    status: $Enums.ProjectStatus;
+    progress: number;
+    assignedDeveloper: string | null;
+    createdAt: Date;
+    updatedAt: Date;
+    _count: ProjectCountAggregateOutputType | null;
+    _avg: ProjectAvgAggregateOutputType | null;
+    _sum: ProjectSumAggregateOutputType | null;
+    _min: ProjectMinAggregateOutputType | null;
+    _max: ProjectMaxAggregateOutputType | null;
+};
+export type GetProjectGroupByPayload<T extends ProjectGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<ProjectGroupByOutputType, T['by']> & {
+    [P in ((keyof T) & (keyof ProjectGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], ProjectGroupByOutputType[P]> : Prisma.GetScalarType<T[P], ProjectGroupByOutputType[P]>;
+}>>;
+export type ProjectWhereInput = {
+    AND?: Prisma.ProjectWhereInput | Prisma.ProjectWhereInput[];
+    OR?: Prisma.ProjectWhereInput[];
+    NOT?: Prisma.ProjectWhereInput | Prisma.ProjectWhereInput[];
+    id?: Prisma.StringFilter<"Project"> | string;
+    projectId?: Prisma.StringFilter<"Project"> | string;
+    userId?: Prisma.StringFilter<"Project"> | string;
+    name?: Prisma.StringFilter<"Project"> | string;
+    description?: Prisma.StringNullableFilter<"Project"> | string | null;
+    budget?: Prisma.DecimalNullableFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline?: Prisma.StringFilter<"Project"> | string;
+    status?: Prisma.EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus;
+    progress?: Prisma.IntFilter<"Project"> | number;
+    assignedDeveloper?: Prisma.StringNullableFilter<"Project"> | string | null;
+    createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string;
+    updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string;
+    user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+    requirements?: Prisma.ProjectRequirementListRelationFilter;
+    messages?: Prisma.ProjectMessageListRelationFilter;
+    files?: Prisma.ProjectFileListRelationFilter;
+};
+export type ProjectOrderByWithRelationInput = {
+    id?: Prisma.SortOrder;
+    projectId?: Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    name?: Prisma.SortOrder;
+    description?: Prisma.SortOrderInput | Prisma.SortOrder;
+    budget?: Prisma.SortOrderInput | Prisma.SortOrder;
+    timeline?: Prisma.SortOrder;
+    status?: Prisma.SortOrder;
+    progress?: Prisma.SortOrder;
+    assignedDeveloper?: Prisma.SortOrderInput | Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+    user?: Prisma.UserOrderByWithRelationInput;
+    requirements?: Prisma.ProjectRequirementOrderByRelationAggregateInput;
+    messages?: Prisma.ProjectMessageOrderByRelationAggregateInput;
+    files?: Prisma.ProjectFileOrderByRelationAggregateInput;
+};
+export type ProjectWhereUniqueInput = Prisma.AtLeast<{
+    id?: string;
+    projectId?: string;
+    AND?: Prisma.ProjectWhereInput | Prisma.ProjectWhereInput[];
+    OR?: Prisma.ProjectWhereInput[];
+    NOT?: Prisma.ProjectWhereInput | Prisma.ProjectWhereInput[];
+    userId?: Prisma.StringFilter<"Project"> | string;
+    name?: Prisma.StringFilter<"Project"> | string;
+    description?: Prisma.StringNullableFilter<"Project"> | string | null;
+    budget?: Prisma.DecimalNullableFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline?: Prisma.StringFilter<"Project"> | string;
+    status?: Prisma.EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus;
+    progress?: Prisma.IntFilter<"Project"> | number;
+    assignedDeveloper?: Prisma.StringNullableFilter<"Project"> | string | null;
+    createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string;
+    updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string;
+    user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+    requirements?: Prisma.ProjectRequirementListRelationFilter;
+    messages?: Prisma.ProjectMessageListRelationFilter;
+    files?: Prisma.ProjectFileListRelationFilter;
+}, "id" | "projectId">;
+export type ProjectOrderByWithAggregationInput = {
+    id?: Prisma.SortOrder;
+    projectId?: Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    name?: Prisma.SortOrder;
+    description?: Prisma.SortOrderInput | Prisma.SortOrder;
+    budget?: Prisma.SortOrderInput | Prisma.SortOrder;
+    timeline?: Prisma.SortOrder;
+    status?: Prisma.SortOrder;
+    progress?: Prisma.SortOrder;
+    assignedDeveloper?: Prisma.SortOrderInput | Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+    _count?: Prisma.ProjectCountOrderByAggregateInput;
+    _avg?: Prisma.ProjectAvgOrderByAggregateInput;
+    _max?: Prisma.ProjectMaxOrderByAggregateInput;
+    _min?: Prisma.ProjectMinOrderByAggregateInput;
+    _sum?: Prisma.ProjectSumOrderByAggregateInput;
+};
+export type ProjectScalarWhereWithAggregatesInput = {
+    AND?: Prisma.ProjectScalarWhereWithAggregatesInput | Prisma.ProjectScalarWhereWithAggregatesInput[];
+    OR?: Prisma.ProjectScalarWhereWithAggregatesInput[];
+    NOT?: Prisma.ProjectScalarWhereWithAggregatesInput | Prisma.ProjectScalarWhereWithAggregatesInput[];
+    id?: Prisma.StringWithAggregatesFilter<"Project"> | string;
+    projectId?: Prisma.StringWithAggregatesFilter<"Project"> | string;
+    userId?: Prisma.StringWithAggregatesFilter<"Project"> | string;
+    name?: Prisma.StringWithAggregatesFilter<"Project"> | string;
+    description?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null;
+    budget?: Prisma.DecimalNullableWithAggregatesFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline?: Prisma.StringWithAggregatesFilter<"Project"> | string;
+    status?: Prisma.EnumProjectStatusWithAggregatesFilter<"Project"> | $Enums.ProjectStatus;
+    progress?: Prisma.IntWithAggregatesFilter<"Project"> | number;
+    assignedDeveloper?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null;
+    createdAt?: Prisma.DateTimeWithAggregatesFilter<"Project"> | Date | string;
+    updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Project"> | Date | string;
+};
+export type ProjectCreateInput = {
+    id?: string;
+    projectId: string;
+    name: string;
+    description?: string | null;
+    budget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline: string;
+    status?: $Enums.ProjectStatus;
+    progress?: number;
+    assignedDeveloper?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    user: Prisma.UserCreateNestedOneWithoutProjectsInput;
+    requirements?: Prisma.ProjectRequirementCreateNestedManyWithoutProjectInput;
+    messages?: Prisma.ProjectMessageCreateNestedManyWithoutProjectInput;
+    files?: Prisma.ProjectFileCreateNestedManyWithoutProjectInput;
+};
+export type ProjectUncheckedCreateInput = {
+    id?: string;
+    projectId: string;
+    userId: string;
+    name: string;
+    description?: string | null;
+    budget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline: string;
+    status?: $Enums.ProjectStatus;
+    progress?: number;
+    assignedDeveloper?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    requirements?: Prisma.ProjectRequirementUncheckedCreateNestedManyWithoutProjectInput;
+    messages?: Prisma.ProjectMessageUncheckedCreateNestedManyWithoutProjectInput;
+    files?: Prisma.ProjectFileUncheckedCreateNestedManyWithoutProjectInput;
+};
+export type ProjectUpdateInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    projectId?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    budget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline?: Prisma.StringFieldUpdateOperationsInput | string;
+    status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
+    progress?: Prisma.IntFieldUpdateOperationsInput | number;
+    assignedDeveloper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    user?: Prisma.UserUpdateOneRequiredWithoutProjectsNestedInput;
+    requirements?: Prisma.ProjectRequirementUpdateManyWithoutProjectNestedInput;
+    messages?: Prisma.ProjectMessageUpdateManyWithoutProjectNestedInput;
+    files?: Prisma.ProjectFileUpdateManyWithoutProjectNestedInput;
+};
+export type ProjectUncheckedUpdateInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    projectId?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    budget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline?: Prisma.StringFieldUpdateOperationsInput | string;
+    status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
+    progress?: Prisma.IntFieldUpdateOperationsInput | number;
+    assignedDeveloper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    requirements?: Prisma.ProjectRequirementUncheckedUpdateManyWithoutProjectNestedInput;
+    messages?: Prisma.ProjectMessageUncheckedUpdateManyWithoutProjectNestedInput;
+    files?: Prisma.ProjectFileUncheckedUpdateManyWithoutProjectNestedInput;
+};
+export type ProjectCreateManyInput = {
+    id?: string;
+    projectId: string;
+    userId: string;
+    name: string;
+    description?: string | null;
+    budget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline: string;
+    status?: $Enums.ProjectStatus;
+    progress?: number;
+    assignedDeveloper?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+};
+export type ProjectUpdateManyMutationInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    projectId?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    budget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline?: Prisma.StringFieldUpdateOperationsInput | string;
+    status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
+    progress?: Prisma.IntFieldUpdateOperationsInput | number;
+    assignedDeveloper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+export type ProjectUncheckedUpdateManyInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    projectId?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    budget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline?: Prisma.StringFieldUpdateOperationsInput | string;
+    status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
+    progress?: Prisma.IntFieldUpdateOperationsInput | number;
+    assignedDeveloper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+export type ProjectListRelationFilter = {
+    every?: Prisma.ProjectWhereInput;
+    some?: Prisma.ProjectWhereInput;
+    none?: Prisma.ProjectWhereInput;
+};
+export type ProjectOrderByRelationAggregateInput = {
+    _count?: Prisma.SortOrder;
+};
+export type ProjectCountOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    projectId?: Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    name?: Prisma.SortOrder;
+    description?: Prisma.SortOrder;
+    budget?: Prisma.SortOrder;
+    timeline?: Prisma.SortOrder;
+    status?: Prisma.SortOrder;
+    progress?: Prisma.SortOrder;
+    assignedDeveloper?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+};
+export type ProjectAvgOrderByAggregateInput = {
+    budget?: Prisma.SortOrder;
+    progress?: Prisma.SortOrder;
+};
+export type ProjectMaxOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    projectId?: Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    name?: Prisma.SortOrder;
+    description?: Prisma.SortOrder;
+    budget?: Prisma.SortOrder;
+    timeline?: Prisma.SortOrder;
+    status?: Prisma.SortOrder;
+    progress?: Prisma.SortOrder;
+    assignedDeveloper?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+};
+export type ProjectMinOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    projectId?: Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    name?: Prisma.SortOrder;
+    description?: Prisma.SortOrder;
+    budget?: Prisma.SortOrder;
+    timeline?: Prisma.SortOrder;
+    status?: Prisma.SortOrder;
+    progress?: Prisma.SortOrder;
+    assignedDeveloper?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+};
+export type ProjectSumOrderByAggregateInput = {
+    budget?: Prisma.SortOrder;
+    progress?: Prisma.SortOrder;
+};
+export type ProjectScalarRelationFilter = {
+    is?: Prisma.ProjectWhereInput;
+    isNot?: Prisma.ProjectWhereInput;
+};
+export type ProjectCreateNestedManyWithoutUserInput = {
+    create?: Prisma.XOR<Prisma.ProjectCreateWithoutUserInput, Prisma.ProjectUncheckedCreateWithoutUserInput> | Prisma.ProjectCreateWithoutUserInput[] | Prisma.ProjectUncheckedCreateWithoutUserInput[];
+    connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutUserInput | Prisma.ProjectCreateOrConnectWithoutUserInput[];
+    createMany?: Prisma.ProjectCreateManyUserInputEnvelope;
+    connect?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[];
+};
+export type ProjectUncheckedCreateNestedManyWithoutUserInput = {
+    create?: Prisma.XOR<Prisma.ProjectCreateWithoutUserInput, Prisma.ProjectUncheckedCreateWithoutUserInput> | Prisma.ProjectCreateWithoutUserInput[] | Prisma.ProjectUncheckedCreateWithoutUserInput[];
+    connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutUserInput | Prisma.ProjectCreateOrConnectWithoutUserInput[];
+    createMany?: Prisma.ProjectCreateManyUserInputEnvelope;
+    connect?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[];
+};
+export type ProjectUpdateManyWithoutUserNestedInput = {
+    create?: Prisma.XOR<Prisma.ProjectCreateWithoutUserInput, Prisma.ProjectUncheckedCreateWithoutUserInput> | Prisma.ProjectCreateWithoutUserInput[] | Prisma.ProjectUncheckedCreateWithoutUserInput[];
+    connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutUserInput | Prisma.ProjectCreateOrConnectWithoutUserInput[];
+    upsert?: Prisma.ProjectUpsertWithWhereUniqueWithoutUserInput | Prisma.ProjectUpsertWithWhereUniqueWithoutUserInput[];
+    createMany?: Prisma.ProjectCreateManyUserInputEnvelope;
+    set?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[];
+    disconnect?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[];
+    delete?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[];
+    connect?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[];
+    update?: Prisma.ProjectUpdateWithWhereUniqueWithoutUserInput | Prisma.ProjectUpdateWithWhereUniqueWithoutUserInput[];
+    updateMany?: Prisma.ProjectUpdateManyWithWhereWithoutUserInput | Prisma.ProjectUpdateManyWithWhereWithoutUserInput[];
+    deleteMany?: Prisma.ProjectScalarWhereInput | Prisma.ProjectScalarWhereInput[];
+};
+export type ProjectUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: Prisma.XOR<Prisma.ProjectCreateWithoutUserInput, Prisma.ProjectUncheckedCreateWithoutUserInput> | Prisma.ProjectCreateWithoutUserInput[] | Prisma.ProjectUncheckedCreateWithoutUserInput[];
+    connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutUserInput | Prisma.ProjectCreateOrConnectWithoutUserInput[];
+    upsert?: Prisma.ProjectUpsertWithWhereUniqueWithoutUserInput | Prisma.ProjectUpsertWithWhereUniqueWithoutUserInput[];
+    createMany?: Prisma.ProjectCreateManyUserInputEnvelope;
+    set?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[];
+    disconnect?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[];
+    delete?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[];
+    connect?: Prisma.ProjectWhereUniqueInput | Prisma.ProjectWhereUniqueInput[];
+    update?: Prisma.ProjectUpdateWithWhereUniqueWithoutUserInput | Prisma.ProjectUpdateWithWhereUniqueWithoutUserInput[];
+    updateMany?: Prisma.ProjectUpdateManyWithWhereWithoutUserInput | Prisma.ProjectUpdateManyWithWhereWithoutUserInput[];
+    deleteMany?: Prisma.ProjectScalarWhereInput | Prisma.ProjectScalarWhereInput[];
+};
+export type EnumProjectStatusFieldUpdateOperationsInput = {
+    set?: $Enums.ProjectStatus;
+};
+export type ProjectCreateNestedOneWithoutRequirementsInput = {
+    create?: Prisma.XOR<Prisma.ProjectCreateWithoutRequirementsInput, Prisma.ProjectUncheckedCreateWithoutRequirementsInput>;
+    connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutRequirementsInput;
+    connect?: Prisma.ProjectWhereUniqueInput;
+};
+export type ProjectUpdateOneRequiredWithoutRequirementsNestedInput = {
+    create?: Prisma.XOR<Prisma.ProjectCreateWithoutRequirementsInput, Prisma.ProjectUncheckedCreateWithoutRequirementsInput>;
+    connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutRequirementsInput;
+    upsert?: Prisma.ProjectUpsertWithoutRequirementsInput;
+    connect?: Prisma.ProjectWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutRequirementsInput, Prisma.ProjectUpdateWithoutRequirementsInput>, Prisma.ProjectUncheckedUpdateWithoutRequirementsInput>;
+};
+export type ProjectCreateNestedOneWithoutMessagesInput = {
+    create?: Prisma.XOR<Prisma.ProjectCreateWithoutMessagesInput, Prisma.ProjectUncheckedCreateWithoutMessagesInput>;
+    connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutMessagesInput;
+    connect?: Prisma.ProjectWhereUniqueInput;
+};
+export type ProjectUpdateOneRequiredWithoutMessagesNestedInput = {
+    create?: Prisma.XOR<Prisma.ProjectCreateWithoutMessagesInput, Prisma.ProjectUncheckedCreateWithoutMessagesInput>;
+    connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutMessagesInput;
+    upsert?: Prisma.ProjectUpsertWithoutMessagesInput;
+    connect?: Prisma.ProjectWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutMessagesInput, Prisma.ProjectUpdateWithoutMessagesInput>, Prisma.ProjectUncheckedUpdateWithoutMessagesInput>;
+};
+export type ProjectCreateNestedOneWithoutFilesInput = {
+    create?: Prisma.XOR<Prisma.ProjectCreateWithoutFilesInput, Prisma.ProjectUncheckedCreateWithoutFilesInput>;
+    connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutFilesInput;
+    connect?: Prisma.ProjectWhereUniqueInput;
+};
+export type ProjectUpdateOneRequiredWithoutFilesNestedInput = {
+    create?: Prisma.XOR<Prisma.ProjectCreateWithoutFilesInput, Prisma.ProjectUncheckedCreateWithoutFilesInput>;
+    connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutFilesInput;
+    upsert?: Prisma.ProjectUpsertWithoutFilesInput;
+    connect?: Prisma.ProjectWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutFilesInput, Prisma.ProjectUpdateWithoutFilesInput>, Prisma.ProjectUncheckedUpdateWithoutFilesInput>;
+};
+export type ProjectCreateWithoutUserInput = {
+    id?: string;
+    projectId: string;
+    name: string;
+    description?: string | null;
+    budget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline: string;
+    status?: $Enums.ProjectStatus;
+    progress?: number;
+    assignedDeveloper?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    requirements?: Prisma.ProjectRequirementCreateNestedManyWithoutProjectInput;
+    messages?: Prisma.ProjectMessageCreateNestedManyWithoutProjectInput;
+    files?: Prisma.ProjectFileCreateNestedManyWithoutProjectInput;
+};
+export type ProjectUncheckedCreateWithoutUserInput = {
+    id?: string;
+    projectId: string;
+    name: string;
+    description?: string | null;
+    budget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline: string;
+    status?: $Enums.ProjectStatus;
+    progress?: number;
+    assignedDeveloper?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    requirements?: Prisma.ProjectRequirementUncheckedCreateNestedManyWithoutProjectInput;
+    messages?: Prisma.ProjectMessageUncheckedCreateNestedManyWithoutProjectInput;
+    files?: Prisma.ProjectFileUncheckedCreateNestedManyWithoutProjectInput;
+};
+export type ProjectCreateOrConnectWithoutUserInput = {
+    where: Prisma.ProjectWhereUniqueInput;
+    create: Prisma.XOR<Prisma.ProjectCreateWithoutUserInput, Prisma.ProjectUncheckedCreateWithoutUserInput>;
+};
+export type ProjectCreateManyUserInputEnvelope = {
+    data: Prisma.ProjectCreateManyUserInput | Prisma.ProjectCreateManyUserInput[];
+    skipDuplicates?: boolean;
+};
+export type ProjectUpsertWithWhereUniqueWithoutUserInput = {
+    where: Prisma.ProjectWhereUniqueInput;
+    update: Prisma.XOR<Prisma.ProjectUpdateWithoutUserInput, Prisma.ProjectUncheckedUpdateWithoutUserInput>;
+    create: Prisma.XOR<Prisma.ProjectCreateWithoutUserInput, Prisma.ProjectUncheckedCreateWithoutUserInput>;
+};
+export type ProjectUpdateWithWhereUniqueWithoutUserInput = {
+    where: Prisma.ProjectWhereUniqueInput;
+    data: Prisma.XOR<Prisma.ProjectUpdateWithoutUserInput, Prisma.ProjectUncheckedUpdateWithoutUserInput>;
+};
+export type ProjectUpdateManyWithWhereWithoutUserInput = {
+    where: Prisma.ProjectScalarWhereInput;
+    data: Prisma.XOR<Prisma.ProjectUpdateManyMutationInput, Prisma.ProjectUncheckedUpdateManyWithoutUserInput>;
+};
+export type ProjectScalarWhereInput = {
+    AND?: Prisma.ProjectScalarWhereInput | Prisma.ProjectScalarWhereInput[];
+    OR?: Prisma.ProjectScalarWhereInput[];
+    NOT?: Prisma.ProjectScalarWhereInput | Prisma.ProjectScalarWhereInput[];
+    id?: Prisma.StringFilter<"Project"> | string;
+    projectId?: Prisma.StringFilter<"Project"> | string;
+    userId?: Prisma.StringFilter<"Project"> | string;
+    name?: Prisma.StringFilter<"Project"> | string;
+    description?: Prisma.StringNullableFilter<"Project"> | string | null;
+    budget?: Prisma.DecimalNullableFilter<"Project"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline?: Prisma.StringFilter<"Project"> | string;
+    status?: Prisma.EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus;
+    progress?: Prisma.IntFilter<"Project"> | number;
+    assignedDeveloper?: Prisma.StringNullableFilter<"Project"> | string | null;
+    createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string;
+    updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string;
+};
+export type ProjectCreateWithoutRequirementsInput = {
+    id?: string;
+    projectId: string;
+    name: string;
+    description?: string | null;
+    budget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline: string;
+    status?: $Enums.ProjectStatus;
+    progress?: number;
+    assignedDeveloper?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    user: Prisma.UserCreateNestedOneWithoutProjectsInput;
+    messages?: Prisma.ProjectMessageCreateNestedManyWithoutProjectInput;
+    files?: Prisma.ProjectFileCreateNestedManyWithoutProjectInput;
+};
+export type ProjectUncheckedCreateWithoutRequirementsInput = {
+    id?: string;
+    projectId: string;
+    userId: string;
+    name: string;
+    description?: string | null;
+    budget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline: string;
+    status?: $Enums.ProjectStatus;
+    progress?: number;
+    assignedDeveloper?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    messages?: Prisma.ProjectMessageUncheckedCreateNestedManyWithoutProjectInput;
+    files?: Prisma.ProjectFileUncheckedCreateNestedManyWithoutProjectInput;
+};
+export type ProjectCreateOrConnectWithoutRequirementsInput = {
+    where: Prisma.ProjectWhereUniqueInput;
+    create: Prisma.XOR<Prisma.ProjectCreateWithoutRequirementsInput, Prisma.ProjectUncheckedCreateWithoutRequirementsInput>;
+};
+export type ProjectUpsertWithoutRequirementsInput = {
+    update: Prisma.XOR<Prisma.ProjectUpdateWithoutRequirementsInput, Prisma.ProjectUncheckedUpdateWithoutRequirementsInput>;
+    create: Prisma.XOR<Prisma.ProjectCreateWithoutRequirementsInput, Prisma.ProjectUncheckedCreateWithoutRequirementsInput>;
+    where?: Prisma.ProjectWhereInput;
+};
+export type ProjectUpdateToOneWithWhereWithoutRequirementsInput = {
+    where?: Prisma.ProjectWhereInput;
+    data: Prisma.XOR<Prisma.ProjectUpdateWithoutRequirementsInput, Prisma.ProjectUncheckedUpdateWithoutRequirementsInput>;
+};
+export type ProjectUpdateWithoutRequirementsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    projectId?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    budget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline?: Prisma.StringFieldUpdateOperationsInput | string;
+    status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
+    progress?: Prisma.IntFieldUpdateOperationsInput | number;
+    assignedDeveloper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    user?: Prisma.UserUpdateOneRequiredWithoutProjectsNestedInput;
+    messages?: Prisma.ProjectMessageUpdateManyWithoutProjectNestedInput;
+    files?: Prisma.ProjectFileUpdateManyWithoutProjectNestedInput;
+};
+export type ProjectUncheckedUpdateWithoutRequirementsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    projectId?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    budget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline?: Prisma.StringFieldUpdateOperationsInput | string;
+    status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
+    progress?: Prisma.IntFieldUpdateOperationsInput | number;
+    assignedDeveloper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    messages?: Prisma.ProjectMessageUncheckedUpdateManyWithoutProjectNestedInput;
+    files?: Prisma.ProjectFileUncheckedUpdateManyWithoutProjectNestedInput;
+};
+export type ProjectCreateWithoutMessagesInput = {
+    id?: string;
+    projectId: string;
+    name: string;
+    description?: string | null;
+    budget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline: string;
+    status?: $Enums.ProjectStatus;
+    progress?: number;
+    assignedDeveloper?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    user: Prisma.UserCreateNestedOneWithoutProjectsInput;
+    requirements?: Prisma.ProjectRequirementCreateNestedManyWithoutProjectInput;
+    files?: Prisma.ProjectFileCreateNestedManyWithoutProjectInput;
+};
+export type ProjectUncheckedCreateWithoutMessagesInput = {
+    id?: string;
+    projectId: string;
+    userId: string;
+    name: string;
+    description?: string | null;
+    budget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline: string;
+    status?: $Enums.ProjectStatus;
+    progress?: number;
+    assignedDeveloper?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    requirements?: Prisma.ProjectRequirementUncheckedCreateNestedManyWithoutProjectInput;
+    files?: Prisma.ProjectFileUncheckedCreateNestedManyWithoutProjectInput;
+};
+export type ProjectCreateOrConnectWithoutMessagesInput = {
+    where: Prisma.ProjectWhereUniqueInput;
+    create: Prisma.XOR<Prisma.ProjectCreateWithoutMessagesInput, Prisma.ProjectUncheckedCreateWithoutMessagesInput>;
+};
+export type ProjectUpsertWithoutMessagesInput = {
+    update: Prisma.XOR<Prisma.ProjectUpdateWithoutMessagesInput, Prisma.ProjectUncheckedUpdateWithoutMessagesInput>;
+    create: Prisma.XOR<Prisma.ProjectCreateWithoutMessagesInput, Prisma.ProjectUncheckedCreateWithoutMessagesInput>;
+    where?: Prisma.ProjectWhereInput;
+};
+export type ProjectUpdateToOneWithWhereWithoutMessagesInput = {
+    where?: Prisma.ProjectWhereInput;
+    data: Prisma.XOR<Prisma.ProjectUpdateWithoutMessagesInput, Prisma.ProjectUncheckedUpdateWithoutMessagesInput>;
+};
+export type ProjectUpdateWithoutMessagesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    projectId?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    budget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline?: Prisma.StringFieldUpdateOperationsInput | string;
+    status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
+    progress?: Prisma.IntFieldUpdateOperationsInput | number;
+    assignedDeveloper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    user?: Prisma.UserUpdateOneRequiredWithoutProjectsNestedInput;
+    requirements?: Prisma.ProjectRequirementUpdateManyWithoutProjectNestedInput;
+    files?: Prisma.ProjectFileUpdateManyWithoutProjectNestedInput;
+};
+export type ProjectUncheckedUpdateWithoutMessagesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    projectId?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    budget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline?: Prisma.StringFieldUpdateOperationsInput | string;
+    status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
+    progress?: Prisma.IntFieldUpdateOperationsInput | number;
+    assignedDeveloper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    requirements?: Prisma.ProjectRequirementUncheckedUpdateManyWithoutProjectNestedInput;
+    files?: Prisma.ProjectFileUncheckedUpdateManyWithoutProjectNestedInput;
+};
+export type ProjectCreateWithoutFilesInput = {
+    id?: string;
+    projectId: string;
+    name: string;
+    description?: string | null;
+    budget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline: string;
+    status?: $Enums.ProjectStatus;
+    progress?: number;
+    assignedDeveloper?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    user: Prisma.UserCreateNestedOneWithoutProjectsInput;
+    requirements?: Prisma.ProjectRequirementCreateNestedManyWithoutProjectInput;
+    messages?: Prisma.ProjectMessageCreateNestedManyWithoutProjectInput;
+};
+export type ProjectUncheckedCreateWithoutFilesInput = {
+    id?: string;
+    projectId: string;
+    userId: string;
+    name: string;
+    description?: string | null;
+    budget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline: string;
+    status?: $Enums.ProjectStatus;
+    progress?: number;
+    assignedDeveloper?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    requirements?: Prisma.ProjectRequirementUncheckedCreateNestedManyWithoutProjectInput;
+    messages?: Prisma.ProjectMessageUncheckedCreateNestedManyWithoutProjectInput;
+};
+export type ProjectCreateOrConnectWithoutFilesInput = {
+    where: Prisma.ProjectWhereUniqueInput;
+    create: Prisma.XOR<Prisma.ProjectCreateWithoutFilesInput, Prisma.ProjectUncheckedCreateWithoutFilesInput>;
+};
+export type ProjectUpsertWithoutFilesInput = {
+    update: Prisma.XOR<Prisma.ProjectUpdateWithoutFilesInput, Prisma.ProjectUncheckedUpdateWithoutFilesInput>;
+    create: Prisma.XOR<Prisma.ProjectCreateWithoutFilesInput, Prisma.ProjectUncheckedCreateWithoutFilesInput>;
+    where?: Prisma.ProjectWhereInput;
+};
+export type ProjectUpdateToOneWithWhereWithoutFilesInput = {
+    where?: Prisma.ProjectWhereInput;
+    data: Prisma.XOR<Prisma.ProjectUpdateWithoutFilesInput, Prisma.ProjectUncheckedUpdateWithoutFilesInput>;
+};
+export type ProjectUpdateWithoutFilesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    projectId?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    budget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline?: Prisma.StringFieldUpdateOperationsInput | string;
+    status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
+    progress?: Prisma.IntFieldUpdateOperationsInput | number;
+    assignedDeveloper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    user?: Prisma.UserUpdateOneRequiredWithoutProjectsNestedInput;
+    requirements?: Prisma.ProjectRequirementUpdateManyWithoutProjectNestedInput;
+    messages?: Prisma.ProjectMessageUpdateManyWithoutProjectNestedInput;
+};
+export type ProjectUncheckedUpdateWithoutFilesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    projectId?: Prisma.StringFieldUpdateOperationsInput | string;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    budget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline?: Prisma.StringFieldUpdateOperationsInput | string;
+    status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
+    progress?: Prisma.IntFieldUpdateOperationsInput | number;
+    assignedDeveloper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    requirements?: Prisma.ProjectRequirementUncheckedUpdateManyWithoutProjectNestedInput;
+    messages?: Prisma.ProjectMessageUncheckedUpdateManyWithoutProjectNestedInput;
+};
+export type ProjectCreateManyUserInput = {
+    id?: string;
+    projectId: string;
+    name: string;
+    description?: string | null;
+    budget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline: string;
+    status?: $Enums.ProjectStatus;
+    progress?: number;
+    assignedDeveloper?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+};
+export type ProjectUpdateWithoutUserInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    projectId?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    budget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline?: Prisma.StringFieldUpdateOperationsInput | string;
+    status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
+    progress?: Prisma.IntFieldUpdateOperationsInput | number;
+    assignedDeveloper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    requirements?: Prisma.ProjectRequirementUpdateManyWithoutProjectNestedInput;
+    messages?: Prisma.ProjectMessageUpdateManyWithoutProjectNestedInput;
+    files?: Prisma.ProjectFileUpdateManyWithoutProjectNestedInput;
+};
+export type ProjectUncheckedUpdateWithoutUserInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    projectId?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    budget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline?: Prisma.StringFieldUpdateOperationsInput | string;
+    status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
+    progress?: Prisma.IntFieldUpdateOperationsInput | number;
+    assignedDeveloper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    requirements?: Prisma.ProjectRequirementUncheckedUpdateManyWithoutProjectNestedInput;
+    messages?: Prisma.ProjectMessageUncheckedUpdateManyWithoutProjectNestedInput;
+    files?: Prisma.ProjectFileUncheckedUpdateManyWithoutProjectNestedInput;
+};
+export type ProjectUncheckedUpdateManyWithoutUserInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    projectId?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    budget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+    timeline?: Prisma.StringFieldUpdateOperationsInput | string;
+    status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
+    progress?: Prisma.IntFieldUpdateOperationsInput | number;
+    assignedDeveloper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+/**
+ * Count Type ProjectCountOutputType
+ */
+export type ProjectCountOutputType = {
+    requirements: number;
+    messages: number;
+    files: number;
+};
+export type ProjectCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    requirements?: boolean | ProjectCountOutputTypeCountRequirementsArgs;
+    messages?: boolean | ProjectCountOutputTypeCountMessagesArgs;
+    files?: boolean | ProjectCountOutputTypeCountFilesArgs;
+};
+/**
+ * ProjectCountOutputType without action
+ */
+export type ProjectCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectCountOutputType
+     */
+    select?: Prisma.ProjectCountOutputTypeSelect<ExtArgs> | null;
+};
+/**
+ * ProjectCountOutputType without action
+ */
+export type ProjectCountOutputTypeCountRequirementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.ProjectRequirementWhereInput;
+};
+/**
+ * ProjectCountOutputType without action
+ */
+export type ProjectCountOutputTypeCountMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.ProjectMessageWhereInput;
+};
+/**
+ * ProjectCountOutputType without action
+ */
+export type ProjectCountOutputTypeCountFilesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.ProjectFileWhereInput;
+};
+export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+    id?: boolean;
+    projectId?: boolean;
+    userId?: boolean;
+    name?: boolean;
+    description?: boolean;
+    budget?: boolean;
+    timeline?: boolean;
+    status?: boolean;
+    progress?: boolean;
+    assignedDeveloper?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    requirements?: boolean | Prisma.Project$requirementsArgs<ExtArgs>;
+    messages?: boolean | Prisma.Project$messagesArgs<ExtArgs>;
+    files?: boolean | Prisma.Project$filesArgs<ExtArgs>;
+    _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>;
+}, ExtArgs["result"]["project"]>;
+export type ProjectSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+    id?: boolean;
+    projectId?: boolean;
+    userId?: boolean;
+    name?: boolean;
+    description?: boolean;
+    budget?: boolean;
+    timeline?: boolean;
+    status?: boolean;
+    progress?: boolean;
+    assignedDeveloper?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+}, ExtArgs["result"]["project"]>;
+export type ProjectSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+    id?: boolean;
+    projectId?: boolean;
+    userId?: boolean;
+    name?: boolean;
+    description?: boolean;
+    budget?: boolean;
+    timeline?: boolean;
+    status?: boolean;
+    progress?: boolean;
+    assignedDeveloper?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+}, ExtArgs["result"]["project"]>;
+export type ProjectSelectScalar = {
+    id?: boolean;
+    projectId?: boolean;
+    userId?: boolean;
+    name?: boolean;
+    description?: boolean;
+    budget?: boolean;
+    timeline?: boolean;
+    status?: boolean;
+    progress?: boolean;
+    assignedDeveloper?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+};
+export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "projectId" | "userId" | "name" | "description" | "budget" | "timeline" | "status" | "progress" | "assignedDeveloper" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>;
+export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    requirements?: boolean | Prisma.Project$requirementsArgs<ExtArgs>;
+    messages?: boolean | Prisma.Project$messagesArgs<ExtArgs>;
+    files?: boolean | Prisma.Project$filesArgs<ExtArgs>;
+    _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>;
+};
+export type ProjectIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+};
+export type ProjectIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+};
+export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    name: "Project";
+    objects: {
+        user: Prisma.$UserPayload<ExtArgs>;
+        requirements: Prisma.$ProjectRequirementPayload<ExtArgs>[];
+        messages: Prisma.$ProjectMessagePayload<ExtArgs>[];
+        files: Prisma.$ProjectFilePayload<ExtArgs>[];
+    };
+    scalars: runtime.Types.Extensions.GetPayloadResult<{
+        id: string;
+        projectId: string;
+        userId: string;
+        name: string;
+        description: string | null;
+        budget: runtime.Decimal | null;
+        timeline: string;
+        status: $Enums.ProjectStatus;
+        progress: number;
+        assignedDeveloper: string | null;
+        createdAt: Date;
+        updatedAt: Date;
+    }, ExtArgs["result"]["project"]>;
+    composites: {};
+};
+export type ProjectGetPayload<S extends boolean | null | undefined | ProjectDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$ProjectPayload, S>;
+export type ProjectCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = Omit<ProjectFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+    select?: ProjectCountAggregateInputType | true;
+};
+export interface ProjectDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: {
+        types: Prisma.TypeMap<ExtArgs>['model']['Project'];
+        meta: {
+            name: 'Project';
+        };
+    };
+    /**
+     * Find zero or one Project that matches the filter.
+     * @param {ProjectFindUniqueArgs} args - Arguments to find a Project
+     * @example
+     * // Get one Project
+     * const project = await prisma.project.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProjectFindUniqueArgs>(args: Prisma.SelectSubset<T, ProjectFindUniqueArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find one Project that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ProjectFindUniqueOrThrowArgs} args - Arguments to find a Project
+     * @example
+     * // Get one Project
+     * const project = await prisma.project.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ProjectFindUniqueOrThrowArgs>(args: Prisma.SelectSubset<T, ProjectFindUniqueOrThrowArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find the first Project that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectFindFirstArgs} args - Arguments to find a Project
+     * @example
+     * // Get one Project
+     * const project = await prisma.project.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProjectFindFirstArgs>(args?: Prisma.SelectSubset<T, ProjectFindFirstArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find the first Project that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectFindFirstOrThrowArgs} args - Arguments to find a Project
+     * @example
+     * // Get one Project
+     * const project = await prisma.project.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ProjectFindFirstOrThrowArgs>(args?: Prisma.SelectSubset<T, ProjectFindFirstOrThrowArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find zero or more Projects that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Projects
+     * const projects = await prisma.project.findMany()
+     *
+     * // Get first 10 Projects
+     * const projects = await prisma.project.findMany({ take: 10 })
+     *
+     * // Only select the `id`
+     * const projectWithIdOnly = await prisma.project.findMany({ select: { id: true } })
+     *
+     */
+    findMany<T extends ProjectFindManyArgs>(args?: Prisma.SelectSubset<T, ProjectFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>;
+    /**
+     * Create a Project.
+     * @param {ProjectCreateArgs} args - Arguments to create a Project.
+     * @example
+     * // Create one Project
+     * const Project = await prisma.project.create({
+     *   data: {
+     *     // ... data to create a Project
+     *   }
+     * })
+     *
+     */
+    create<T extends ProjectCreateArgs>(args: Prisma.SelectSubset<T, ProjectCreateArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Create many Projects.
+     * @param {ProjectCreateManyArgs} args - Arguments to create many Projects.
+     * @example
+     * // Create many Projects
+     * const project = await prisma.project.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     */
+    createMany<T extends ProjectCreateManyArgs>(args?: Prisma.SelectSubset<T, ProjectCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Create many Projects and returns the data saved in the database.
+     * @param {ProjectCreateManyAndReturnArgs} args - Arguments to create many Projects.
+     * @example
+     * // Create many Projects
+     * const project = await prisma.project.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Create many Projects and only return the `id`
+     * const projectWithIdOnly = await prisma.project.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    createManyAndReturn<T extends ProjectCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, ProjectCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>;
+    /**
+     * Delete a Project.
+     * @param {ProjectDeleteArgs} args - Arguments to delete one Project.
+     * @example
+     * // Delete one Project
+     * const Project = await prisma.project.delete({
+     *   where: {
+     *     // ... filter to delete one Project
+     *   }
+     * })
+     *
+     */
+    delete<T extends ProjectDeleteArgs>(args: Prisma.SelectSubset<T, ProjectDeleteArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Update one Project.
+     * @param {ProjectUpdateArgs} args - Arguments to update one Project.
+     * @example
+     * // Update one Project
+     * const project = await prisma.project.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    update<T extends ProjectUpdateArgs>(args: Prisma.SelectSubset<T, ProjectUpdateArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Delete zero or more Projects.
+     * @param {ProjectDeleteManyArgs} args - Arguments to filter Projects to delete.
+     * @example
+     * // Delete a few Projects
+     * const { count } = await prisma.project.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     */
+    deleteMany<T extends ProjectDeleteManyArgs>(args?: Prisma.SelectSubset<T, ProjectDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Update zero or more Projects.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Projects
+     * const project = await prisma.project.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    updateMany<T extends ProjectUpdateManyArgs>(args: Prisma.SelectSubset<T, ProjectUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Update zero or more Projects and returns the data updated in the database.
+     * @param {ProjectUpdateManyAndReturnArgs} args - Arguments to update many Projects.
+     * @example
+     * // Update many Projects
+     * const project = await prisma.project.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Update zero or more Projects and only return the `id`
+     * const projectWithIdOnly = await prisma.project.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    updateManyAndReturn<T extends ProjectUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, ProjectUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>;
+    /**
+     * Create or update one Project.
+     * @param {ProjectUpsertArgs} args - Arguments to update or create a Project.
+     * @example
+     * // Update or create a Project
+     * const project = await prisma.project.upsert({
+     *   create: {
+     *     // ... data to create a Project
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Project we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ProjectUpsertArgs>(args: Prisma.SelectSubset<T, ProjectUpsertArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Count the number of Projects.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectCountArgs} args - Arguments to filter Projects to count.
+     * @example
+     * // Count the number of Projects
+     * const count = await prisma.project.count({
+     *   where: {
+     *     // ... the filter for the Projects we want to count
+     *   }
+     * })
+    **/
+    count<T extends ProjectCountArgs>(args?: Prisma.Subset<T, ProjectCountArgs>): Prisma.PrismaPromise<T extends runtime.Types.Utils.Record<'select', any> ? T['select'] extends true ? number : Prisma.GetScalarType<T['select'], ProjectCountAggregateOutputType> : number>;
+    /**
+     * Allows you to perform aggregations operations on a Project.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ProjectAggregateArgs>(args: Prisma.Subset<T, ProjectAggregateArgs>): Prisma.PrismaPromise<GetProjectAggregateType<T>>;
+    /**
+     * Group by Project.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+    **/
+    groupBy<T extends ProjectGroupByArgs, HasSelectOrTake extends Prisma.Or<Prisma.Extends<'skip', Prisma.Keys<T>>, Prisma.Extends<'take', Prisma.Keys<T>>>, OrderByArg extends Prisma.True extends HasSelectOrTake ? {
+        orderBy: ProjectGroupByArgs['orderBy'];
+    } : {
+        orderBy?: ProjectGroupByArgs['orderBy'];
+    }, OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>, ByFields extends Prisma.MaybeTupleToUnion<T['by']>, ByValid extends Prisma.Has<ByFields, OrderFields>, HavingFields extends Prisma.GetHavingFields<T['having']>, HavingValid extends Prisma.Has<ByFields, HavingFields>, ByEmpty extends T['by'] extends never[] ? Prisma.True : Prisma.False, InputErrors extends ByEmpty extends Prisma.True ? `Error: "by" must not be empty.` : HavingValid extends Prisma.False ? {
+        [P in HavingFields]: P extends ByFields ? never : P extends string ? `Error: Field "${P}" used in "having" needs to be provided in "by".` : [
+            Error,
+            'Field ',
+            P,
+            ` in "having" needs to be provided in "by"`
+        ];
+    }[HavingFields] : 'take' extends Prisma.Keys<T> ? 'orderBy' extends Prisma.Keys<T> ? ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields] : 'Error: If you provide "take", you also need to provide "orderBy"' : 'skip' extends Prisma.Keys<T> ? 'orderBy' extends Prisma.Keys<T> ? ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields] : 'Error: If you provide "skip", you also need to provide "orderBy"' : ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields]>(args: Prisma.SubsetIntersection<T, ProjectGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProjectGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>;
+    /**
+     * Fields of the Project model
+     */
+    readonly fields: ProjectFieldRefs;
+}
+/**
+ * The delegate class that acts as a "Promise-like" for Project.
+ * Why is this prefixed with `Prisma__`?
+ * Because we want to prevent naming conflicts as mentioned in
+ * https://github.com/prisma/prisma-client-js/issues/707
+ */
+export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise";
+    user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
+    requirements<T extends Prisma.Project$requirementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$requirementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectRequirementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    messages<T extends Prisma.Project$messagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    files<T extends Prisma.Project$filesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$filesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectFilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): runtime.Types.Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): runtime.Types.Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): runtime.Types.Utils.JsPromise<T>;
+}
+/**
+ * Fields of the Project model
+ */
+export interface ProjectFieldRefs {
+    readonly id: Prisma.FieldRef<"Project", 'String'>;
+    readonly projectId: Prisma.FieldRef<"Project", 'String'>;
+    readonly userId: Prisma.FieldRef<"Project", 'String'>;
+    readonly name: Prisma.FieldRef<"Project", 'String'>;
+    readonly description: Prisma.FieldRef<"Project", 'String'>;
+    readonly budget: Prisma.FieldRef<"Project", 'Decimal'>;
+    readonly timeline: Prisma.FieldRef<"Project", 'String'>;
+    readonly status: Prisma.FieldRef<"Project", 'ProjectStatus'>;
+    readonly progress: Prisma.FieldRef<"Project", 'Int'>;
+    readonly assignedDeveloper: Prisma.FieldRef<"Project", 'String'>;
+    readonly createdAt: Prisma.FieldRef<"Project", 'DateTime'>;
+    readonly updatedAt: Prisma.FieldRef<"Project", 'DateTime'>;
+}
+/**
+ * Project findUnique
+ */
+export type ProjectFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Project
+     */
+    select?: Prisma.ProjectSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Project
+     */
+    omit?: Prisma.ProjectOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ProjectInclude<ExtArgs> | null;
+    /**
+     * Filter, which Project to fetch.
+     */
+    where: Prisma.ProjectWhereUniqueInput;
+};
+/**
+ * Project findUniqueOrThrow
+ */
+export type ProjectFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Project
+     */
+    select?: Prisma.ProjectSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Project
+     */
+    omit?: Prisma.ProjectOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ProjectInclude<ExtArgs> | null;
+    /**
+     * Filter, which Project to fetch.
+     */
+    where: Prisma.ProjectWhereUniqueInput;
+};
+/**
+ * Project findFirst
+ */
+export type ProjectFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Project
+     */
+    select?: Prisma.ProjectSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Project
+     */
+    omit?: Prisma.ProjectOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ProjectInclude<ExtArgs> | null;
+    /**
+     * Filter, which Project to fetch.
+     */
+    where?: Prisma.ProjectWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Projects to fetch.
+     */
+    orderBy?: Prisma.ProjectOrderByWithRelationInput | Prisma.ProjectOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for Projects.
+     */
+    cursor?: Prisma.ProjectWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Projects from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Projects.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Projects.
+     */
+    distinct?: Prisma.ProjectScalarFieldEnum | Prisma.ProjectScalarFieldEnum[];
+};
+/**
+ * Project findFirstOrThrow
+ */
+export type ProjectFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Project
+     */
+    select?: Prisma.ProjectSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Project
+     */
+    omit?: Prisma.ProjectOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ProjectInclude<ExtArgs> | null;
+    /**
+     * Filter, which Project to fetch.
+     */
+    where?: Prisma.ProjectWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Projects to fetch.
+     */
+    orderBy?: Prisma.ProjectOrderByWithRelationInput | Prisma.ProjectOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for Projects.
+     */
+    cursor?: Prisma.ProjectWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Projects from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Projects.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Projects.
+     */
+    distinct?: Prisma.ProjectScalarFieldEnum | Prisma.ProjectScalarFieldEnum[];
+};
+/**
+ * Project findMany
+ */
+export type ProjectFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Project
+     */
+    select?: Prisma.ProjectSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Project
+     */
+    omit?: Prisma.ProjectOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ProjectInclude<ExtArgs> | null;
+    /**
+     * Filter, which Projects to fetch.
+     */
+    where?: Prisma.ProjectWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Projects to fetch.
+     */
+    orderBy?: Prisma.ProjectOrderByWithRelationInput | Prisma.ProjectOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing Projects.
+     */
+    cursor?: Prisma.ProjectWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Projects from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Projects.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Projects.
+     */
+    distinct?: Prisma.ProjectScalarFieldEnum | Prisma.ProjectScalarFieldEnum[];
+};
+/**
+ * Project create
+ */
+export type ProjectCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Project
+     */
+    select?: Prisma.ProjectSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Project
+     */
+    omit?: Prisma.ProjectOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ProjectInclude<ExtArgs> | null;
+    /**
+     * The data needed to create a Project.
+     */
+    data: Prisma.XOR<Prisma.ProjectCreateInput, Prisma.ProjectUncheckedCreateInput>;
+};
+/**
+ * Project createMany
+ */
+export type ProjectCreateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Projects.
+     */
+    data: Prisma.ProjectCreateManyInput | Prisma.ProjectCreateManyInput[];
+    skipDuplicates?: boolean;
+};
+/**
+ * Project createManyAndReturn
+ */
+export type ProjectCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Project
+     */
+    select?: Prisma.ProjectSelectCreateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Project
+     */
+    omit?: Prisma.ProjectOmit<ExtArgs> | null;
+    /**
+     * The data used to create many Projects.
+     */
+    data: Prisma.ProjectCreateManyInput | Prisma.ProjectCreateManyInput[];
+    skipDuplicates?: boolean;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ProjectIncludeCreateManyAndReturn<ExtArgs> | null;
+};
+/**
+ * Project update
+ */
+export type ProjectUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Project
+     */
+    select?: Prisma.ProjectSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Project
+     */
+    omit?: Prisma.ProjectOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ProjectInclude<ExtArgs> | null;
+    /**
+     * The data needed to update a Project.
+     */
+    data: Prisma.XOR<Prisma.ProjectUpdateInput, Prisma.ProjectUncheckedUpdateInput>;
+    /**
+     * Choose, which Project to update.
+     */
+    where: Prisma.ProjectWhereUniqueInput;
+};
+/**
+ * Project updateMany
+ */
+export type ProjectUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Projects.
+     */
+    data: Prisma.XOR<Prisma.ProjectUpdateManyMutationInput, Prisma.ProjectUncheckedUpdateManyInput>;
+    /**
+     * Filter which Projects to update
+     */
+    where?: Prisma.ProjectWhereInput;
+    /**
+     * Limit how many Projects to update.
+     */
+    limit?: number;
+};
+/**
+ * Project updateManyAndReturn
+ */
+export type ProjectUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Project
+     */
+    select?: Prisma.ProjectSelectUpdateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Project
+     */
+    omit?: Prisma.ProjectOmit<ExtArgs> | null;
+    /**
+     * The data used to update Projects.
+     */
+    data: Prisma.XOR<Prisma.ProjectUpdateManyMutationInput, Prisma.ProjectUncheckedUpdateManyInput>;
+    /**
+     * Filter which Projects to update
+     */
+    where?: Prisma.ProjectWhereInput;
+    /**
+     * Limit how many Projects to update.
+     */
+    limit?: number;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ProjectIncludeUpdateManyAndReturn<ExtArgs> | null;
+};
+/**
+ * Project upsert
+ */
+export type ProjectUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Project
+     */
+    select?: Prisma.ProjectSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Project
+     */
+    omit?: Prisma.ProjectOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ProjectInclude<ExtArgs> | null;
+    /**
+     * The filter to search for the Project to update in case it exists.
+     */
+    where: Prisma.ProjectWhereUniqueInput;
+    /**
+     * In case the Project found by the `where` argument doesn't exist, create a new Project with this data.
+     */
+    create: Prisma.XOR<Prisma.ProjectCreateInput, Prisma.ProjectUncheckedCreateInput>;
+    /**
+     * In case the Project was found with the provided `where` argument, update it with this data.
+     */
+    update: Prisma.XOR<Prisma.ProjectUpdateInput, Prisma.ProjectUncheckedUpdateInput>;
+};
+/**
+ * Project delete
+ */
+export type ProjectDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Project
+     */
+    select?: Prisma.ProjectSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Project
+     */
+    omit?: Prisma.ProjectOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ProjectInclude<ExtArgs> | null;
+    /**
+     * Filter which Project to delete.
+     */
+    where: Prisma.ProjectWhereUniqueInput;
+};
+/**
+ * Project deleteMany
+ */
+export type ProjectDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Filter which Projects to delete
+     */
+    where?: Prisma.ProjectWhereInput;
+    /**
+     * Limit how many Projects to delete.
+     */
+    limit?: number;
+};
+/**
+ * Project.requirements
+ */
+export type Project$requirementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectRequirement
+     */
+    select?: Prisma.ProjectRequirementSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the ProjectRequirement
+     */
+    omit?: Prisma.ProjectRequirementOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ProjectRequirementInclude<ExtArgs> | null;
+    where?: Prisma.ProjectRequirementWhereInput;
+    orderBy?: Prisma.ProjectRequirementOrderByWithRelationInput | Prisma.ProjectRequirementOrderByWithRelationInput[];
+    cursor?: Prisma.ProjectRequirementWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.ProjectRequirementScalarFieldEnum | Prisma.ProjectRequirementScalarFieldEnum[];
+};
+/**
+ * Project.messages
+ */
+export type Project$messagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectMessage
+     */
+    select?: Prisma.ProjectMessageSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the ProjectMessage
+     */
+    omit?: Prisma.ProjectMessageOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ProjectMessageInclude<ExtArgs> | null;
+    where?: Prisma.ProjectMessageWhereInput;
+    orderBy?: Prisma.ProjectMessageOrderByWithRelationInput | Prisma.ProjectMessageOrderByWithRelationInput[];
+    cursor?: Prisma.ProjectMessageWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.ProjectMessageScalarFieldEnum | Prisma.ProjectMessageScalarFieldEnum[];
+};
+/**
+ * Project.files
+ */
+export type Project$filesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectFile
+     */
+    select?: Prisma.ProjectFileSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the ProjectFile
+     */
+    omit?: Prisma.ProjectFileOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ProjectFileInclude<ExtArgs> | null;
+    where?: Prisma.ProjectFileWhereInput;
+    orderBy?: Prisma.ProjectFileOrderByWithRelationInput | Prisma.ProjectFileOrderByWithRelationInput[];
+    cursor?: Prisma.ProjectFileWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.ProjectFileScalarFieldEnum | Prisma.ProjectFileScalarFieldEnum[];
+};
+/**
+ * Project without action
+ */
+export type ProjectDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Project
+     */
+    select?: Prisma.ProjectSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Project
+     */
+    omit?: Prisma.ProjectOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ProjectInclude<ExtArgs> | null;
+};

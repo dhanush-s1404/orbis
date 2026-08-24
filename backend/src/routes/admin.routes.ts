@@ -1,42 +1,38 @@
-import { NextResponse } from "next/server"
-import { prisma } from "@/lib/prisma"
+import { Request, Response } from "express"
+import PrismaClient from "@prisma/client"
 
-export async function GET() {
+const prisma = new PrismaClient()
+
+export const adminRoutes = require("express").Router()
+
+adminRoutes.get("/", async (req: Request, res: Response) => {
   try {
-    // Get counts for admin dashboard
     const [users, products, orders, projects, notifications] = await Promise.all([
-      prisma.user.findMany({ select: { role: true, _count: true } }),
+      prisma.user.findMany({ select: { id: true, name: true, email: true, role: true, status: true } }),
       prisma.product.count(),
       prisma.order.count(),
-      prisma.customProject.count(),
-      prisma.notification.findMany({
-        where: { read: false },
-        take: 10,
-        orderBy: { createdAt: "desc" },
-      }),
+      prisma.project.count(),
+      prisma.notification.findMany({ where: { read: false }, take: 10, orderBy: { createdAt: "desc" } }),
     ])
 
-    // Calculate stats
-    const totalUsers = users.reduce((sum, user) => sum + user._count, 0)
+    const totalUsers = users.length
     const adminCount = users.filter((u) => u.role === "ADMIN").length
     const customerCount = users.filter((u) => u.role === "CUSTOMER").length
     const developerCount = users.filter((u) => u.role === "DEVELOPER").length
 
-    // Get recent orders
     const recentOrders = await prisma.order.findMany({
       include: { user: true, orderItems: { include: { product: true } } },
       orderBy: { createdAt: "desc" },
       take: 5,
     })
 
-    // Get recent projects
-    const recentProjects = await prisma.customProject.findMany({
+    const recentProjects = await prisma.project.findMany({
       include: { user: true },
       orderBy: { createdAt: "desc" },
       take: 5,
     })
 
-    return NextResponse.json({
+    return res.json({
       stats: {
         totalUsers,
         adminCount,
@@ -51,9 +47,11 @@ export async function GET() {
       unreadNotifications: notifications.length,
     })
   } catch (error: any) {
-    return NextResponse.json(
-      { message: "Failed to fetch admin data", error: error.message },
-      { status: 500 }
-    )
+    return res.status(500).json({
+      message: "Failed to fetch admin data",
+      error: error.message,
+    })
   }
-}
+})
+
+export default adminRoutes

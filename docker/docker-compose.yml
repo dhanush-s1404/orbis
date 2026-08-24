@@ -1,12 +1,12 @@
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: website-sales-postgres
+    container_name: orbis-postgres
     restart: unless-stopped
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: websales
+      POSTGRES_DB: orbis
     ports:
       - "5432:5432"
     volumes:
