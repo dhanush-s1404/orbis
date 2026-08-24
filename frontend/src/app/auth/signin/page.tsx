@@ -1,33 +1,24 @@
 "use client"
 
 import { useState } from "react"
+import { useAuth } from "@/hooks/use-auth"
 
 export default function SignInPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState<string | null>(null)
+  const { login, isLoading } = useAuth()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError(null)
     try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      })
-
-      if (!response.ok) {
-        const errData = await response.json()
-        setError(errData.message || "Login failed")
+      const result = await login(email, password)
+      if (result.error) {
+        setError(result.error)
         return
       }
-
-      const data = await response.json()
-      // Store token
-      localStorage.setItem("token", data.token)
-      // Redirect or success
-      window.location.href = "/dashboard"
+      // Login handled by useAuth hook - redirect inside
     } catch (error: any) {
       setError("An error occurred. Please try again.")
     }
@@ -41,6 +32,12 @@ export default function SignInPage() {
         {error && (
           <div className="mb-4 p-3 bg-zinc-100 rounded-md text-zinc-800">
             {error}
+          </div>
+        )}
+
+        {isLoading && (
+          <div className="mb-6 text-center">
+            <p className="text-zinc-500">Signing in...</p>
           </div>
         )}
 
@@ -71,8 +68,9 @@ export default function SignInPage() {
           <button 
             type="submit"
             className="w-full bg-zinc-900 text-white font-medium py-2 rounded-md hover:bg-zinc-800 transition-colors"
+            disabled={isLoading}
           >
-            Sign In
+            {isLoading ? "Signing in..." : "Sign In"}
           </button>
         </form>
       </div>
