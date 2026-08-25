@@ -34,6 +34,10 @@ export type UserMinAggregateOutputType = {
   emailVerified: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  passwordResetToken: string | null
+  passwordResetExpires: Date | null
+  emailVerificationToken: string | null
+  emailVerificationSent: Date | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -46,6 +50,10 @@ export type UserMaxAggregateOutputType = {
   emailVerified: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  passwordResetToken: string | null
+  passwordResetExpires: Date | null
+  emailVerificationToken: string | null
+  emailVerificationSent: Date | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -58,6 +66,10 @@ export type UserCountAggregateOutputType = {
   emailVerified: number
   createdAt: number
   updatedAt: number
+  passwordResetToken: number
+  passwordResetExpires: number
+  emailVerificationToken: number
+  emailVerificationSent: number
   _all: number
 }
 
@@ -72,6 +84,10 @@ export type UserMinAggregateInputType = {
   emailVerified?: true
   createdAt?: true
   updatedAt?: true
+  passwordResetToken?: true
+  passwordResetExpires?: true
+  emailVerificationToken?: true
+  emailVerificationSent?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -84,6 +100,10 @@ export type UserMaxAggregateInputType = {
   emailVerified?: true
   createdAt?: true
   updatedAt?: true
+  passwordResetToken?: true
+  passwordResetExpires?: true
+  emailVerificationToken?: true
+  emailVerificationSent?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -96,6 +116,10 @@ export type UserCountAggregateInputType = {
   emailVerified?: true
   createdAt?: true
   updatedAt?: true
+  passwordResetToken?: true
+  passwordResetExpires?: true
+  emailVerificationToken?: true
+  emailVerificationSent?: true
   _all?: true
 }
 
@@ -181,6 +205,10 @@ export type UserGroupByOutputType = {
   emailVerified: Date | null
   createdAt: Date
   updatedAt: Date
+  passwordResetToken: string | null
+  passwordResetExpires: Date | null
+  emailVerificationToken: string | null
+  emailVerificationSent: Date | null
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -214,11 +242,13 @@ export type UserWhereInput = {
   emailVerified?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  passwordResetToken?: Prisma.StringNullableFilter<"User"> | string | null
+  passwordResetExpires?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  emailVerificationToken?: Prisma.StringNullableFilter<"User"> | string | null
+  emailVerificationSent?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   orders?: Prisma.OrderListRelationFilter
   projects?: Prisma.ProjectListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
-  projectMessages?: Prisma.ProjectMessageListRelationFilter
-  projectFiles?: Prisma.ProjectFileListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
 }
 
@@ -232,11 +262,13 @@ export type UserOrderByWithRelationInput = {
   emailVerified?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  passwordResetToken?: Prisma.SortOrderInput | Prisma.SortOrder
+  passwordResetExpires?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailVerificationToken?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailVerificationSent?: Prisma.SortOrderInput | Prisma.SortOrder
   orders?: Prisma.OrderOrderByRelationAggregateInput
   projects?: Prisma.ProjectOrderByRelationAggregateInput
   notifications?: Prisma.NotificationOrderByRelationAggregateInput
-  projectMessages?: Prisma.ProjectMessageOrderByRelationAggregateInput
-  projectFiles?: Prisma.ProjectFileOrderByRelationAggregateInput
   auditLogs?: Prisma.AuditLogOrderByRelationAggregateInput
 }
 
@@ -253,11 +285,13 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   emailVerified?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  passwordResetToken?: Prisma.StringNullableFilter<"User"> | string | null
+  passwordResetExpires?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  emailVerificationToken?: Prisma.StringNullableFilter<"User"> | string | null
+  emailVerificationSent?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   orders?: Prisma.OrderListRelationFilter
   projects?: Prisma.ProjectListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
-  projectMessages?: Prisma.ProjectMessageListRelationFilter
-  projectFiles?: Prisma.ProjectFileListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
 }, "id" | "email">
 
@@ -271,6 +305,10 @@ export type UserOrderByWithAggregationInput = {
   emailVerified?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  passwordResetToken?: Prisma.SortOrderInput | Prisma.SortOrder
+  passwordResetExpires?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailVerificationToken?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailVerificationSent?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -289,6 +327,10 @@ export type UserScalarWhereWithAggregatesInput = {
   emailVerified?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  passwordResetToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  passwordResetExpires?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  emailVerificationToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  emailVerificationSent?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
 }
 
 export type UserCreateInput = {
@@ -301,11 +343,13 @@ export type UserCreateInput = {
   emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  passwordResetToken?: string | null
+  passwordResetExpires?: Date | string | null
+  emailVerificationToken?: string | null
+  emailVerificationSent?: Date | string | null
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  projectMessages?: Prisma.ProjectMessageCreateNestedManyWithoutSenderInput
-  projectFiles?: Prisma.ProjectFileCreateNestedManyWithoutUploaderInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
 }
 
@@ -319,11 +363,13 @@ export type UserUncheckedCreateInput = {
   emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  passwordResetToken?: string | null
+  passwordResetExpires?: Date | string | null
+  emailVerificationToken?: string | null
+  emailVerificationSent?: Date | string | null
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  projectMessages?: Prisma.ProjectMessageUncheckedCreateNestedManyWithoutSenderInput
-  projectFiles?: Prisma.ProjectFileUncheckedCreateNestedManyWithoutUploaderInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -337,11 +383,13 @@ export type UserUpdateInput = {
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationSent?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  projectMessages?: Prisma.ProjectMessageUpdateManyWithoutSenderNestedInput
-  projectFiles?: Prisma.ProjectFileUpdateManyWithoutUploaderNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
 }
 
@@ -355,11 +403,13 @@ export type UserUncheckedUpdateInput = {
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationSent?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  projectMessages?: Prisma.ProjectMessageUncheckedUpdateManyWithoutSenderNestedInput
-  projectFiles?: Prisma.ProjectFileUncheckedUpdateManyWithoutUploaderNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -373,6 +423,10 @@ export type UserCreateManyInput = {
   emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  passwordResetToken?: string | null
+  passwordResetExpires?: Date | string | null
+  emailVerificationToken?: string | null
+  emailVerificationSent?: Date | string | null
 }
 
 export type UserUpdateManyMutationInput = {
@@ -385,6 +439,10 @@ export type UserUpdateManyMutationInput = {
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationSent?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -397,6 +455,10 @@ export type UserUncheckedUpdateManyInput = {
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationSent?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -409,6 +471,10 @@ export type UserCountOrderByAggregateInput = {
   emailVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  passwordResetToken?: Prisma.SortOrder
+  passwordResetExpires?: Prisma.SortOrder
+  emailVerificationToken?: Prisma.SortOrder
+  emailVerificationSent?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -421,6 +487,10 @@ export type UserMaxOrderByAggregateInput = {
   emailVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  passwordResetToken?: Prisma.SortOrder
+  passwordResetExpires?: Prisma.SortOrder
+  emailVerificationToken?: Prisma.SortOrder
+  emailVerificationSent?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -433,6 +503,10 @@ export type UserMinOrderByAggregateInput = {
   emailVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  passwordResetToken?: Prisma.SortOrder
+  passwordResetExpires?: Prisma.SortOrder
+  emailVerificationToken?: Prisma.SortOrder
+  emailVerificationSent?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -497,34 +571,6 @@ export type UserUpdateOneRequiredWithoutProjectsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutProjectsInput, Prisma.UserUpdateWithoutProjectsInput>, Prisma.UserUncheckedUpdateWithoutProjectsInput>
 }
 
-export type UserCreateNestedOneWithoutProjectMessagesInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutProjectMessagesInput, Prisma.UserUncheckedCreateWithoutProjectMessagesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProjectMessagesInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutProjectMessagesNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutProjectMessagesInput, Prisma.UserUncheckedCreateWithoutProjectMessagesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProjectMessagesInput
-  upsert?: Prisma.UserUpsertWithoutProjectMessagesInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutProjectMessagesInput, Prisma.UserUpdateWithoutProjectMessagesInput>, Prisma.UserUncheckedUpdateWithoutProjectMessagesInput>
-}
-
-export type UserCreateNestedOneWithoutProjectFilesInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutProjectFilesInput, Prisma.UserUncheckedCreateWithoutProjectFilesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProjectFilesInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutProjectFilesNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutProjectFilesInput, Prisma.UserUncheckedCreateWithoutProjectFilesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProjectFilesInput
-  upsert?: Prisma.UserUpsertWithoutProjectFilesInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutProjectFilesInput, Prisma.UserUpdateWithoutProjectFilesInput>, Prisma.UserUncheckedUpdateWithoutProjectFilesInput>
-}
-
 export type UserCreateNestedOneWithoutNotificationsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
@@ -565,10 +611,12 @@ export type UserCreateWithoutOrdersInput = {
   emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  passwordResetToken?: string | null
+  passwordResetExpires?: Date | string | null
+  emailVerificationToken?: string | null
+  emailVerificationSent?: Date | string | null
   projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  projectMessages?: Prisma.ProjectMessageCreateNestedManyWithoutSenderInput
-  projectFiles?: Prisma.ProjectFileCreateNestedManyWithoutUploaderInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
 }
 
@@ -582,10 +630,12 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  passwordResetToken?: string | null
+  passwordResetExpires?: Date | string | null
+  emailVerificationToken?: string | null
+  emailVerificationSent?: Date | string | null
   projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  projectMessages?: Prisma.ProjectMessageUncheckedCreateNestedManyWithoutSenderInput
-  projectFiles?: Prisma.ProjectFileUncheckedCreateNestedManyWithoutUploaderInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -615,10 +665,12 @@ export type UserUpdateWithoutOrdersInput = {
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationSent?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  projectMessages?: Prisma.ProjectMessageUpdateManyWithoutSenderNestedInput
-  projectFiles?: Prisma.ProjectFileUpdateManyWithoutUploaderNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
 }
 
@@ -632,10 +684,12 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationSent?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  projectMessages?: Prisma.ProjectMessageUncheckedUpdateManyWithoutSenderNestedInput
-  projectFiles?: Prisma.ProjectFileUncheckedUpdateManyWithoutUploaderNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -649,10 +703,12 @@ export type UserCreateWithoutProjectsInput = {
   emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  passwordResetToken?: string | null
+  passwordResetExpires?: Date | string | null
+  emailVerificationToken?: string | null
+  emailVerificationSent?: Date | string | null
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  projectMessages?: Prisma.ProjectMessageCreateNestedManyWithoutSenderInput
-  projectFiles?: Prisma.ProjectFileCreateNestedManyWithoutUploaderInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
 }
 
@@ -666,10 +722,12 @@ export type UserUncheckedCreateWithoutProjectsInput = {
   emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  passwordResetToken?: string | null
+  passwordResetExpires?: Date | string | null
+  emailVerificationToken?: string | null
+  emailVerificationSent?: Date | string | null
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  projectMessages?: Prisma.ProjectMessageUncheckedCreateNestedManyWithoutSenderInput
-  projectFiles?: Prisma.ProjectFileUncheckedCreateNestedManyWithoutUploaderInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -699,10 +757,12 @@ export type UserUpdateWithoutProjectsInput = {
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationSent?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  projectMessages?: Prisma.ProjectMessageUpdateManyWithoutSenderNestedInput
-  projectFiles?: Prisma.ProjectFileUpdateManyWithoutUploaderNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
 }
 
@@ -716,178 +776,12 @@ export type UserUncheckedUpdateWithoutProjectsInput = {
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationSent?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  projectMessages?: Prisma.ProjectMessageUncheckedUpdateManyWithoutSenderNestedInput
-  projectFiles?: Prisma.ProjectFileUncheckedUpdateManyWithoutUploaderNestedInput
-  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutProjectMessagesInput = {
-  id?: string
-  name?: string | null
-  email: string
-  passwordHash: string
-  role?: $Enums.Role
-  status?: $Enums.Status
-  emailVerified?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  orders?: Prisma.OrderCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  projectFiles?: Prisma.ProjectFileCreateNestedManyWithoutUploaderInput
-  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutProjectMessagesInput = {
-  id?: string
-  name?: string | null
-  email: string
-  passwordHash: string
-  role?: $Enums.Role
-  status?: $Enums.Status
-  emailVerified?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  projectFiles?: Prisma.ProjectFileUncheckedCreateNestedManyWithoutUploaderInput
-  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutProjectMessagesInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutProjectMessagesInput, Prisma.UserUncheckedCreateWithoutProjectMessagesInput>
-}
-
-export type UserUpsertWithoutProjectMessagesInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutProjectMessagesInput, Prisma.UserUncheckedUpdateWithoutProjectMessagesInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutProjectMessagesInput, Prisma.UserUncheckedCreateWithoutProjectMessagesInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutProjectMessagesInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutProjectMessagesInput, Prisma.UserUncheckedUpdateWithoutProjectMessagesInput>
-}
-
-export type UserUpdateWithoutProjectMessagesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  projectFiles?: Prisma.ProjectFileUpdateManyWithoutUploaderNestedInput
-  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutProjectMessagesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  projectFiles?: Prisma.ProjectFileUncheckedUpdateManyWithoutUploaderNestedInput
-  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutProjectFilesInput = {
-  id?: string
-  name?: string | null
-  email: string
-  passwordHash: string
-  role?: $Enums.Role
-  status?: $Enums.Status
-  emailVerified?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  orders?: Prisma.OrderCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  projectMessages?: Prisma.ProjectMessageCreateNestedManyWithoutSenderInput
-  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutProjectFilesInput = {
-  id?: string
-  name?: string | null
-  email: string
-  passwordHash: string
-  role?: $Enums.Role
-  status?: $Enums.Status
-  emailVerified?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  projectMessages?: Prisma.ProjectMessageUncheckedCreateNestedManyWithoutSenderInput
-  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutProjectFilesInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutProjectFilesInput, Prisma.UserUncheckedCreateWithoutProjectFilesInput>
-}
-
-export type UserUpsertWithoutProjectFilesInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutProjectFilesInput, Prisma.UserUncheckedUpdateWithoutProjectFilesInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutProjectFilesInput, Prisma.UserUncheckedCreateWithoutProjectFilesInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutProjectFilesInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutProjectFilesInput, Prisma.UserUncheckedUpdateWithoutProjectFilesInput>
-}
-
-export type UserUpdateWithoutProjectFilesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  projectMessages?: Prisma.ProjectMessageUpdateManyWithoutSenderNestedInput
-  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutProjectFilesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
-  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  projectMessages?: Prisma.ProjectMessageUncheckedUpdateManyWithoutSenderNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -901,10 +795,12 @@ export type UserCreateWithoutNotificationsInput = {
   emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  passwordResetToken?: string | null
+  passwordResetExpires?: Date | string | null
+  emailVerificationToken?: string | null
+  emailVerificationSent?: Date | string | null
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
-  projectMessages?: Prisma.ProjectMessageCreateNestedManyWithoutSenderInput
-  projectFiles?: Prisma.ProjectFileCreateNestedManyWithoutUploaderInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
 }
 
@@ -918,10 +814,12 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  passwordResetToken?: string | null
+  passwordResetExpires?: Date | string | null
+  emailVerificationToken?: string | null
+  emailVerificationSent?: Date | string | null
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
-  projectMessages?: Prisma.ProjectMessageUncheckedCreateNestedManyWithoutSenderInput
-  projectFiles?: Prisma.ProjectFileUncheckedCreateNestedManyWithoutUploaderInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -951,10 +849,12 @@ export type UserUpdateWithoutNotificationsInput = {
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationSent?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
-  projectMessages?: Prisma.ProjectMessageUpdateManyWithoutSenderNestedInput
-  projectFiles?: Prisma.ProjectFileUpdateManyWithoutUploaderNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
 }
 
@@ -968,10 +868,12 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationSent?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
-  projectMessages?: Prisma.ProjectMessageUncheckedUpdateManyWithoutSenderNestedInput
-  projectFiles?: Prisma.ProjectFileUncheckedUpdateManyWithoutUploaderNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -985,11 +887,13 @@ export type UserCreateWithoutAuditLogsInput = {
   emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  passwordResetToken?: string | null
+  passwordResetExpires?: Date | string | null
+  emailVerificationToken?: string | null
+  emailVerificationSent?: Date | string | null
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  projectMessages?: Prisma.ProjectMessageCreateNestedManyWithoutSenderInput
-  projectFiles?: Prisma.ProjectFileCreateNestedManyWithoutUploaderInput
 }
 
 export type UserUncheckedCreateWithoutAuditLogsInput = {
@@ -1002,11 +906,13 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   emailVerified?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  passwordResetToken?: string | null
+  passwordResetExpires?: Date | string | null
+  emailVerificationToken?: string | null
+  emailVerificationSent?: Date | string | null
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  projectMessages?: Prisma.ProjectMessageUncheckedCreateNestedManyWithoutSenderInput
-  projectFiles?: Prisma.ProjectFileUncheckedCreateNestedManyWithoutUploaderInput
 }
 
 export type UserCreateOrConnectWithoutAuditLogsInput = {
@@ -1035,11 +941,13 @@ export type UserUpdateWithoutAuditLogsInput = {
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationSent?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  projectMessages?: Prisma.ProjectMessageUpdateManyWithoutSenderNestedInput
-  projectFiles?: Prisma.ProjectFileUpdateManyWithoutUploaderNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAuditLogsInput = {
@@ -1052,11 +960,13 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationSent?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  projectMessages?: Prisma.ProjectMessageUncheckedUpdateManyWithoutSenderNestedInput
-  projectFiles?: Prisma.ProjectFileUncheckedUpdateManyWithoutUploaderNestedInput
 }
 
 
@@ -1068,8 +978,6 @@ export type UserCountOutputType = {
   orders: number
   projects: number
   notifications: number
-  projectMessages: number
-  projectFiles: number
   auditLogs: number
 }
 
@@ -1077,8 +985,6 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   orders?: boolean | UserCountOutputTypeCountOrdersArgs
   projects?: boolean | UserCountOutputTypeCountProjectsArgs
   notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
-  projectMessages?: boolean | UserCountOutputTypeCountProjectMessagesArgs
-  projectFiles?: boolean | UserCountOutputTypeCountProjectFilesArgs
   auditLogs?: boolean | UserCountOutputTypeCountAuditLogsArgs
 }
 
@@ -1116,20 +1022,6 @@ export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Ty
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountProjectMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ProjectMessageWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountProjectFilesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ProjectFileWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
 export type UserCountOutputTypeCountAuditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.AuditLogWhereInput
 }
@@ -1145,11 +1037,13 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   emailVerified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  passwordResetToken?: boolean
+  passwordResetExpires?: boolean
+  emailVerificationToken?: boolean
+  emailVerificationSent?: boolean
   orders?: boolean | Prisma.User$ordersArgs<ExtArgs>
   projects?: boolean | Prisma.User$projectsArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
-  projectMessages?: boolean | Prisma.User$projectMessagesArgs<ExtArgs>
-  projectFiles?: boolean | Prisma.User$projectFilesArgs<ExtArgs>
   auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -1164,6 +1058,10 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   emailVerified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  passwordResetToken?: boolean
+  passwordResetExpires?: boolean
+  emailVerificationToken?: boolean
+  emailVerificationSent?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1176,6 +1074,10 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   emailVerified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  passwordResetToken?: boolean
+  passwordResetExpires?: boolean
+  emailVerificationToken?: boolean
+  emailVerificationSent?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -1188,15 +1090,17 @@ export type UserSelectScalar = {
   emailVerified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  passwordResetToken?: boolean
+  passwordResetExpires?: boolean
+  emailVerificationToken?: boolean
+  emailVerificationSent?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "role" | "status" | "emailVerified" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "role" | "status" | "emailVerified" | "createdAt" | "updatedAt" | "passwordResetToken" | "passwordResetExpires" | "emailVerificationToken" | "emailVerificationSent", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   orders?: boolean | Prisma.User$ordersArgs<ExtArgs>
   projects?: boolean | Prisma.User$projectsArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
-  projectMessages?: boolean | Prisma.User$projectMessagesArgs<ExtArgs>
-  projectFiles?: boolean | Prisma.User$projectFilesArgs<ExtArgs>
   auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1209,8 +1113,6 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     orders: Prisma.$OrderPayload<ExtArgs>[]
     projects: Prisma.$ProjectPayload<ExtArgs>[]
     notifications: Prisma.$NotificationPayload<ExtArgs>[]
-    projectMessages: Prisma.$ProjectMessagePayload<ExtArgs>[]
-    projectFiles: Prisma.$ProjectFilePayload<ExtArgs>[]
     auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1223,6 +1125,10 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     emailVerified: Date | null
     createdAt: Date
     updatedAt: Date
+    passwordResetToken: string | null
+    passwordResetExpires: Date | null
+    emailVerificationToken: string | null
+    emailVerificationSent: Date | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1620,8 +1526,6 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   orders<T extends Prisma.User$ordersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   projects<T extends Prisma.User$projectsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$projectsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  projectMessages<T extends Prisma.User$projectMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$projectMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  projectFiles<T extends Prisma.User$projectFilesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$projectFilesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectFilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   auditLogs<T extends Prisma.User$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1661,6 +1565,10 @@ export interface UserFieldRefs {
   readonly emailVerified: Prisma.FieldRef<"User", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly passwordResetToken: Prisma.FieldRef<"User", 'String'>
+  readonly passwordResetExpires: Prisma.FieldRef<"User", 'DateTime'>
+  readonly emailVerificationToken: Prisma.FieldRef<"User", 'String'>
+  readonly emailVerificationSent: Prisma.FieldRef<"User", 'DateTime'>
 }
     
 
@@ -2123,54 +2031,6 @@ export type User$notificationsArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
-}
-
-/**
- * User.projectMessages
- */
-export type User$projectMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ProjectMessage
-   */
-  select?: Prisma.ProjectMessageSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ProjectMessage
-   */
-  omit?: Prisma.ProjectMessageOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProjectMessageInclude<ExtArgs> | null
-  where?: Prisma.ProjectMessageWhereInput
-  orderBy?: Prisma.ProjectMessageOrderByWithRelationInput | Prisma.ProjectMessageOrderByWithRelationInput[]
-  cursor?: Prisma.ProjectMessageWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ProjectMessageScalarFieldEnum | Prisma.ProjectMessageScalarFieldEnum[]
-}
-
-/**
- * User.projectFiles
- */
-export type User$projectFilesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ProjectFile
-   */
-  select?: Prisma.ProjectFileSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ProjectFile
-   */
-  omit?: Prisma.ProjectFileOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProjectFileInclude<ExtArgs> | null
-  where?: Prisma.ProjectFileWhereInput
-  orderBy?: Prisma.ProjectFileOrderByWithRelationInput | Prisma.ProjectFileOrderByWithRelationInput[]
-  cursor?: Prisma.ProjectFileWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ProjectFileScalarFieldEnum | Prisma.ProjectFileScalarFieldEnum[]
 }
 
 /**

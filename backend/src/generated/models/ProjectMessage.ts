@@ -183,7 +183,6 @@ export type ProjectMessageWhereInput = {
   message?: Prisma.StringFilter<"ProjectMessage"> | string
   createdAt?: Prisma.DateTimeFilter<"ProjectMessage"> | Date | string
   project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
-  sender?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type ProjectMessageOrderByWithRelationInput = {
@@ -193,7 +192,6 @@ export type ProjectMessageOrderByWithRelationInput = {
   message?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   project?: Prisma.ProjectOrderByWithRelationInput
-  sender?: Prisma.UserOrderByWithRelationInput
 }
 
 export type ProjectMessageWhereUniqueInput = Prisma.AtLeast<{
@@ -206,7 +204,6 @@ export type ProjectMessageWhereUniqueInput = Prisma.AtLeast<{
   message?: Prisma.StringFilter<"ProjectMessage"> | string
   createdAt?: Prisma.DateTimeFilter<"ProjectMessage"> | Date | string
   project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
-  sender?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
 export type ProjectMessageOrderByWithAggregationInput = {
@@ -233,10 +230,10 @@ export type ProjectMessageScalarWhereWithAggregatesInput = {
 
 export type ProjectMessageCreateInput = {
   id?: string
+  senderId: string
   message: string
   createdAt?: Date | string
   project: Prisma.ProjectCreateNestedOneWithoutMessagesInput
-  sender: Prisma.UserCreateNestedOneWithoutProjectMessagesInput
 }
 
 export type ProjectMessageUncheckedCreateInput = {
@@ -249,10 +246,10 @@ export type ProjectMessageUncheckedCreateInput = {
 
 export type ProjectMessageUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  senderId?: Prisma.StringFieldUpdateOperationsInput | string
   message?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   project?: Prisma.ProjectUpdateOneRequiredWithoutMessagesNestedInput
-  sender?: Prisma.UserUpdateOneRequiredWithoutProjectMessagesNestedInput
 }
 
 export type ProjectMessageUncheckedUpdateInput = {
@@ -273,6 +270,7 @@ export type ProjectMessageCreateManyInput = {
 
 export type ProjectMessageUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  senderId?: Prisma.StringFieldUpdateOperationsInput | string
   message?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -319,48 +317,6 @@ export type ProjectMessageMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
 }
 
-export type ProjectMessageCreateNestedManyWithoutSenderInput = {
-  create?: Prisma.XOR<Prisma.ProjectMessageCreateWithoutSenderInput, Prisma.ProjectMessageUncheckedCreateWithoutSenderInput> | Prisma.ProjectMessageCreateWithoutSenderInput[] | Prisma.ProjectMessageUncheckedCreateWithoutSenderInput[]
-  connectOrCreate?: Prisma.ProjectMessageCreateOrConnectWithoutSenderInput | Prisma.ProjectMessageCreateOrConnectWithoutSenderInput[]
-  createMany?: Prisma.ProjectMessageCreateManySenderInputEnvelope
-  connect?: Prisma.ProjectMessageWhereUniqueInput | Prisma.ProjectMessageWhereUniqueInput[]
-}
-
-export type ProjectMessageUncheckedCreateNestedManyWithoutSenderInput = {
-  create?: Prisma.XOR<Prisma.ProjectMessageCreateWithoutSenderInput, Prisma.ProjectMessageUncheckedCreateWithoutSenderInput> | Prisma.ProjectMessageCreateWithoutSenderInput[] | Prisma.ProjectMessageUncheckedCreateWithoutSenderInput[]
-  connectOrCreate?: Prisma.ProjectMessageCreateOrConnectWithoutSenderInput | Prisma.ProjectMessageCreateOrConnectWithoutSenderInput[]
-  createMany?: Prisma.ProjectMessageCreateManySenderInputEnvelope
-  connect?: Prisma.ProjectMessageWhereUniqueInput | Prisma.ProjectMessageWhereUniqueInput[]
-}
-
-export type ProjectMessageUpdateManyWithoutSenderNestedInput = {
-  create?: Prisma.XOR<Prisma.ProjectMessageCreateWithoutSenderInput, Prisma.ProjectMessageUncheckedCreateWithoutSenderInput> | Prisma.ProjectMessageCreateWithoutSenderInput[] | Prisma.ProjectMessageUncheckedCreateWithoutSenderInput[]
-  connectOrCreate?: Prisma.ProjectMessageCreateOrConnectWithoutSenderInput | Prisma.ProjectMessageCreateOrConnectWithoutSenderInput[]
-  upsert?: Prisma.ProjectMessageUpsertWithWhereUniqueWithoutSenderInput | Prisma.ProjectMessageUpsertWithWhereUniqueWithoutSenderInput[]
-  createMany?: Prisma.ProjectMessageCreateManySenderInputEnvelope
-  set?: Prisma.ProjectMessageWhereUniqueInput | Prisma.ProjectMessageWhereUniqueInput[]
-  disconnect?: Prisma.ProjectMessageWhereUniqueInput | Prisma.ProjectMessageWhereUniqueInput[]
-  delete?: Prisma.ProjectMessageWhereUniqueInput | Prisma.ProjectMessageWhereUniqueInput[]
-  connect?: Prisma.ProjectMessageWhereUniqueInput | Prisma.ProjectMessageWhereUniqueInput[]
-  update?: Prisma.ProjectMessageUpdateWithWhereUniqueWithoutSenderInput | Prisma.ProjectMessageUpdateWithWhereUniqueWithoutSenderInput[]
-  updateMany?: Prisma.ProjectMessageUpdateManyWithWhereWithoutSenderInput | Prisma.ProjectMessageUpdateManyWithWhereWithoutSenderInput[]
-  deleteMany?: Prisma.ProjectMessageScalarWhereInput | Prisma.ProjectMessageScalarWhereInput[]
-}
-
-export type ProjectMessageUncheckedUpdateManyWithoutSenderNestedInput = {
-  create?: Prisma.XOR<Prisma.ProjectMessageCreateWithoutSenderInput, Prisma.ProjectMessageUncheckedCreateWithoutSenderInput> | Prisma.ProjectMessageCreateWithoutSenderInput[] | Prisma.ProjectMessageUncheckedCreateWithoutSenderInput[]
-  connectOrCreate?: Prisma.ProjectMessageCreateOrConnectWithoutSenderInput | Prisma.ProjectMessageCreateOrConnectWithoutSenderInput[]
-  upsert?: Prisma.ProjectMessageUpsertWithWhereUniqueWithoutSenderInput | Prisma.ProjectMessageUpsertWithWhereUniqueWithoutSenderInput[]
-  createMany?: Prisma.ProjectMessageCreateManySenderInputEnvelope
-  set?: Prisma.ProjectMessageWhereUniqueInput | Prisma.ProjectMessageWhereUniqueInput[]
-  disconnect?: Prisma.ProjectMessageWhereUniqueInput | Prisma.ProjectMessageWhereUniqueInput[]
-  delete?: Prisma.ProjectMessageWhereUniqueInput | Prisma.ProjectMessageWhereUniqueInput[]
-  connect?: Prisma.ProjectMessageWhereUniqueInput | Prisma.ProjectMessageWhereUniqueInput[]
-  update?: Prisma.ProjectMessageUpdateWithWhereUniqueWithoutSenderInput | Prisma.ProjectMessageUpdateWithWhereUniqueWithoutSenderInput[]
-  updateMany?: Prisma.ProjectMessageUpdateManyWithWhereWithoutSenderInput | Prisma.ProjectMessageUpdateManyWithWhereWithoutSenderInput[]
-  deleteMany?: Prisma.ProjectMessageScalarWhereInput | Prisma.ProjectMessageScalarWhereInput[]
-}
-
 export type ProjectMessageCreateNestedManyWithoutProjectInput = {
   create?: Prisma.XOR<Prisma.ProjectMessageCreateWithoutProjectInput, Prisma.ProjectMessageUncheckedCreateWithoutProjectInput> | Prisma.ProjectMessageCreateWithoutProjectInput[] | Prisma.ProjectMessageUncheckedCreateWithoutProjectInput[]
   connectOrCreate?: Prisma.ProjectMessageCreateOrConnectWithoutProjectInput | Prisma.ProjectMessageCreateOrConnectWithoutProjectInput[]
@@ -403,62 +359,11 @@ export type ProjectMessageUncheckedUpdateManyWithoutProjectNestedInput = {
   deleteMany?: Prisma.ProjectMessageScalarWhereInput | Prisma.ProjectMessageScalarWhereInput[]
 }
 
-export type ProjectMessageCreateWithoutSenderInput = {
-  id?: string
-  message: string
-  createdAt?: Date | string
-  project: Prisma.ProjectCreateNestedOneWithoutMessagesInput
-}
-
-export type ProjectMessageUncheckedCreateWithoutSenderInput = {
-  id?: string
-  projectId: string
-  message: string
-  createdAt?: Date | string
-}
-
-export type ProjectMessageCreateOrConnectWithoutSenderInput = {
-  where: Prisma.ProjectMessageWhereUniqueInput
-  create: Prisma.XOR<Prisma.ProjectMessageCreateWithoutSenderInput, Prisma.ProjectMessageUncheckedCreateWithoutSenderInput>
-}
-
-export type ProjectMessageCreateManySenderInputEnvelope = {
-  data: Prisma.ProjectMessageCreateManySenderInput | Prisma.ProjectMessageCreateManySenderInput[]
-  skipDuplicates?: boolean
-}
-
-export type ProjectMessageUpsertWithWhereUniqueWithoutSenderInput = {
-  where: Prisma.ProjectMessageWhereUniqueInput
-  update: Prisma.XOR<Prisma.ProjectMessageUpdateWithoutSenderInput, Prisma.ProjectMessageUncheckedUpdateWithoutSenderInput>
-  create: Prisma.XOR<Prisma.ProjectMessageCreateWithoutSenderInput, Prisma.ProjectMessageUncheckedCreateWithoutSenderInput>
-}
-
-export type ProjectMessageUpdateWithWhereUniqueWithoutSenderInput = {
-  where: Prisma.ProjectMessageWhereUniqueInput
-  data: Prisma.XOR<Prisma.ProjectMessageUpdateWithoutSenderInput, Prisma.ProjectMessageUncheckedUpdateWithoutSenderInput>
-}
-
-export type ProjectMessageUpdateManyWithWhereWithoutSenderInput = {
-  where: Prisma.ProjectMessageScalarWhereInput
-  data: Prisma.XOR<Prisma.ProjectMessageUpdateManyMutationInput, Prisma.ProjectMessageUncheckedUpdateManyWithoutSenderInput>
-}
-
-export type ProjectMessageScalarWhereInput = {
-  AND?: Prisma.ProjectMessageScalarWhereInput | Prisma.ProjectMessageScalarWhereInput[]
-  OR?: Prisma.ProjectMessageScalarWhereInput[]
-  NOT?: Prisma.ProjectMessageScalarWhereInput | Prisma.ProjectMessageScalarWhereInput[]
-  id?: Prisma.StringFilter<"ProjectMessage"> | string
-  projectId?: Prisma.StringFilter<"ProjectMessage"> | string
-  senderId?: Prisma.StringFilter<"ProjectMessage"> | string
-  message?: Prisma.StringFilter<"ProjectMessage"> | string
-  createdAt?: Prisma.DateTimeFilter<"ProjectMessage"> | Date | string
-}
-
 export type ProjectMessageCreateWithoutProjectInput = {
   id?: string
+  senderId: string
   message: string
   createdAt?: Date | string
-  sender: Prisma.UserCreateNestedOneWithoutProjectMessagesInput
 }
 
 export type ProjectMessageUncheckedCreateWithoutProjectInput = {
@@ -494,32 +399,15 @@ export type ProjectMessageUpdateManyWithWhereWithoutProjectInput = {
   data: Prisma.XOR<Prisma.ProjectMessageUpdateManyMutationInput, Prisma.ProjectMessageUncheckedUpdateManyWithoutProjectInput>
 }
 
-export type ProjectMessageCreateManySenderInput = {
-  id?: string
-  projectId: string
-  message: string
-  createdAt?: Date | string
-}
-
-export type ProjectMessageUpdateWithoutSenderInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  message?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  project?: Prisma.ProjectUpdateOneRequiredWithoutMessagesNestedInput
-}
-
-export type ProjectMessageUncheckedUpdateWithoutSenderInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  projectId?: Prisma.StringFieldUpdateOperationsInput | string
-  message?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type ProjectMessageUncheckedUpdateManyWithoutSenderInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  projectId?: Prisma.StringFieldUpdateOperationsInput | string
-  message?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+export type ProjectMessageScalarWhereInput = {
+  AND?: Prisma.ProjectMessageScalarWhereInput | Prisma.ProjectMessageScalarWhereInput[]
+  OR?: Prisma.ProjectMessageScalarWhereInput[]
+  NOT?: Prisma.ProjectMessageScalarWhereInput | Prisma.ProjectMessageScalarWhereInput[]
+  id?: Prisma.StringFilter<"ProjectMessage"> | string
+  projectId?: Prisma.StringFilter<"ProjectMessage"> | string
+  senderId?: Prisma.StringFilter<"ProjectMessage"> | string
+  message?: Prisma.StringFilter<"ProjectMessage"> | string
+  createdAt?: Prisma.DateTimeFilter<"ProjectMessage"> | Date | string
 }
 
 export type ProjectMessageCreateManyProjectInput = {
@@ -531,9 +419,9 @@ export type ProjectMessageCreateManyProjectInput = {
 
 export type ProjectMessageUpdateWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  senderId?: Prisma.StringFieldUpdateOperationsInput | string
   message?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sender?: Prisma.UserUpdateOneRequiredWithoutProjectMessagesNestedInput
 }
 
 export type ProjectMessageUncheckedUpdateWithoutProjectInput = {
@@ -559,7 +447,6 @@ export type ProjectMessageSelect<ExtArgs extends runtime.Types.Extensions.Intern
   message?: boolean
   createdAt?: boolean
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
-  sender?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["projectMessage"]>
 
 export type ProjectMessageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -569,7 +456,6 @@ export type ProjectMessageSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   message?: boolean
   createdAt?: boolean
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
-  sender?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["projectMessage"]>
 
 export type ProjectMessageSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -579,7 +465,6 @@ export type ProjectMessageSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   message?: boolean
   createdAt?: boolean
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
-  sender?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["projectMessage"]>
 
 export type ProjectMessageSelectScalar = {
@@ -593,22 +478,18 @@ export type ProjectMessageSelectScalar = {
 export type ProjectMessageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "projectId" | "senderId" | "message" | "createdAt", ExtArgs["result"]["projectMessage"]>
 export type ProjectMessageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
-  sender?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type ProjectMessageIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
-  sender?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type ProjectMessageIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
-  sender?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $ProjectMessagePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ProjectMessage"
   objects: {
     project: Prisma.$ProjectPayload<ExtArgs>
-    sender: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1011,7 +892,6 @@ readonly fields: ProjectMessageFieldRefs;
 export interface Prisma__ProjectMessageClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   project<T extends Prisma.ProjectDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProjectDefaultArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  sender<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

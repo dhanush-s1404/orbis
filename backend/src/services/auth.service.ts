@@ -1,5 +1,5 @@
-import PrismaClient from "@prisma/client"
-import User from "@prisma/client"
+import { PrismaClient } from "../generated/client"
+import { User } from "../generated/client"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 

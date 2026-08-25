@@ -216,7 +216,6 @@ model Project {
   requirements ProjectRequirement[]
   messages     ProjectMessage[]
   files        ProjectFile[]
-  aiUsage      AIUsage?
 
   builderState      String?       // JSON: templateId, pages, sections, content, styles
   templateId        String?       // references a template in the template library
@@ -312,5 +311,11 @@ model AIUsage {
   location   String?
   stylePreference String?
   generationCount Int @default(0)
-  createdAt DateTime @default(now())
+  provider   String?     // "openai" | "anthropic"
+  model      String?     // "gpt-4o-mini" | "claude-3-haiku-20240307"
+  success    Boolean
+  durationMs  Int?
+  tokensUsed   Int?
+  requestId   String    @unique   // Unique request identifier
+  createdAt   DateTime  @default(now())
 }

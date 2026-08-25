@@ -42,8 +42,8 @@ export const PaymentStatus = {
   PENDING: 'PENDING',
   SUCCESS: 'SUCCESS',
   FAILED: 'FAILED',
-  CANCELLED: 'CANCELLED',
-  REFUNDED: 'REFUNDED'
+  REFUNDED: 'REFUNDED',
+  CANCELLED: 'CANCELLED'
 } as const
 
 export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
@@ -59,7 +59,8 @@ export const ProjectStatus = {
   CUSTOMER_REVIEW: 'CUSTOMER_REVIEW',
   REVISIONS: 'REVISIONS',
   DEPLOYMENT: 'DEPLOYMENT',
-  COMPLETED: 'COMPLETED'
+  COMPLETED: 'COMPLETED',
+  ARCHIVED: 'ARCHIVED'
 } as const
 
 export type ProjectStatus = (typeof ProjectStatus)[keyof typeof ProjectStatus]

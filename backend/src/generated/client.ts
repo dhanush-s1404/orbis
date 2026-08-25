@@ -109,3 +109,13 @@ export type Notification = Prisma.NotificationModel
  * 
  */
 export type AuditLog = Prisma.AuditLogModel
+/**
+ * Model Template
+ * 
+ */
+export type Template = Prisma.TemplateModel
+/**
+ * Model AIUsage
+ * 
+ */
+export type AIUsage = Prisma.AIUsageModel

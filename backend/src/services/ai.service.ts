@@ -1,5 +1,5 @@
-import PrismaClient from "@prisma/client"
-import { Prisma } from "@prisma/client"
+import { PrismaClient } from "../generated/client"
+import { Prisma } from "../generated/client"
 
 const prisma = new PrismaClient()
 
@@ -87,6 +87,65 @@ export class AIService {
 
   static getProvider(): AIProviderAdapter | null {
     return AIService.provider
+  }
+
+  /**
+   * Initialize the AI provider from environment variables.
+   * Should be called at backend startup.
+   * Reads AI_PROVIDER, OPENAI_API_KEY, OPENAI_MODEL, etc.
+   */
+  static async initializeProvider() {
+    const providerName = process.env.AI_PROVIDER
+
+    if (!providerName) {
+      console.warn("AI_PROVIDER not set in environment variables")
+      return
+    }
+
+    // Clear any existing provider
+    AIService.setProvider(null)
+
+    if (providerName === "openai") {
+      const openaiApiKey = process.env.OPENAI_API_KEY
+      const openaiModel = process.env.OPENAI_MODEL || "gpt-4o-mini"
+
+      if (!openaiApiKey || openaiApiKey === "sk-your-openai-key-here") {
+        console.warn("OpenAI API key not configured properly")
+        return
+      }
+
+      try {
+        const openaiProvider = new (await import("./providers/openai.provider")).OpenAIProvider(
+          openaiApiKey,
+          openaiModel
+        )
+        AIService.setProvider(openaiProvider)
+        console.log(`OpenAI provider initialized with model: ${openaiModel}`)
+      } catch (error) {
+        console.error("Failed to initialize OpenAI provider:", error)
+      }
+    } else if (providerName === "anthropic") {
+      const anthropicApiKey = process.env.ANTHROPIC_API_KEY
+      const anthropicModel = process.env.ANTHROPIC_MODEL || "claude-3-haiku-20240307"
+
+      if (!anthropicApiKey || anthropicApiKey === "anthropic-your-key-here") {
+        console.warn("Anthropic API key not configured properly")
+        return
+      }
+
+      try {
+        const anthropicProvider = new (await import("./providers/anthropic.provider")).AnthropicProvider(
+          anthropicApiKey,
+          anthropicModel
+        )
+        AIService.setProvider(anthropicProvider)
+        console.log(`Anthropic provider initialized with model: ${anthropicModel}`)
+      } catch (error) {
+        console.error("Failed to initialize Anthropic provider:", error)
+      }
+    } else {
+      console.warn(`Unknown AI provider: ${providerName}`)
+    }
   }
 
   static async generateWebsiteContent(
@@ -231,6 +290,55 @@ export class AIService {
 
     const templateSpecific = defaultSupport[templateId] || defaultSupport["default"]
     return templateSpecific
+  }
+
+  /**
+   * Build a restaurant template prompt with section priorities.
+   * The AI should generate content prioritizing menu messaging, reservations,
+   * location, and food-focused CTAs for restaurant templates.
+   */
+  static buildRestaurantPrompt(profile: AIBusinessProfile): string {
+    return `Generate content for a restaurant website:
+    - Name: ${profile.businessName}
+    - Cuisine type: inferred from description
+    - Must include: Menu/service messaging, Reservations, Location, Opening information, Food-focused CTAs
+    - Tone: ${profile.tone}
+    - Format: JSON with sections: hero, about, services, contact`
+  }
+
+  /**
+   * Build a portfolio template prompt with section priorities.
+   * The AI should generate content prioritizing personal branding,
+   * work/project highlights, skills, and contact information.
+   */
+  static buildPortfolioPrompt(profile: AIBusinessProfile): string {
+    return `Generate content for a portfolio website:
+    - Name: ${profile.businessName}
+    - Must include: Personal branding, Work/project highlights, Skills, Contact
+    - Format: JSON with sections: hero, about, testimonials, cta`
+  }
+
+  /**
+   * Build a SaaS template prompt with section priorities.
+   * The AI should generate content prioritizing value proposition,
+   * product features, benefits, pricing, and conversion-focused CTAs.
+   */
+  static buildSaaSPrompt(profile: AIBusinessProfile): string {
+    return `Generate content for a SaaS website:
+    - Company: ${profile.businessName}
+    - Must include: Value proposition, Product features, Benefits, Pricing, Conversion-focused CTAs
+    - Format: JSON with sections: hero, features, pricing, cta`
+  }
+
+  /**
+   * Build a business template prompt with section priorities.
+   * The AI should generate content prioritizing services,
+   * trust, professional positioning, and lead generation.
+   */
+  static buildBusinessPrompt(profile: AIBusinessProfile): string {
+    return `Generate content for a business website:
+    - Must include: Services, Trust, Professional positioning, Lead generation
+    - Format: JSON with sections: hero, about, services, cta`
   }
 
   private static defaultMetadata(): AIGenerationMetadata {

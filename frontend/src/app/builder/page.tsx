@@ -162,7 +162,7 @@ export default function BuilderPage() {
     })
   }
 
-  const handleSectionAI = (sectionId: string, action: "rewrite" | "improve" | "shorten" | "expand" | "change-tone") => {
+  const handleSectionAI = (sectionId: string, action: "rewrite" | "shorten" | "expand" | "make-professional" | "make-friendly" | "make-persuasive" | "make-premium" | "make-concise" | "generate-variations") => {
     // Find the section
     const page = builderState.pages.find((p) => p.id === builderState.selectedPageId)
     if (!page) return

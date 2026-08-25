@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient } from "../generated/client"
 import { AIService, AIBusinessProfile, AISectionContent, AIGenerationMetadata, AIGenerateResponse } from "../services/ai.service"
 
 const prisma = new PrismaClient()

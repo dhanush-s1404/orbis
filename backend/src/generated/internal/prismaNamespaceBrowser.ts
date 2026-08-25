@@ -64,7 +64,9 @@ export const ModelName = {
   ProjectMessage: 'ProjectMessage',
   ProjectFile: 'ProjectFile',
   Notification: 'Notification',
-  AuditLog: 'AuditLog'
+  AuditLog: 'AuditLog',
+  Template: 'Template',
+  AIUsage: 'AIUsage'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -92,7 +94,11 @@ export const UserScalarFieldEnum = {
   status: 'status',
   emailVerified: 'emailVerified',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  passwordResetToken: 'passwordResetToken',
+  passwordResetExpires: 'passwordResetExpires',
+  emailVerificationToken: 'emailVerificationToken',
+  emailVerificationSent: 'emailVerificationSent'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -197,7 +203,13 @@ export const ProjectScalarFieldEnum = {
   progress: 'progress',
   assignedDeveloper: 'assignedDeveloper',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  builderState: 'builderState',
+  templateId: 'templateId',
+  publishStatus: 'publishStatus',
+  publishedAt: 'publishedAt',
+  publishedSlug: 'publishedSlug',
+  publishedCount: 'publishedCount'
 } as const
 
 export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
@@ -243,8 +255,7 @@ export const NotificationScalarFieldEnum = {
   userId: 'userId',
   type: 'type',
   message: 'message',
-  read: 'read',
-  createdAt: 'createdAt'
+  read: 'read'
 } as const
 
 export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
@@ -261,6 +272,42 @@ export const AuditLogScalarFieldEnum = {
 } as const
 
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
+export const TemplateScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  previewUrl: 'previewUrl',
+  category: 'category',
+  pages: 'pages',
+  sections: 'sections',
+  defaultContent: 'defaultContent',
+  defaultStyles: 'defaultStyles',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TemplateScalarFieldEnum = (typeof TemplateScalarFieldEnum)[keyof typeof TemplateScalarFieldEnum]
+
+
+export const AIUsageScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  businessName: 'businessName',
+  industry: 'industry',
+  targetAudience: 'targetAudience',
+  goal: 'goal',
+  tone: 'tone',
+  services: 'services',
+  location: 'location',
+  stylePreference: 'stylePreference',
+  generationCount: 'generationCount',
+  createdAt: 'createdAt'
+} as const
+
+export type AIUsageScalarFieldEnum = (typeof AIUsageScalarFieldEnum)[keyof typeof AIUsageScalarFieldEnum]
 
 
 export const SortOrder = {
