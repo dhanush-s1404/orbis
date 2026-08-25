@@ -1,0 +1,32 @@
+# Docker Ignore File for ORBIS
+
+node_modules
+npm-debug.log
+yarn-error.log
+
+*.log
+.env.local
+.env.*.local
+
+# Next.js Build Output
+.out
+*.cache
+
+# Prisma
+./database/prisma/migrations/*
+!.dockerignore
+!prisma/schema.prisma
+
+# Environment Variables
+.env
+
+# TypeScript
+*.tsbuildinfo
+.tnext
+
+# IDE
+.vscode/
+.idea/
+
+# Docker Specific
+Dockerfile

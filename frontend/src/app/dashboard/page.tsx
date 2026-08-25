@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { useAuth } from "@/hooks/use-auth"
 
 interface DashboardNavItem {
   key: string
@@ -10,14 +11,106 @@ interface DashboardNavItem {
   icon?: string
 }
 
+interface Project {
+  id: string
+  projectId: string
+  name: string
+  description: string | null
+  status: string
+  progress: number
+  budget: number | null
+  timeline: string | null
+  assignedDeveloper: string | null
+  createdAt: string
+  updatedAt: string
+}
+
 export default function Dashboard() {
   const [activeSection, setActiveSection] = useState<keyof DashboardNavItem>("overview")
+  const { user, isLoading, isAuthenticated, login, logout } = useAuth()
+  const [projects, setProjects] = useState<Project[]>([])
+  const [error, setError] = useState<string | null>(null)
+
+  const handlePublish = async (projectId: string) => {
+    try {
+      const response = await fetch(`/api/projects/${projectId}/publish`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        cache: "no-store",
+      })
+      if (!response.ok) {
+        const errData = await response.json()
+        throw new Error(errData.message || "Failed to publish")
+      }
+      const data = await response.json()
+      // Refresh projects
+      fetchProjects()
+      return data
+    } catch (err) {
+      console.error("Publish error:", err)
+      throw err
+    }
+  }
+
+  const handleUnpublish = async (projectId: string) => {
+    try {
+      const response = await fetch(`/api/projects/${projectId}/unpublish`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        cache: "no-store",
+      })
+      if (!response.ok) {
+        const errData = await response.json()
+        throw new Error(errData.message || "Failed to unpublish")
+      }
+      const data = await response.json()
+      // Refresh projects
+      fetchProjects()
+      return data
+    } catch (err) {
+      console.error("Unpublish error:", err)
+      throw err
+    }
+  }
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setError("Please sign in to view your dashboard")
+      return
+    }
+    fetchProjects()
+  }, [isAuthenticated])
+
+  const fetchProjects = async () => {
+    if (!user?.id) return
+    try {
+      const response = await fetch("/api/projects", {
+        cache: "no-store",
+      })
+      if (!response.ok) {
+        const errData = await response.json()
+        throw new Error(errData.message || "Failed to fetch projects")
+      }
+      const data = await response.json()
+      setProjects(data.projects)
+      setError(null)
+    } catch (err) {
+      console.error(err)
+      setError("Failed to load projects. Please try again.")
+    }
+  }, [user?.id])
+
+  const handleSignOut = () => {
+    logout()
+  }
 
   const navItems: DashboardNavItem[] = [
     { key: "overview", label: "Overview", href: "/dashboard" },
     { key: "my-websites", label: "My Websites", href: "/dashboard/websites" },
-    { key: "build", label: "Build Website", href: "/build" },
-    { key: "improve", label: "Improve Website", href: "/improve" },
     { key: "projects", label: "Projects", href: "/dashboard/projects" },
     { key: "templates", label: "Templates", href: "/templates" },
     { key: "stores", label: "Stores", href: "/dashboard/stores" },
@@ -32,6 +125,57 @@ export default function Dashboard() {
 
   const handleNavChange = (key: keyof DashboardNavItem) => {
     setActiveSection(key)
+  }
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+        <div className="max-w-7xl mx-auto px-6 py-12">
+          <div className="text-center">
+            <h1 className="text-3xl font-bold text-zinc-900 mb-4 dark:text-zinc-100">
+              Sign In
+            </h1>
+            <p className="text-zinc-600 dark:text-zinc-400">
+              Please sign in to access your ORBIS dashboard.
+            </p>
+            <button
+              onClick={handleSignOut}
+              className="mt-4 py-2 px-4 bg-orange-600 text-white font-medium rounded-md hover:bg-orange-500 transition-colors"
+            >
+              Continue Without Signing In
+            </button>
+          </div>
+        </div>
+      </main>
+    )
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+        <div className="max-w-7xl mx-auto px-6 py-12">
+          <p className="text-lg text-zinc-600">Loading dashboard...</p>
+        </div>
+      </main>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+        <div className="max-w-7xl mx-auto px-6 py-12">
+          <div className="bg-zinc-100 dark:bg-zinc-800 rounded-lg p-6 text-zinc-800">
+            <p>{error}</p>
+            <button
+              onClick={() => setError(null)}
+              className="mt-3 py-2 px-4 text-orange-600 font-medium hover:underline"
+            >
+              Try Again
+            </button>
+          </div>
+        </div>
+      </main>
+    )
   }
 
   return (
@@ -108,96 +252,169 @@ export default function Dashboard() {
                 Dashboard
               </h1>
               <p className="text-zinc-500 text-sm">
-                Welcome back, Orbis user
+                Welcome back, {user?.name || "Orbis user"}
               </p>
             </div>
             <div className="flex items-center gap-3">
               <span className="text-zinc-500 text-sm">
                 {new Date().toLocaleDateString()}
               </span>
+              <button
+                onClick={handleSignOut}
+                className="py-2 px-4 text-sm text-zinc-500 hover:text-zinc-600 transition-colors"
+              >
+                Sign Out
+              </button>
             </div>
           </header>
 
-          {/* Overview Section */}
-          {activeSection === "overview" && (
+          {/* Projects Section */}
+          {activeSection === "projects" && (
             <div className="bg-white dark:bg-zinc-900 rounded-2xl p-6 shadow-lg">
               <h2 className="text-xl font-bold text-zinc-900 mb-4 dark:text-zinc-100">
-                Overview
+                My Projects
               </h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="p-4 rounded-lg bg-zinc-50 dark:bg-zinc-800/30">
-                  <div className="text-2xl font-bold text-orange-600">12</div>
-                  <div className="text-zinc-500 text-xs mt-1">Active Projects</div>
-                </div>
-                <div className="p-4 rounded-lg bg-zinc-50 dark:bg-zinc-800/30">
-                  <div className="text-2xl font-bold text-orange-600">$45,230</div>
-                  <div className="text-zinc-500 text-xs mt-1">Monthly Revenue</div>
-                </div>
-                <div className="p-4 rounded-lg bg-zinc-50 dark:bg-zinc-800/30">
-                  <div className="text-2xl font-bold text-orange-600">98%</div>
-                  <div className="text-zinc-500 text-xs mt-1">Uptime</div>
-                </div>
-                <div className="p-4 rounded-lg bg-zinc-50 dark:bg-zinc-800/30">
-                  <div className="text-2xl font-bold text-orange-600">1,247</div>
-                  <div className="text-zinc-500 text-xs mt-1">Messages</div>
-                </div>
-              </div>
-            </div>
-          )}
 
-          {/* My Websites Section */}
-          {activeSection === "my-websites" && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {Array.from({ length: 4 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="bg-white dark:bg-zinc-900 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow border"
-                >
-                  <div className="h-48 rounded-lg bg-zinc-100 dark:bg-zinc-800/50 flex items-center justify-center mb-4">
-                    <svg
-                      className="w-8 h-8 text-zinc-400 dark:text-zinc-500"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                      <line x1="3" y1="9" x2="21" y2="9"></line>
-                      <line x1="3" y1="15" x2="21" y2="15"></line>
-                      <line x1="9" y1="3" x2="9" y2="21"></line>
-                      <line x1="15" y1="3" x2="15" y2="21"></line>
-                    </svg>
-                  </div>
-                  <h3 className="text-base font-medium text-zinc-900 dark:text-zinc-100 mb-2">
-                    Website Project {i + 1}
-                  </h3>
-                  <p className="text-zinc-500 text-sm">
-                    In progress
+              {/* Loading state */}
+              {isLoading && (
+                <div className="py-8 text-center">
+                  <p className="text-zinc-500">Loading projects...</p>
+                </div>
+              )}
+
+              {/* Empty state */}
+              {projects.length === 0 && !isLoading && (
+                <div className="p-8 text-center bg-zinc-50 dark:bg-zinc-800/30 rounded-lg">
+                  <svg
+                    className="w-12 h-12 mx-auto mb-4 text-zinc-400 dark:text-zinc-500"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="3" y1="9" x2="21" y2="9"></line>
+                    <line x1="3" y1="15" x2="21" y2="15"></line>
+                    <line x1="9" y1="3" x2="9" y2="21"></line>
+                    <line x1="15" y1="3" x2="15" y2="21"></line>
+                  </svg>
+                  <h3 className="text-zinc-500 mb-2">No projects yet</h3>
+                  <p className="text-zinc-400 text-sm">
+                    Create your first project to get started with ORBIS.
                   </p>
-                  <div className="mt-3">
-                    <span className="text-zinc-400 text-xs mr-2">Active</span>
-                    <span className="text-zinc-400 text-xs">Oct 2024</span>
-                  </div>
+                  <Link
+                    href "/build"
+                    className="mt-3 py-2 px-4 bg-orange-600 text-white font-medium rounded-md hover:bg-orange-500 transition-colors text-sm"
+                  >
+                    Create Project
+                  </Link>
                 </div>
-              ))}
+              )}
+
+              {/* Projects List */}
+              {projects.length > 0 && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {projects.map((project) => (
+                    <div
+                      key={project.id}
+                      className="bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow border"
+                    >
+                      <div className="h-48 bg-zinc-100 dark:bg-zinc-800/50 flex items-center justify-center">
+                        <span className="text-zinc-400 text-sm">
+                          {project.status || "Submitted"}
+                        </span>
+                      </div>
+                      <div className="p-5">
+                        <h3 className="text-base font-medium text-zinc-900 dark:text-zinc-100 mb-1">
+                          {project.name}
+                        </h3>
+                        <p className="text-zinc-500 text-sm line-clamp-2">
+                          {project.description || "No description"}
+                        </p>
+                        <div className="mt-3 flex flex-col sm:flex-row gap-2 text-zinc-500 text-xs">
+                          <span>#{project.progress || 0}%</span>
+                          <span>{project.createdAt ? new Date(project.createdAt).toLocaleDateString() : "—"}</span>
+                          {project.assignedDeveloper && (
+                            <span>Dev: {project.assignedDeveloper}</span>
+                          )}
+                        </div>
+                        <div className="mt-3 flex gap-2">
+                          <Link
+                            href `/project/${project.id}`
+                            className="flex-1 py-2 px-2 text-orange-600 text-sm font-medium rounded border border-orange-600 hover:bg-orange-100 transition-colors"
+                          >
+                            View
+                          </Link>
+                          
+                          {/* Publish status badge */}
+                          {project.publishStatus && (
+                            <span className={`inline-flex items-center px-2 py-1 text-xs rounded ${
+                              project.publishStatus === "PUBLISHED" 
+                                ? "bg-green-100 text-green-800" 
+                                : project.publishStatus === "UNPUBLISHED"
+                                  ? "bg-yellow-100 text-yellow-800" 
+                                  : "bg-gray-100 text-gray-800"
+                            } mb-2`}>
+                              {project.publishStatus === "PUBLISHED" 
+                                ? "Published" 
+                                : project.publishStatus === "UNPUBLISHED"
+                                  ? "Unpublished" 
+                                  : "Draft"
+                              }
+                            </span>
+                          )}
+                          
+                          {project.publishStatus !== "PUBLISHED" && (
+                            <div className="mt-2">
+                              <button
+                                onClick={() => handlePublish(project.id)}
+                                className="py-1 px-2 text-xs text-orange-600 font-medium rounded border border-orange-600 hover:bg-orange-100 transition-colors"
+                                disabled={project.builderState ? false : true}
+                              >
+                                Publish
+                              </button>
+                            </div>
+                          )}
+                          {project.publishStatus === "PUBLISHED" && (
+                            <div className="mt-2">
+                              <button
+                                onClick={() => handleUnpublish(project.id)}
+ className="py-1 px-2 text-xs text-yellow-600 font-medium rounded border border-yellow-600 hover:bg-yellow-100 transition-colors"
+                              >
+                                Unpublish
+                              </button>
+                            </div>
+                          )}
+                          <Link
+                            href `/project/${project.id}`
+                            className="flex-1 py-2 px-2 text-zinc-600 text-sm rounded bg-zinc-100 dark:bg-zinc-800/30 hover:bg-zinc-200 transition-colors"
+                          >
+                            Edit
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
-          {/* Default message when no section specific content */}
-          {activeSection !== "overview" && activeSection !== "my-websites" && (
+          {/* Default: show overview when no specific section is active */}
+          {activeSection !== "projects" && activeSection !== "my-websites" && (
             <div className="p-8 text-center">
               <h2 className="text-2xl font-bold text-zinc-900 mb-4 dark:text-zinc-100">
-                Section Coming Soon
+                Dashboard
               </h2>
               <p className="text-zinc-500">
-                The {activeSection} section is under development. Check back soon for updates!
+                Select a section from the sidebar to get started.
               </p>
             </div>
           )}
         </div>
-      </div>
-    </main>
+      </main>
+    </div>
   )
 }

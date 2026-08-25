@@ -9,6 +9,9 @@ import categoryRoutes from "./routes/category.routes"
 import orderRoutes from "./routes/order.routes"
 import projectRoutes from "./routes/project.routes"
 import adminRoutes from "./routes/admin.routes"
+import builderRoutes from "./routes/builder.routes"
+ import publishRoutes from "./routes/publish.routes"
+import aiRoutes from "./routes/ai.routes"
 import { errorHandler } from "./middleware/error.middleware"
 
 const prisma = new PrismaClient()
@@ -62,6 +65,9 @@ app.use("/api/auth", authRoutes)
 app.use("/api/categories", categoryRoutes)
 app.use("/api/orders", orderRoutes)
 app.use("/api/projects", projectRoutes)
+app.use("/api/builder", builderRoutes)
+app.use("/api/publish", publishRoutes)
+app.use("/api/ai", aiRoutes)
 app.use("/api/admin", adminRoutes)
 
 // Health check
