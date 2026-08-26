@@ -271,5 +271,27 @@ export interface PrismaClient<in LogOpts extends Prisma.LogLevel = never, in out
     get auditLog(): Prisma.AuditLogDelegate<ExtArgs, {
         omit: OmitOpts;
     }>;
+    /**
+     * `prisma.template`: Exposes CRUD operations for the **Template** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more Templates
+      * const templates = await prisma.template.findMany()
+      * ```
+      */
+    get template(): Prisma.TemplateDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
+     * `prisma.aIUsage`: Exposes CRUD operations for the **AIUsage** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more AIUsages
+      * const aIUsages = await prisma.aIUsage.findMany()
+      * ```
+      */
+    get aIUsage(): Prisma.AIUsageDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
 }
 export declare function getPrismaClientClass(): PrismaClientConstructor;

@@ -2,19 +2,16 @@ import "dotenv/config"
 import express from "express"
 import helmet from "helmet"
 import cors from "cors"
-import { PrismaClient } from "./generated/client"
+import prisma from "./lib/prisma"
 import productRoutes from "./routes/product.routes"
 import authRoutes from "./routes/auth.routes"
 import categoryRoutes from "./routes/category.routes"
 import orderRoutes from "./routes/order.routes"
 import projectRoutes from "./routes/project.routes"
-import adminRoutes from "./routes/admin.routes"
 import builderRoutes from "./routes/builder.routes"
- import publishRoutes from "./routes/publish.routes"
-import aiRoutes from "./routes/ai.routes"
+import adminRoutes from "./routes/admin.routes"
 import { errorHandler } from "./middleware/error.middleware"
 
-const prisma = new PrismaClient()
 const app = express()
 
 // Security headers via Helmet
@@ -66,8 +63,6 @@ app.use("/api/categories", categoryRoutes)
 app.use("/api/orders", orderRoutes)
 app.use("/api/projects", projectRoutes)
 app.use("/api/builder", builderRoutes)
-app.use("/api/publish", publishRoutes)
-app.use("/api/ai", aiRoutes)
 app.use("/api/admin", adminRoutes)
 
 // Health check
@@ -84,4 +79,4 @@ app.listen(PORT, () => {
   console.log(`📅 Database: ${process.env.DATABASE_URL?.split("@")[1] || "localhost"}`)
 })
 
-export { app, prisma }
+export { prisma }

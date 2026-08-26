@@ -4,6 +4,14 @@ import { AIService, AIBusinessProfile, AISectionContent, AIGenerationMetadata, A
 
 const prisma = new PrismaClient()
 
+// AI credit costs (from configuration)
+const AI_COSTS = {
+  fullGeneration: 5,   // AI_COST_FULL_GENERATION
+  sectionRewrite: 2,   // AI_COST_SECTION_REWRITE
+  variation: 1,        // AI_COST_VARIATION
+  rewrite: 1,          // AI_COST_REWRITE
+}
+
 // POST /api/ai/generate - Generate AI website content
 // Requires authentication, validated business profile, template sections
 export async function handleAIGenerate(req: Request, res: Response) {
@@ -52,6 +60,18 @@ export async function handleAIGenerate(req: Request, res: Response) {
         s === "testimonials" || s === "pricing" || s === "contact"
     )
 
+    // Check user's AI credits before generation
+    const user = (await prisma.user.findUnique({
+      where: { id: userId },
+    })) as { credits?: number }
+
+    if (!user || (user.credits ?? 0) < AI_COSTS.fullGeneration) {
+      return res.status(400).json({ 
+        message: "Insufficient AI credits. You need " + AI_COSTS.fullGeneration + " credits for full generation.",
+        currentCredits: user?.credits ?? 0
+      })
+    }
+
     // Generate content using configured provider
     const response = await AIService.generateWebsiteContent(profile, allowedSections)
 
@@ -59,10 +79,20 @@ export async function handleAIGenerate(req: Request, res: Response) {
       return res.status(500).json({ message: "AI generation failed", errors: response.errors })
     }
 
-    // Persist AI usage record
+    // Deduct credits after successful AI generation
+    await prisma.user.update({
+      where: { id: userId },
+      data: { credits: { decrement: AI_COSTS.fullGeneration } },
+    })
+
+    // Persist AI usage record with the user's project
+    const userProject = (await prisma.project.findFirst({
+      where: { userId },
+    })) as any
+
     await prisma.aIUsage.create({
       data: {
-        project: { connect: { id: userId } },
+        ...(userProject ? { project: { connect: { id: userProject.id } } } : { projectId: userId }),
         businessName: profile.businessName,
         industry: profile.industry,
         targetAudience: profile.targetAudience,
@@ -70,6 +100,7 @@ export async function handleAIGenerate(req: Request, res: Response) {
         tone: profile.tone,
         services: profile.services,
         generationCount: 1,
+        creditsConsumed: AI_COSTS.fullGeneration,
       },
     })
 
@@ -120,6 +151,12 @@ export async function handleAIRewrite(req: Request, res: Response) {
     if (!result.success) {
       return res.status(500).json({ message: "AI rewrite failed", error: result.error })
     }
+
+    // Deduct credits after successful AI rewrite
+    await prisma.user.update({
+      where: { id: userId },
+      data: { credits: { decrement: AI_COSTS.rewrite } } as Prisma.DecimalValue | Prisma.JsonValue,
+    })
 
     res.json({
       success: true,

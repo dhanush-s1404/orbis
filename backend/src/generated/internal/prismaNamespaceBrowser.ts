@@ -98,7 +98,8 @@ export const UserScalarFieldEnum = {
   passwordResetToken: 'passwordResetToken',
   passwordResetExpires: 'passwordResetExpires',
   emailVerificationToken: 'emailVerificationToken',
-  emailVerificationSent: 'emailVerificationSent'
+  emailVerificationSent: 'emailVerificationSent',
+  credits: 'credits'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -304,7 +305,15 @@ export const AIUsageScalarFieldEnum = {
   location: 'location',
   stylePreference: 'stylePreference',
   generationCount: 'generationCount',
-  createdAt: 'createdAt'
+  provider: 'provider',
+  model: 'model',
+  success: 'success',
+  durationMs: 'durationMs',
+  tokensUsed: 'tokensUsed',
+  requestId: 'requestId',
+  createdAt: 'createdAt',
+  creditsConsumed: 'creditsConsumed',
+  creditCategory: 'creditCategory'
 } as const
 
 export type AIUsageScalarFieldEnum = (typeof AIUsageScalarFieldEnum)[keyof typeof AIUsageScalarFieldEnum]

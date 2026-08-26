@@ -16,7 +16,6 @@ export type NotificationMinAggregateOutputType = {
     type: string | null;
     message: string | null;
     read: boolean | null;
-    createdAt: Date | null;
 };
 export type NotificationMaxAggregateOutputType = {
     id: string | null;
@@ -24,7 +23,6 @@ export type NotificationMaxAggregateOutputType = {
     type: string | null;
     message: string | null;
     read: boolean | null;
-    createdAt: Date | null;
 };
 export type NotificationCountAggregateOutputType = {
     id: number;
@@ -32,7 +30,6 @@ export type NotificationCountAggregateOutputType = {
     type: number;
     message: number;
     read: number;
-    createdAt: number;
     _all: number;
 };
 export type NotificationMinAggregateInputType = {
@@ -41,7 +38,6 @@ export type NotificationMinAggregateInputType = {
     type?: true;
     message?: true;
     read?: true;
-    createdAt?: true;
 };
 export type NotificationMaxAggregateInputType = {
     id?: true;
@@ -49,7 +45,6 @@ export type NotificationMaxAggregateInputType = {
     type?: true;
     message?: true;
     read?: true;
-    createdAt?: true;
 };
 export type NotificationCountAggregateInputType = {
     id?: true;
@@ -57,7 +52,6 @@ export type NotificationCountAggregateInputType = {
     type?: true;
     message?: true;
     read?: true;
-    createdAt?: true;
     _all?: true;
 };
 export type NotificationAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -128,7 +122,6 @@ export type NotificationGroupByOutputType = {
     type: string;
     message: string;
     read: boolean;
-    createdAt: Date;
     _count: NotificationCountAggregateOutputType | null;
     _min: NotificationMinAggregateOutputType | null;
     _max: NotificationMaxAggregateOutputType | null;
@@ -145,7 +138,6 @@ export type NotificationWhereInput = {
     type?: Prisma.StringFilter<"Notification"> | string;
     message?: Prisma.StringFilter<"Notification"> | string;
     read?: Prisma.BoolFilter<"Notification"> | boolean;
-    createdAt?: Prisma.DateTimeFilter<"Notification"> | Date | string;
     user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
 };
 export type NotificationOrderByWithRelationInput = {
@@ -154,7 +146,6 @@ export type NotificationOrderByWithRelationInput = {
     type?: Prisma.SortOrder;
     message?: Prisma.SortOrder;
     read?: Prisma.SortOrder;
-    createdAt?: Prisma.SortOrder;
     user?: Prisma.UserOrderByWithRelationInput;
 };
 export type NotificationWhereUniqueInput = Prisma.AtLeast<{
@@ -166,7 +157,6 @@ export type NotificationWhereUniqueInput = Prisma.AtLeast<{
     type?: Prisma.StringFilter<"Notification"> | string;
     message?: Prisma.StringFilter<"Notification"> | string;
     read?: Prisma.BoolFilter<"Notification"> | boolean;
-    createdAt?: Prisma.DateTimeFilter<"Notification"> | Date | string;
     user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
 }, "id">;
 export type NotificationOrderByWithAggregationInput = {
@@ -175,7 +165,6 @@ export type NotificationOrderByWithAggregationInput = {
     type?: Prisma.SortOrder;
     message?: Prisma.SortOrder;
     read?: Prisma.SortOrder;
-    createdAt?: Prisma.SortOrder;
     _count?: Prisma.NotificationCountOrderByAggregateInput;
     _max?: Prisma.NotificationMaxOrderByAggregateInput;
     _min?: Prisma.NotificationMinOrderByAggregateInput;
@@ -189,14 +178,12 @@ export type NotificationScalarWhereWithAggregatesInput = {
     type?: Prisma.StringWithAggregatesFilter<"Notification"> | string;
     message?: Prisma.StringWithAggregatesFilter<"Notification"> | string;
     read?: Prisma.BoolWithAggregatesFilter<"Notification"> | boolean;
-    createdAt?: Prisma.DateTimeWithAggregatesFilter<"Notification"> | Date | string;
 };
 export type NotificationCreateInput = {
     id?: string;
     type: string;
     message: string;
     read?: boolean;
-    createdAt?: Date | string;
     user: Prisma.UserCreateNestedOneWithoutNotificationsInput;
 };
 export type NotificationUncheckedCreateInput = {
@@ -205,14 +192,12 @@ export type NotificationUncheckedCreateInput = {
     type: string;
     message: string;
     read?: boolean;
-    createdAt?: Date | string;
 };
 export type NotificationUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     type?: Prisma.StringFieldUpdateOperationsInput | string;
     message?: Prisma.StringFieldUpdateOperationsInput | string;
     read?: Prisma.BoolFieldUpdateOperationsInput | boolean;
-    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     user?: Prisma.UserUpdateOneRequiredWithoutNotificationsNestedInput;
 };
 export type NotificationUncheckedUpdateInput = {
@@ -221,7 +206,6 @@ export type NotificationUncheckedUpdateInput = {
     type?: Prisma.StringFieldUpdateOperationsInput | string;
     message?: Prisma.StringFieldUpdateOperationsInput | string;
     read?: Prisma.BoolFieldUpdateOperationsInput | boolean;
-    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type NotificationCreateManyInput = {
     id?: string;
@@ -229,14 +213,12 @@ export type NotificationCreateManyInput = {
     type: string;
     message: string;
     read?: boolean;
-    createdAt?: Date | string;
 };
 export type NotificationUpdateManyMutationInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     type?: Prisma.StringFieldUpdateOperationsInput | string;
     message?: Prisma.StringFieldUpdateOperationsInput | string;
     read?: Prisma.BoolFieldUpdateOperationsInput | boolean;
-    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type NotificationUncheckedUpdateManyInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -244,7 +226,6 @@ export type NotificationUncheckedUpdateManyInput = {
     type?: Prisma.StringFieldUpdateOperationsInput | string;
     message?: Prisma.StringFieldUpdateOperationsInput | string;
     read?: Prisma.BoolFieldUpdateOperationsInput | boolean;
-    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type NotificationListRelationFilter = {
     every?: Prisma.NotificationWhereInput;
@@ -260,7 +241,6 @@ export type NotificationCountOrderByAggregateInput = {
     type?: Prisma.SortOrder;
     message?: Prisma.SortOrder;
     read?: Prisma.SortOrder;
-    createdAt?: Prisma.SortOrder;
 };
 export type NotificationMaxOrderByAggregateInput = {
     id?: Prisma.SortOrder;
@@ -268,7 +248,6 @@ export type NotificationMaxOrderByAggregateInput = {
     type?: Prisma.SortOrder;
     message?: Prisma.SortOrder;
     read?: Prisma.SortOrder;
-    createdAt?: Prisma.SortOrder;
 };
 export type NotificationMinOrderByAggregateInput = {
     id?: Prisma.SortOrder;
@@ -276,7 +255,6 @@ export type NotificationMinOrderByAggregateInput = {
     type?: Prisma.SortOrder;
     message?: Prisma.SortOrder;
     read?: Prisma.SortOrder;
-    createdAt?: Prisma.SortOrder;
 };
 export type NotificationCreateNestedManyWithoutUserInput = {
     create?: Prisma.XOR<Prisma.NotificationCreateWithoutUserInput, Prisma.NotificationUncheckedCreateWithoutUserInput> | Prisma.NotificationCreateWithoutUserInput[] | Prisma.NotificationUncheckedCreateWithoutUserInput[];
@@ -321,14 +299,12 @@ export type NotificationCreateWithoutUserInput = {
     type: string;
     message: string;
     read?: boolean;
-    createdAt?: Date | string;
 };
 export type NotificationUncheckedCreateWithoutUserInput = {
     id?: string;
     type: string;
     message: string;
     read?: boolean;
-    createdAt?: Date | string;
 };
 export type NotificationCreateOrConnectWithoutUserInput = {
     where: Prisma.NotificationWhereUniqueInput;
@@ -360,35 +336,30 @@ export type NotificationScalarWhereInput = {
     type?: Prisma.StringFilter<"Notification"> | string;
     message?: Prisma.StringFilter<"Notification"> | string;
     read?: Prisma.BoolFilter<"Notification"> | boolean;
-    createdAt?: Prisma.DateTimeFilter<"Notification"> | Date | string;
 };
 export type NotificationCreateManyUserInput = {
     id?: string;
     type: string;
     message: string;
     read?: boolean;
-    createdAt?: Date | string;
 };
 export type NotificationUpdateWithoutUserInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     type?: Prisma.StringFieldUpdateOperationsInput | string;
     message?: Prisma.StringFieldUpdateOperationsInput | string;
     read?: Prisma.BoolFieldUpdateOperationsInput | boolean;
-    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type NotificationUncheckedUpdateWithoutUserInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     type?: Prisma.StringFieldUpdateOperationsInput | string;
     message?: Prisma.StringFieldUpdateOperationsInput | string;
     read?: Prisma.BoolFieldUpdateOperationsInput | boolean;
-    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type NotificationUncheckedUpdateManyWithoutUserInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     type?: Prisma.StringFieldUpdateOperationsInput | string;
     message?: Prisma.StringFieldUpdateOperationsInput | string;
     read?: Prisma.BoolFieldUpdateOperationsInput | boolean;
-    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type NotificationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
@@ -396,7 +367,6 @@ export type NotificationSelect<ExtArgs extends runtime.Types.Extensions.Internal
     type?: boolean;
     message?: boolean;
     read?: boolean;
-    createdAt?: boolean;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["notification"]>;
 export type NotificationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -405,7 +375,6 @@ export type NotificationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
     type?: boolean;
     message?: boolean;
     read?: boolean;
-    createdAt?: boolean;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["notification"]>;
 export type NotificationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -414,7 +383,6 @@ export type NotificationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
     type?: boolean;
     message?: boolean;
     read?: boolean;
-    createdAt?: boolean;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["notification"]>;
 export type NotificationSelectScalar = {
@@ -423,9 +391,8 @@ export type NotificationSelectScalar = {
     type?: boolean;
     message?: boolean;
     read?: boolean;
-    createdAt?: boolean;
 };
-export type NotificationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "type" | "message" | "read" | "createdAt", ExtArgs["result"]["notification"]>;
+export type NotificationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "type" | "message" | "read", ExtArgs["result"]["notification"]>;
 export type NotificationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 };
@@ -446,7 +413,6 @@ export type $NotificationPayload<ExtArgs extends runtime.Types.Extensions.Intern
         type: string;
         message: string;
         read: boolean;
-        createdAt: Date;
     }, ExtArgs["result"]["notification"]>;
     composites: {};
 };
@@ -807,7 +773,6 @@ export interface NotificationFieldRefs {
     readonly type: Prisma.FieldRef<"Notification", 'String'>;
     readonly message: Prisma.FieldRef<"Notification", 'String'>;
     readonly read: Prisma.FieldRef<"Notification", 'Boolean'>;
-    readonly createdAt: Prisma.FieldRef<"Notification", 'DateTime'>;
 }
 /**
  * Notification findUnique

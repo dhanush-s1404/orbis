@@ -155,7 +155,6 @@ export type ProjectFileWhereInput = {
     fileUrl?: Prisma.StringFilter<"ProjectFile"> | string;
     createdAt?: Prisma.DateTimeFilter<"ProjectFile"> | Date | string;
     project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>;
-    uploader?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
 };
 export type ProjectFileOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
@@ -166,7 +165,6 @@ export type ProjectFileOrderByWithRelationInput = {
     fileUrl?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     project?: Prisma.ProjectOrderByWithRelationInput;
-    uploader?: Prisma.UserOrderByWithRelationInput;
 };
 export type ProjectFileWhereUniqueInput = Prisma.AtLeast<{
     id?: string;
@@ -180,7 +178,6 @@ export type ProjectFileWhereUniqueInput = Prisma.AtLeast<{
     fileUrl?: Prisma.StringFilter<"ProjectFile"> | string;
     createdAt?: Prisma.DateTimeFilter<"ProjectFile"> | Date | string;
     project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>;
-    uploader?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
 }, "id">;
 export type ProjectFileOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
@@ -208,12 +205,12 @@ export type ProjectFileScalarWhereWithAggregatesInput = {
 };
 export type ProjectFileCreateInput = {
     id?: string;
+    uploadedBy: string;
     fileName: string;
     fileType: string;
     fileUrl: string;
     createdAt?: Date | string;
     project: Prisma.ProjectCreateNestedOneWithoutFilesInput;
-    uploader: Prisma.UserCreateNestedOneWithoutProjectFilesInput;
 };
 export type ProjectFileUncheckedCreateInput = {
     id?: string;
@@ -226,12 +223,12 @@ export type ProjectFileUncheckedCreateInput = {
 };
 export type ProjectFileUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
+    uploadedBy?: Prisma.StringFieldUpdateOperationsInput | string;
     fileName?: Prisma.StringFieldUpdateOperationsInput | string;
     fileType?: Prisma.StringFieldUpdateOperationsInput | string;
     fileUrl?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     project?: Prisma.ProjectUpdateOneRequiredWithoutFilesNestedInput;
-    uploader?: Prisma.UserUpdateOneRequiredWithoutProjectFilesNestedInput;
 };
 export type ProjectFileUncheckedUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -253,6 +250,7 @@ export type ProjectFileCreateManyInput = {
 };
 export type ProjectFileUpdateManyMutationInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
+    uploadedBy?: Prisma.StringFieldUpdateOperationsInput | string;
     fileName?: Prisma.StringFieldUpdateOperationsInput | string;
     fileType?: Prisma.StringFieldUpdateOperationsInput | string;
     fileUrl?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -302,44 +300,6 @@ export type ProjectFileMinOrderByAggregateInput = {
     fileUrl?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
 };
-export type ProjectFileCreateNestedManyWithoutUploaderInput = {
-    create?: Prisma.XOR<Prisma.ProjectFileCreateWithoutUploaderInput, Prisma.ProjectFileUncheckedCreateWithoutUploaderInput> | Prisma.ProjectFileCreateWithoutUploaderInput[] | Prisma.ProjectFileUncheckedCreateWithoutUploaderInput[];
-    connectOrCreate?: Prisma.ProjectFileCreateOrConnectWithoutUploaderInput | Prisma.ProjectFileCreateOrConnectWithoutUploaderInput[];
-    createMany?: Prisma.ProjectFileCreateManyUploaderInputEnvelope;
-    connect?: Prisma.ProjectFileWhereUniqueInput | Prisma.ProjectFileWhereUniqueInput[];
-};
-export type ProjectFileUncheckedCreateNestedManyWithoutUploaderInput = {
-    create?: Prisma.XOR<Prisma.ProjectFileCreateWithoutUploaderInput, Prisma.ProjectFileUncheckedCreateWithoutUploaderInput> | Prisma.ProjectFileCreateWithoutUploaderInput[] | Prisma.ProjectFileUncheckedCreateWithoutUploaderInput[];
-    connectOrCreate?: Prisma.ProjectFileCreateOrConnectWithoutUploaderInput | Prisma.ProjectFileCreateOrConnectWithoutUploaderInput[];
-    createMany?: Prisma.ProjectFileCreateManyUploaderInputEnvelope;
-    connect?: Prisma.ProjectFileWhereUniqueInput | Prisma.ProjectFileWhereUniqueInput[];
-};
-export type ProjectFileUpdateManyWithoutUploaderNestedInput = {
-    create?: Prisma.XOR<Prisma.ProjectFileCreateWithoutUploaderInput, Prisma.ProjectFileUncheckedCreateWithoutUploaderInput> | Prisma.ProjectFileCreateWithoutUploaderInput[] | Prisma.ProjectFileUncheckedCreateWithoutUploaderInput[];
-    connectOrCreate?: Prisma.ProjectFileCreateOrConnectWithoutUploaderInput | Prisma.ProjectFileCreateOrConnectWithoutUploaderInput[];
-    upsert?: Prisma.ProjectFileUpsertWithWhereUniqueWithoutUploaderInput | Prisma.ProjectFileUpsertWithWhereUniqueWithoutUploaderInput[];
-    createMany?: Prisma.ProjectFileCreateManyUploaderInputEnvelope;
-    set?: Prisma.ProjectFileWhereUniqueInput | Prisma.ProjectFileWhereUniqueInput[];
-    disconnect?: Prisma.ProjectFileWhereUniqueInput | Prisma.ProjectFileWhereUniqueInput[];
-    delete?: Prisma.ProjectFileWhereUniqueInput | Prisma.ProjectFileWhereUniqueInput[];
-    connect?: Prisma.ProjectFileWhereUniqueInput | Prisma.ProjectFileWhereUniqueInput[];
-    update?: Prisma.ProjectFileUpdateWithWhereUniqueWithoutUploaderInput | Prisma.ProjectFileUpdateWithWhereUniqueWithoutUploaderInput[];
-    updateMany?: Prisma.ProjectFileUpdateManyWithWhereWithoutUploaderInput | Prisma.ProjectFileUpdateManyWithWhereWithoutUploaderInput[];
-    deleteMany?: Prisma.ProjectFileScalarWhereInput | Prisma.ProjectFileScalarWhereInput[];
-};
-export type ProjectFileUncheckedUpdateManyWithoutUploaderNestedInput = {
-    create?: Prisma.XOR<Prisma.ProjectFileCreateWithoutUploaderInput, Prisma.ProjectFileUncheckedCreateWithoutUploaderInput> | Prisma.ProjectFileCreateWithoutUploaderInput[] | Prisma.ProjectFileUncheckedCreateWithoutUploaderInput[];
-    connectOrCreate?: Prisma.ProjectFileCreateOrConnectWithoutUploaderInput | Prisma.ProjectFileCreateOrConnectWithoutUploaderInput[];
-    upsert?: Prisma.ProjectFileUpsertWithWhereUniqueWithoutUploaderInput | Prisma.ProjectFileUpsertWithWhereUniqueWithoutUploaderInput[];
-    createMany?: Prisma.ProjectFileCreateManyUploaderInputEnvelope;
-    set?: Prisma.ProjectFileWhereUniqueInput | Prisma.ProjectFileWhereUniqueInput[];
-    disconnect?: Prisma.ProjectFileWhereUniqueInput | Prisma.ProjectFileWhereUniqueInput[];
-    delete?: Prisma.ProjectFileWhereUniqueInput | Prisma.ProjectFileWhereUniqueInput[];
-    connect?: Prisma.ProjectFileWhereUniqueInput | Prisma.ProjectFileWhereUniqueInput[];
-    update?: Prisma.ProjectFileUpdateWithWhereUniqueWithoutUploaderInput | Prisma.ProjectFileUpdateWithWhereUniqueWithoutUploaderInput[];
-    updateMany?: Prisma.ProjectFileUpdateManyWithWhereWithoutUploaderInput | Prisma.ProjectFileUpdateManyWithWhereWithoutUploaderInput[];
-    deleteMany?: Prisma.ProjectFileScalarWhereInput | Prisma.ProjectFileScalarWhereInput[];
-};
 export type ProjectFileCreateNestedManyWithoutProjectInput = {
     create?: Prisma.XOR<Prisma.ProjectFileCreateWithoutProjectInput, Prisma.ProjectFileUncheckedCreateWithoutProjectInput> | Prisma.ProjectFileCreateWithoutProjectInput[] | Prisma.ProjectFileUncheckedCreateWithoutProjectInput[];
     connectOrCreate?: Prisma.ProjectFileCreateOrConnectWithoutProjectInput | Prisma.ProjectFileCreateOrConnectWithoutProjectInput[];
@@ -378,62 +338,13 @@ export type ProjectFileUncheckedUpdateManyWithoutProjectNestedInput = {
     updateMany?: Prisma.ProjectFileUpdateManyWithWhereWithoutProjectInput | Prisma.ProjectFileUpdateManyWithWhereWithoutProjectInput[];
     deleteMany?: Prisma.ProjectFileScalarWhereInput | Prisma.ProjectFileScalarWhereInput[];
 };
-export type ProjectFileCreateWithoutUploaderInput = {
-    id?: string;
-    fileName: string;
-    fileType: string;
-    fileUrl: string;
-    createdAt?: Date | string;
-    project: Prisma.ProjectCreateNestedOneWithoutFilesInput;
-};
-export type ProjectFileUncheckedCreateWithoutUploaderInput = {
-    id?: string;
-    projectId: string;
-    fileName: string;
-    fileType: string;
-    fileUrl: string;
-    createdAt?: Date | string;
-};
-export type ProjectFileCreateOrConnectWithoutUploaderInput = {
-    where: Prisma.ProjectFileWhereUniqueInput;
-    create: Prisma.XOR<Prisma.ProjectFileCreateWithoutUploaderInput, Prisma.ProjectFileUncheckedCreateWithoutUploaderInput>;
-};
-export type ProjectFileCreateManyUploaderInputEnvelope = {
-    data: Prisma.ProjectFileCreateManyUploaderInput | Prisma.ProjectFileCreateManyUploaderInput[];
-    skipDuplicates?: boolean;
-};
-export type ProjectFileUpsertWithWhereUniqueWithoutUploaderInput = {
-    where: Prisma.ProjectFileWhereUniqueInput;
-    update: Prisma.XOR<Prisma.ProjectFileUpdateWithoutUploaderInput, Prisma.ProjectFileUncheckedUpdateWithoutUploaderInput>;
-    create: Prisma.XOR<Prisma.ProjectFileCreateWithoutUploaderInput, Prisma.ProjectFileUncheckedCreateWithoutUploaderInput>;
-};
-export type ProjectFileUpdateWithWhereUniqueWithoutUploaderInput = {
-    where: Prisma.ProjectFileWhereUniqueInput;
-    data: Prisma.XOR<Prisma.ProjectFileUpdateWithoutUploaderInput, Prisma.ProjectFileUncheckedUpdateWithoutUploaderInput>;
-};
-export type ProjectFileUpdateManyWithWhereWithoutUploaderInput = {
-    where: Prisma.ProjectFileScalarWhereInput;
-    data: Prisma.XOR<Prisma.ProjectFileUpdateManyMutationInput, Prisma.ProjectFileUncheckedUpdateManyWithoutUploaderInput>;
-};
-export type ProjectFileScalarWhereInput = {
-    AND?: Prisma.ProjectFileScalarWhereInput | Prisma.ProjectFileScalarWhereInput[];
-    OR?: Prisma.ProjectFileScalarWhereInput[];
-    NOT?: Prisma.ProjectFileScalarWhereInput | Prisma.ProjectFileScalarWhereInput[];
-    id?: Prisma.StringFilter<"ProjectFile"> | string;
-    projectId?: Prisma.StringFilter<"ProjectFile"> | string;
-    uploadedBy?: Prisma.StringFilter<"ProjectFile"> | string;
-    fileName?: Prisma.StringFilter<"ProjectFile"> | string;
-    fileType?: Prisma.StringFilter<"ProjectFile"> | string;
-    fileUrl?: Prisma.StringFilter<"ProjectFile"> | string;
-    createdAt?: Prisma.DateTimeFilter<"ProjectFile"> | Date | string;
-};
 export type ProjectFileCreateWithoutProjectInput = {
     id?: string;
+    uploadedBy: string;
     fileName: string;
     fileType: string;
     fileUrl: string;
     createdAt?: Date | string;
-    uploader: Prisma.UserCreateNestedOneWithoutProjectFilesInput;
 };
 export type ProjectFileUncheckedCreateWithoutProjectInput = {
     id?: string;
@@ -464,37 +375,17 @@ export type ProjectFileUpdateManyWithWhereWithoutProjectInput = {
     where: Prisma.ProjectFileScalarWhereInput;
     data: Prisma.XOR<Prisma.ProjectFileUpdateManyMutationInput, Prisma.ProjectFileUncheckedUpdateManyWithoutProjectInput>;
 };
-export type ProjectFileCreateManyUploaderInput = {
-    id?: string;
-    projectId: string;
-    fileName: string;
-    fileType: string;
-    fileUrl: string;
-    createdAt?: Date | string;
-};
-export type ProjectFileUpdateWithoutUploaderInput = {
-    id?: Prisma.StringFieldUpdateOperationsInput | string;
-    fileName?: Prisma.StringFieldUpdateOperationsInput | string;
-    fileType?: Prisma.StringFieldUpdateOperationsInput | string;
-    fileUrl?: Prisma.StringFieldUpdateOperationsInput | string;
-    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    project?: Prisma.ProjectUpdateOneRequiredWithoutFilesNestedInput;
-};
-export type ProjectFileUncheckedUpdateWithoutUploaderInput = {
-    id?: Prisma.StringFieldUpdateOperationsInput | string;
-    projectId?: Prisma.StringFieldUpdateOperationsInput | string;
-    fileName?: Prisma.StringFieldUpdateOperationsInput | string;
-    fileType?: Prisma.StringFieldUpdateOperationsInput | string;
-    fileUrl?: Prisma.StringFieldUpdateOperationsInput | string;
-    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-};
-export type ProjectFileUncheckedUpdateManyWithoutUploaderInput = {
-    id?: Prisma.StringFieldUpdateOperationsInput | string;
-    projectId?: Prisma.StringFieldUpdateOperationsInput | string;
-    fileName?: Prisma.StringFieldUpdateOperationsInput | string;
-    fileType?: Prisma.StringFieldUpdateOperationsInput | string;
-    fileUrl?: Prisma.StringFieldUpdateOperationsInput | string;
-    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+export type ProjectFileScalarWhereInput = {
+    AND?: Prisma.ProjectFileScalarWhereInput | Prisma.ProjectFileScalarWhereInput[];
+    OR?: Prisma.ProjectFileScalarWhereInput[];
+    NOT?: Prisma.ProjectFileScalarWhereInput | Prisma.ProjectFileScalarWhereInput[];
+    id?: Prisma.StringFilter<"ProjectFile"> | string;
+    projectId?: Prisma.StringFilter<"ProjectFile"> | string;
+    uploadedBy?: Prisma.StringFilter<"ProjectFile"> | string;
+    fileName?: Prisma.StringFilter<"ProjectFile"> | string;
+    fileType?: Prisma.StringFilter<"ProjectFile"> | string;
+    fileUrl?: Prisma.StringFilter<"ProjectFile"> | string;
+    createdAt?: Prisma.DateTimeFilter<"ProjectFile"> | Date | string;
 };
 export type ProjectFileCreateManyProjectInput = {
     id?: string;
@@ -506,11 +397,11 @@ export type ProjectFileCreateManyProjectInput = {
 };
 export type ProjectFileUpdateWithoutProjectInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
+    uploadedBy?: Prisma.StringFieldUpdateOperationsInput | string;
     fileName?: Prisma.StringFieldUpdateOperationsInput | string;
     fileType?: Prisma.StringFieldUpdateOperationsInput | string;
     fileUrl?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    uploader?: Prisma.UserUpdateOneRequiredWithoutProjectFilesNestedInput;
 };
 export type ProjectFileUncheckedUpdateWithoutProjectInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -537,7 +428,6 @@ export type ProjectFileSelect<ExtArgs extends runtime.Types.Extensions.InternalA
     fileUrl?: boolean;
     createdAt?: boolean;
     project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>;
-    uploader?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["projectFile"]>;
 export type ProjectFileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
@@ -548,7 +438,6 @@ export type ProjectFileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
     fileUrl?: boolean;
     createdAt?: boolean;
     project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>;
-    uploader?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["projectFile"]>;
 export type ProjectFileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
@@ -559,7 +448,6 @@ export type ProjectFileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
     fileUrl?: boolean;
     createdAt?: boolean;
     project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>;
-    uploader?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["projectFile"]>;
 export type ProjectFileSelectScalar = {
     id?: boolean;
@@ -573,21 +461,17 @@ export type ProjectFileSelectScalar = {
 export type ProjectFileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "projectId" | "uploadedBy" | "fileName" | "fileType" | "fileUrl" | "createdAt", ExtArgs["result"]["projectFile"]>;
 export type ProjectFileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>;
-    uploader?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 };
 export type ProjectFileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>;
-    uploader?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 };
 export type ProjectFileIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>;
-    uploader?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 };
 export type $ProjectFilePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     name: "ProjectFile";
     objects: {
         project: Prisma.$ProjectPayload<ExtArgs>;
-        uploader: Prisma.$UserPayload<ExtArgs>;
     };
     scalars: runtime.Types.Extensions.GetPayloadResult<{
         id: string;
@@ -927,7 +811,6 @@ export interface ProjectFileDelegate<ExtArgs extends runtime.Types.Extensions.In
 export interface Prisma__ProjectFileClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise";
     project<T extends Prisma.ProjectDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProjectDefaultArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
-    uploader<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.

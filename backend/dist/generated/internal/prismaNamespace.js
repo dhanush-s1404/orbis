@@ -48,7 +48,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.defineExtension = exports.NullsOrder = exports.QueryMode = exports.SortOrder = exports.AuditLogScalarFieldEnum = exports.NotificationScalarFieldEnum = exports.ProjectFileScalarFieldEnum = exports.ProjectMessageScalarFieldEnum = exports.ProjectRequirementScalarFieldEnum = exports.ProjectScalarFieldEnum = exports.OrderItemScalarFieldEnum = exports.OrderScalarFieldEnum = exports.ProductImageScalarFieldEnum = exports.ProductTechnologyScalarFieldEnum = exports.ProductFeatureScalarFieldEnum = exports.ProductScalarFieldEnum = exports.CategoryScalarFieldEnum = exports.UserScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.prismaVersion = exports.getExtensionContext = exports.Decimal = exports.Sql = exports.raw = exports.join = exports.empty = exports.sql = exports.PrismaClientValidationError = exports.PrismaClientInitializationError = exports.PrismaClientRustPanicError = exports.PrismaClientUnknownRequestError = exports.PrismaClientKnownRequestError = void 0;
+exports.defineExtension = exports.NullsOrder = exports.QueryMode = exports.SortOrder = exports.AIUsageScalarFieldEnum = exports.TemplateScalarFieldEnum = exports.AuditLogScalarFieldEnum = exports.NotificationScalarFieldEnum = exports.ProjectFileScalarFieldEnum = exports.ProjectMessageScalarFieldEnum = exports.ProjectRequirementScalarFieldEnum = exports.ProjectScalarFieldEnum = exports.OrderItemScalarFieldEnum = exports.OrderScalarFieldEnum = exports.ProductImageScalarFieldEnum = exports.ProductTechnologyScalarFieldEnum = exports.ProductFeatureScalarFieldEnum = exports.ProductScalarFieldEnum = exports.CategoryScalarFieldEnum = exports.UserScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.prismaVersion = exports.getExtensionContext = exports.Decimal = exports.Sql = exports.raw = exports.join = exports.empty = exports.sql = exports.PrismaClientValidationError = exports.PrismaClientInitializationError = exports.PrismaClientRustPanicError = exports.PrismaClientUnknownRequestError = exports.PrismaClientKnownRequestError = void 0;
 const runtime = __importStar(require("@prisma/client/runtime/client"));
 /**
  * Prisma Errors
@@ -116,7 +116,9 @@ exports.ModelName = {
     ProjectMessage: 'ProjectMessage',
     ProjectFile: 'ProjectFile',
     Notification: 'Notification',
-    AuditLog: 'AuditLog'
+    AuditLog: 'AuditLog',
+    Template: 'Template',
+    AIUsage: 'AIUsage'
 };
 /**
  * Enums
@@ -136,7 +138,12 @@ exports.UserScalarFieldEnum = {
     status: 'status',
     emailVerified: 'emailVerified',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    passwordResetToken: 'passwordResetToken',
+    passwordResetExpires: 'passwordResetExpires',
+    emailVerificationToken: 'emailVerificationToken',
+    emailVerificationSent: 'emailVerificationSent',
+    credits: 'credits'
 };
 exports.CategoryScalarFieldEnum = {
     id: 'id',
@@ -209,7 +216,13 @@ exports.ProjectScalarFieldEnum = {
     progress: 'progress',
     assignedDeveloper: 'assignedDeveloper',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    builderState: 'builderState',
+    templateId: 'templateId',
+    publishStatus: 'publishStatus',
+    publishedAt: 'publishedAt',
+    publishedSlug: 'publishedSlug',
+    publishedCount: 'publishedCount'
 };
 exports.ProjectRequirementScalarFieldEnum = {
     id: 'id',
@@ -239,8 +252,7 @@ exports.NotificationScalarFieldEnum = {
     userId: 'userId',
     type: 'type',
     message: 'message',
-    read: 'read',
-    createdAt: 'createdAt'
+    read: 'read'
 };
 exports.AuditLogScalarFieldEnum = {
     id: 'id',
@@ -250,6 +262,42 @@ exports.AuditLogScalarFieldEnum = {
     userId: 'userId',
     details: 'details',
     createdAt: 'createdAt'
+};
+exports.TemplateScalarFieldEnum = {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    previewUrl: 'previewUrl',
+    category: 'category',
+    pages: 'pages',
+    sections: 'sections',
+    defaultContent: 'defaultContent',
+    defaultStyles: 'defaultStyles',
+    isActive: 'isActive',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+exports.AIUsageScalarFieldEnum = {
+    id: 'id',
+    projectId: 'projectId',
+    businessName: 'businessName',
+    industry: 'industry',
+    targetAudience: 'targetAudience',
+    goal: 'goal',
+    tone: 'tone',
+    services: 'services',
+    location: 'location',
+    stylePreference: 'stylePreference',
+    generationCount: 'generationCount',
+    provider: 'provider',
+    model: 'model',
+    success: 'success',
+    durationMs: 'durationMs',
+    tokensUsed: 'tokensUsed',
+    requestId: 'requestId',
+    createdAt: 'createdAt',
+    creditsConsumed: 'creditsConsumed',
+    creditCategory: 'creditCategory'
 };
 exports.SortOrder = {
     asc: 'asc',

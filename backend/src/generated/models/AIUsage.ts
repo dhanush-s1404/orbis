@@ -28,10 +28,16 @@ export type AggregateAIUsage = {
 
 export type AIUsageAvgAggregateOutputType = {
   generationCount: number | null
+  durationMs: number | null
+  tokensUsed: number | null
+  creditsConsumed: number | null
 }
 
 export type AIUsageSumAggregateOutputType = {
   generationCount: number | null
+  durationMs: number | null
+  tokensUsed: number | null
+  creditsConsumed: number | null
 }
 
 export type AIUsageMinAggregateOutputType = {
@@ -45,7 +51,15 @@ export type AIUsageMinAggregateOutputType = {
   location: string | null
   stylePreference: string | null
   generationCount: number | null
+  provider: string | null
+  model: string | null
+  success: boolean | null
+  durationMs: number | null
+  tokensUsed: number | null
+  requestId: string | null
   createdAt: Date | null
+  creditsConsumed: number | null
+  creditCategory: string | null
 }
 
 export type AIUsageMaxAggregateOutputType = {
@@ -59,7 +73,15 @@ export type AIUsageMaxAggregateOutputType = {
   location: string | null
   stylePreference: string | null
   generationCount: number | null
+  provider: string | null
+  model: string | null
+  success: boolean | null
+  durationMs: number | null
+  tokensUsed: number | null
+  requestId: string | null
   createdAt: Date | null
+  creditsConsumed: number | null
+  creditCategory: string | null
 }
 
 export type AIUsageCountAggregateOutputType = {
@@ -74,17 +96,31 @@ export type AIUsageCountAggregateOutputType = {
   location: number
   stylePreference: number
   generationCount: number
+  provider: number
+  model: number
+  success: number
+  durationMs: number
+  tokensUsed: number
+  requestId: number
   createdAt: number
+  creditsConsumed: number
+  creditCategory: number
   _all: number
 }
 
 
 export type AIUsageAvgAggregateInputType = {
   generationCount?: true
+  durationMs?: true
+  tokensUsed?: true
+  creditsConsumed?: true
 }
 
 export type AIUsageSumAggregateInputType = {
   generationCount?: true
+  durationMs?: true
+  tokensUsed?: true
+  creditsConsumed?: true
 }
 
 export type AIUsageMinAggregateInputType = {
@@ -98,7 +134,15 @@ export type AIUsageMinAggregateInputType = {
   location?: true
   stylePreference?: true
   generationCount?: true
+  provider?: true
+  model?: true
+  success?: true
+  durationMs?: true
+  tokensUsed?: true
+  requestId?: true
   createdAt?: true
+  creditsConsumed?: true
+  creditCategory?: true
 }
 
 export type AIUsageMaxAggregateInputType = {
@@ -112,7 +156,15 @@ export type AIUsageMaxAggregateInputType = {
   location?: true
   stylePreference?: true
   generationCount?: true
+  provider?: true
+  model?: true
+  success?: true
+  durationMs?: true
+  tokensUsed?: true
+  requestId?: true
   createdAt?: true
+  creditsConsumed?: true
+  creditCategory?: true
 }
 
 export type AIUsageCountAggregateInputType = {
@@ -127,7 +179,15 @@ export type AIUsageCountAggregateInputType = {
   location?: true
   stylePreference?: true
   generationCount?: true
+  provider?: true
+  model?: true
+  success?: true
+  durationMs?: true
+  tokensUsed?: true
+  requestId?: true
   createdAt?: true
+  creditsConsumed?: true
+  creditCategory?: true
   _all?: true
 }
 
@@ -229,7 +289,15 @@ export type AIUsageGroupByOutputType = {
   location: string | null
   stylePreference: string | null
   generationCount: number
+  provider: string | null
+  model: string | null
+  success: boolean
+  durationMs: number | null
+  tokensUsed: number | null
+  requestId: string
   createdAt: Date
+  creditsConsumed: number | null
+  creditCategory: string | null
   _count: AIUsageCountAggregateOutputType | null
   _avg: AIUsageAvgAggregateOutputType | null
   _sum: AIUsageSumAggregateOutputType | null
@@ -267,7 +335,16 @@ export type AIUsageWhereInput = {
   location?: Prisma.StringNullableFilter<"AIUsage"> | string | null
   stylePreference?: Prisma.StringNullableFilter<"AIUsage"> | string | null
   generationCount?: Prisma.IntFilter<"AIUsage"> | number
+  provider?: Prisma.StringNullableFilter<"AIUsage"> | string | null
+  model?: Prisma.StringNullableFilter<"AIUsage"> | string | null
+  success?: Prisma.BoolFilter<"AIUsage"> | boolean
+  durationMs?: Prisma.IntNullableFilter<"AIUsage"> | number | null
+  tokensUsed?: Prisma.IntNullableFilter<"AIUsage"> | number | null
+  requestId?: Prisma.StringFilter<"AIUsage"> | string
   createdAt?: Prisma.DateTimeFilter<"AIUsage"> | Date | string
+  creditsConsumed?: Prisma.IntNullableFilter<"AIUsage"> | number | null
+  creditCategory?: Prisma.StringNullableFilter<"AIUsage"> | string | null
+  project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
 }
 
 export type AIUsageOrderByWithRelationInput = {
@@ -282,11 +359,21 @@ export type AIUsageOrderByWithRelationInput = {
   location?: Prisma.SortOrderInput | Prisma.SortOrder
   stylePreference?: Prisma.SortOrderInput | Prisma.SortOrder
   generationCount?: Prisma.SortOrder
+  provider?: Prisma.SortOrderInput | Prisma.SortOrder
+  model?: Prisma.SortOrderInput | Prisma.SortOrder
+  success?: Prisma.SortOrder
+  durationMs?: Prisma.SortOrderInput | Prisma.SortOrder
+  tokensUsed?: Prisma.SortOrderInput | Prisma.SortOrder
+  requestId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  creditsConsumed?: Prisma.SortOrderInput | Prisma.SortOrder
+  creditCategory?: Prisma.SortOrderInput | Prisma.SortOrder
+  project?: Prisma.ProjectOrderByWithRelationInput
 }
 
 export type AIUsageWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  requestId?: string
   AND?: Prisma.AIUsageWhereInput | Prisma.AIUsageWhereInput[]
   OR?: Prisma.AIUsageWhereInput[]
   NOT?: Prisma.AIUsageWhereInput | Prisma.AIUsageWhereInput[]
@@ -300,8 +387,16 @@ export type AIUsageWhereUniqueInput = Prisma.AtLeast<{
   location?: Prisma.StringNullableFilter<"AIUsage"> | string | null
   stylePreference?: Prisma.StringNullableFilter<"AIUsage"> | string | null
   generationCount?: Prisma.IntFilter<"AIUsage"> | number
+  provider?: Prisma.StringNullableFilter<"AIUsage"> | string | null
+  model?: Prisma.StringNullableFilter<"AIUsage"> | string | null
+  success?: Prisma.BoolFilter<"AIUsage"> | boolean
+  durationMs?: Prisma.IntNullableFilter<"AIUsage"> | number | null
+  tokensUsed?: Prisma.IntNullableFilter<"AIUsage"> | number | null
   createdAt?: Prisma.DateTimeFilter<"AIUsage"> | Date | string
-}, "id">
+  creditsConsumed?: Prisma.IntNullableFilter<"AIUsage"> | number | null
+  creditCategory?: Prisma.StringNullableFilter<"AIUsage"> | string | null
+  project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
+}, "id" | "requestId">
 
 export type AIUsageOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -315,7 +410,15 @@ export type AIUsageOrderByWithAggregationInput = {
   location?: Prisma.SortOrderInput | Prisma.SortOrder
   stylePreference?: Prisma.SortOrderInput | Prisma.SortOrder
   generationCount?: Prisma.SortOrder
+  provider?: Prisma.SortOrderInput | Prisma.SortOrder
+  model?: Prisma.SortOrderInput | Prisma.SortOrder
+  success?: Prisma.SortOrder
+  durationMs?: Prisma.SortOrderInput | Prisma.SortOrder
+  tokensUsed?: Prisma.SortOrderInput | Prisma.SortOrder
+  requestId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  creditsConsumed?: Prisma.SortOrderInput | Prisma.SortOrder
+  creditCategory?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.AIUsageCountOrderByAggregateInput
   _avg?: Prisma.AIUsageAvgOrderByAggregateInput
   _max?: Prisma.AIUsageMaxOrderByAggregateInput
@@ -338,12 +441,19 @@ export type AIUsageScalarWhereWithAggregatesInput = {
   location?: Prisma.StringNullableWithAggregatesFilter<"AIUsage"> | string | null
   stylePreference?: Prisma.StringNullableWithAggregatesFilter<"AIUsage"> | string | null
   generationCount?: Prisma.IntWithAggregatesFilter<"AIUsage"> | number
+  provider?: Prisma.StringNullableWithAggregatesFilter<"AIUsage"> | string | null
+  model?: Prisma.StringNullableWithAggregatesFilter<"AIUsage"> | string | null
+  success?: Prisma.BoolWithAggregatesFilter<"AIUsage"> | boolean
+  durationMs?: Prisma.IntNullableWithAggregatesFilter<"AIUsage"> | number | null
+  tokensUsed?: Prisma.IntNullableWithAggregatesFilter<"AIUsage"> | number | null
+  requestId?: Prisma.StringWithAggregatesFilter<"AIUsage"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"AIUsage"> | Date | string
+  creditsConsumed?: Prisma.IntNullableWithAggregatesFilter<"AIUsage"> | number | null
+  creditCategory?: Prisma.StringNullableWithAggregatesFilter<"AIUsage"> | string | null
 }
 
 export type AIUsageCreateInput = {
   id?: string
-  projectId: string
   businessName: string
   industry: string
   targetAudience: string
@@ -353,7 +463,16 @@ export type AIUsageCreateInput = {
   location?: string | null
   stylePreference?: string | null
   generationCount?: number
+  provider?: string | null
+  model?: string | null
+  success: boolean
+  durationMs?: number | null
+  tokensUsed?: number | null
+  requestId: string
   createdAt?: Date | string
+  creditsConsumed?: number | null
+  creditCategory?: string | null
+  project: Prisma.ProjectCreateNestedOneWithoutAiUsageInput
 }
 
 export type AIUsageUncheckedCreateInput = {
@@ -368,12 +487,19 @@ export type AIUsageUncheckedCreateInput = {
   location?: string | null
   stylePreference?: string | null
   generationCount?: number
+  provider?: string | null
+  model?: string | null
+  success: boolean
+  durationMs?: number | null
+  tokensUsed?: number | null
+  requestId: string
   createdAt?: Date | string
+  creditsConsumed?: number | null
+  creditCategory?: string | null
 }
 
 export type AIUsageUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  projectId?: Prisma.StringFieldUpdateOperationsInput | string
   businessName?: Prisma.StringFieldUpdateOperationsInput | string
   industry?: Prisma.StringFieldUpdateOperationsInput | string
   targetAudience?: Prisma.StringFieldUpdateOperationsInput | string
@@ -383,7 +509,16 @@ export type AIUsageUpdateInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stylePreference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   generationCount?: Prisma.IntFieldUpdateOperationsInput | number
+  provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  success?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  durationMs?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tokensUsed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requestId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  creditsConsumed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  creditCategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  project?: Prisma.ProjectUpdateOneRequiredWithoutAiUsageNestedInput
 }
 
 export type AIUsageUncheckedUpdateInput = {
@@ -398,7 +533,15 @@ export type AIUsageUncheckedUpdateInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stylePreference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   generationCount?: Prisma.IntFieldUpdateOperationsInput | number
+  provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  success?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  durationMs?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tokensUsed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requestId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  creditsConsumed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  creditCategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type AIUsageCreateManyInput = {
@@ -413,12 +556,19 @@ export type AIUsageCreateManyInput = {
   location?: string | null
   stylePreference?: string | null
   generationCount?: number
+  provider?: string | null
+  model?: string | null
+  success: boolean
+  durationMs?: number | null
+  tokensUsed?: number | null
+  requestId: string
   createdAt?: Date | string
+  creditsConsumed?: number | null
+  creditCategory?: string | null
 }
 
 export type AIUsageUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  projectId?: Prisma.StringFieldUpdateOperationsInput | string
   businessName?: Prisma.StringFieldUpdateOperationsInput | string
   industry?: Prisma.StringFieldUpdateOperationsInput | string
   targetAudience?: Prisma.StringFieldUpdateOperationsInput | string
@@ -428,7 +578,15 @@ export type AIUsageUpdateManyMutationInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stylePreference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   generationCount?: Prisma.IntFieldUpdateOperationsInput | number
+  provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  success?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  durationMs?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tokensUsed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requestId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  creditsConsumed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  creditCategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type AIUsageUncheckedUpdateManyInput = {
@@ -443,7 +601,25 @@ export type AIUsageUncheckedUpdateManyInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stylePreference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   generationCount?: Prisma.IntFieldUpdateOperationsInput | number
+  provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  success?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  durationMs?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tokensUsed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requestId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  creditsConsumed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  creditCategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type AIUsageListRelationFilter = {
+  every?: Prisma.AIUsageWhereInput
+  some?: Prisma.AIUsageWhereInput
+  none?: Prisma.AIUsageWhereInput
+}
+
+export type AIUsageOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type StringNullableListFilter<$PrismaModel = never> = {
@@ -466,11 +642,22 @@ export type AIUsageCountOrderByAggregateInput = {
   location?: Prisma.SortOrder
   stylePreference?: Prisma.SortOrder
   generationCount?: Prisma.SortOrder
+  provider?: Prisma.SortOrder
+  model?: Prisma.SortOrder
+  success?: Prisma.SortOrder
+  durationMs?: Prisma.SortOrder
+  tokensUsed?: Prisma.SortOrder
+  requestId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  creditsConsumed?: Prisma.SortOrder
+  creditCategory?: Prisma.SortOrder
 }
 
 export type AIUsageAvgOrderByAggregateInput = {
   generationCount?: Prisma.SortOrder
+  durationMs?: Prisma.SortOrder
+  tokensUsed?: Prisma.SortOrder
+  creditsConsumed?: Prisma.SortOrder
 }
 
 export type AIUsageMaxOrderByAggregateInput = {
@@ -484,7 +671,15 @@ export type AIUsageMaxOrderByAggregateInput = {
   location?: Prisma.SortOrder
   stylePreference?: Prisma.SortOrder
   generationCount?: Prisma.SortOrder
+  provider?: Prisma.SortOrder
+  model?: Prisma.SortOrder
+  success?: Prisma.SortOrder
+  durationMs?: Prisma.SortOrder
+  tokensUsed?: Prisma.SortOrder
+  requestId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  creditsConsumed?: Prisma.SortOrder
+  creditCategory?: Prisma.SortOrder
 }
 
 export type AIUsageMinOrderByAggregateInput = {
@@ -498,11 +693,64 @@ export type AIUsageMinOrderByAggregateInput = {
   location?: Prisma.SortOrder
   stylePreference?: Prisma.SortOrder
   generationCount?: Prisma.SortOrder
+  provider?: Prisma.SortOrder
+  model?: Prisma.SortOrder
+  success?: Prisma.SortOrder
+  durationMs?: Prisma.SortOrder
+  tokensUsed?: Prisma.SortOrder
+  requestId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  creditsConsumed?: Prisma.SortOrder
+  creditCategory?: Prisma.SortOrder
 }
 
 export type AIUsageSumOrderByAggregateInput = {
   generationCount?: Prisma.SortOrder
+  durationMs?: Prisma.SortOrder
+  tokensUsed?: Prisma.SortOrder
+  creditsConsumed?: Prisma.SortOrder
+}
+
+export type AIUsageCreateNestedManyWithoutProjectInput = {
+  create?: Prisma.XOR<Prisma.AIUsageCreateWithoutProjectInput, Prisma.AIUsageUncheckedCreateWithoutProjectInput> | Prisma.AIUsageCreateWithoutProjectInput[] | Prisma.AIUsageUncheckedCreateWithoutProjectInput[]
+  connectOrCreate?: Prisma.AIUsageCreateOrConnectWithoutProjectInput | Prisma.AIUsageCreateOrConnectWithoutProjectInput[]
+  createMany?: Prisma.AIUsageCreateManyProjectInputEnvelope
+  connect?: Prisma.AIUsageWhereUniqueInput | Prisma.AIUsageWhereUniqueInput[]
+}
+
+export type AIUsageUncheckedCreateNestedManyWithoutProjectInput = {
+  create?: Prisma.XOR<Prisma.AIUsageCreateWithoutProjectInput, Prisma.AIUsageUncheckedCreateWithoutProjectInput> | Prisma.AIUsageCreateWithoutProjectInput[] | Prisma.AIUsageUncheckedCreateWithoutProjectInput[]
+  connectOrCreate?: Prisma.AIUsageCreateOrConnectWithoutProjectInput | Prisma.AIUsageCreateOrConnectWithoutProjectInput[]
+  createMany?: Prisma.AIUsageCreateManyProjectInputEnvelope
+  connect?: Prisma.AIUsageWhereUniqueInput | Prisma.AIUsageWhereUniqueInput[]
+}
+
+export type AIUsageUpdateManyWithoutProjectNestedInput = {
+  create?: Prisma.XOR<Prisma.AIUsageCreateWithoutProjectInput, Prisma.AIUsageUncheckedCreateWithoutProjectInput> | Prisma.AIUsageCreateWithoutProjectInput[] | Prisma.AIUsageUncheckedCreateWithoutProjectInput[]
+  connectOrCreate?: Prisma.AIUsageCreateOrConnectWithoutProjectInput | Prisma.AIUsageCreateOrConnectWithoutProjectInput[]
+  upsert?: Prisma.AIUsageUpsertWithWhereUniqueWithoutProjectInput | Prisma.AIUsageUpsertWithWhereUniqueWithoutProjectInput[]
+  createMany?: Prisma.AIUsageCreateManyProjectInputEnvelope
+  set?: Prisma.AIUsageWhereUniqueInput | Prisma.AIUsageWhereUniqueInput[]
+  disconnect?: Prisma.AIUsageWhereUniqueInput | Prisma.AIUsageWhereUniqueInput[]
+  delete?: Prisma.AIUsageWhereUniqueInput | Prisma.AIUsageWhereUniqueInput[]
+  connect?: Prisma.AIUsageWhereUniqueInput | Prisma.AIUsageWhereUniqueInput[]
+  update?: Prisma.AIUsageUpdateWithWhereUniqueWithoutProjectInput | Prisma.AIUsageUpdateWithWhereUniqueWithoutProjectInput[]
+  updateMany?: Prisma.AIUsageUpdateManyWithWhereWithoutProjectInput | Prisma.AIUsageUpdateManyWithWhereWithoutProjectInput[]
+  deleteMany?: Prisma.AIUsageScalarWhereInput | Prisma.AIUsageScalarWhereInput[]
+}
+
+export type AIUsageUncheckedUpdateManyWithoutProjectNestedInput = {
+  create?: Prisma.XOR<Prisma.AIUsageCreateWithoutProjectInput, Prisma.AIUsageUncheckedCreateWithoutProjectInput> | Prisma.AIUsageCreateWithoutProjectInput[] | Prisma.AIUsageUncheckedCreateWithoutProjectInput[]
+  connectOrCreate?: Prisma.AIUsageCreateOrConnectWithoutProjectInput | Prisma.AIUsageCreateOrConnectWithoutProjectInput[]
+  upsert?: Prisma.AIUsageUpsertWithWhereUniqueWithoutProjectInput | Prisma.AIUsageUpsertWithWhereUniqueWithoutProjectInput[]
+  createMany?: Prisma.AIUsageCreateManyProjectInputEnvelope
+  set?: Prisma.AIUsageWhereUniqueInput | Prisma.AIUsageWhereUniqueInput[]
+  disconnect?: Prisma.AIUsageWhereUniqueInput | Prisma.AIUsageWhereUniqueInput[]
+  delete?: Prisma.AIUsageWhereUniqueInput | Prisma.AIUsageWhereUniqueInput[]
+  connect?: Prisma.AIUsageWhereUniqueInput | Prisma.AIUsageWhereUniqueInput[]
+  update?: Prisma.AIUsageUpdateWithWhereUniqueWithoutProjectInput | Prisma.AIUsageUpdateWithWhereUniqueWithoutProjectInput[]
+  updateMany?: Prisma.AIUsageUpdateManyWithWhereWithoutProjectInput | Prisma.AIUsageUpdateManyWithWhereWithoutProjectInput[]
+  deleteMany?: Prisma.AIUsageScalarWhereInput | Prisma.AIUsageScalarWhereInput[]
 }
 
 export type AIUsageCreateservicesInput = {
@@ -512,6 +760,198 @@ export type AIUsageCreateservicesInput = {
 export type AIUsageUpdateservicesInput = {
   set?: string[]
   push?: string | string[]
+}
+
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type AIUsageCreateWithoutProjectInput = {
+  id?: string
+  businessName: string
+  industry: string
+  targetAudience: string
+  goal: string
+  tone: string
+  services?: Prisma.AIUsageCreateservicesInput | string[]
+  location?: string | null
+  stylePreference?: string | null
+  generationCount?: number
+  provider?: string | null
+  model?: string | null
+  success: boolean
+  durationMs?: number | null
+  tokensUsed?: number | null
+  requestId: string
+  createdAt?: Date | string
+  creditsConsumed?: number | null
+  creditCategory?: string | null
+}
+
+export type AIUsageUncheckedCreateWithoutProjectInput = {
+  id?: string
+  businessName: string
+  industry: string
+  targetAudience: string
+  goal: string
+  tone: string
+  services?: Prisma.AIUsageCreateservicesInput | string[]
+  location?: string | null
+  stylePreference?: string | null
+  generationCount?: number
+  provider?: string | null
+  model?: string | null
+  success: boolean
+  durationMs?: number | null
+  tokensUsed?: number | null
+  requestId: string
+  createdAt?: Date | string
+  creditsConsumed?: number | null
+  creditCategory?: string | null
+}
+
+export type AIUsageCreateOrConnectWithoutProjectInput = {
+  where: Prisma.AIUsageWhereUniqueInput
+  create: Prisma.XOR<Prisma.AIUsageCreateWithoutProjectInput, Prisma.AIUsageUncheckedCreateWithoutProjectInput>
+}
+
+export type AIUsageCreateManyProjectInputEnvelope = {
+  data: Prisma.AIUsageCreateManyProjectInput | Prisma.AIUsageCreateManyProjectInput[]
+  skipDuplicates?: boolean
+}
+
+export type AIUsageUpsertWithWhereUniqueWithoutProjectInput = {
+  where: Prisma.AIUsageWhereUniqueInput
+  update: Prisma.XOR<Prisma.AIUsageUpdateWithoutProjectInput, Prisma.AIUsageUncheckedUpdateWithoutProjectInput>
+  create: Prisma.XOR<Prisma.AIUsageCreateWithoutProjectInput, Prisma.AIUsageUncheckedCreateWithoutProjectInput>
+}
+
+export type AIUsageUpdateWithWhereUniqueWithoutProjectInput = {
+  where: Prisma.AIUsageWhereUniqueInput
+  data: Prisma.XOR<Prisma.AIUsageUpdateWithoutProjectInput, Prisma.AIUsageUncheckedUpdateWithoutProjectInput>
+}
+
+export type AIUsageUpdateManyWithWhereWithoutProjectInput = {
+  where: Prisma.AIUsageScalarWhereInput
+  data: Prisma.XOR<Prisma.AIUsageUpdateManyMutationInput, Prisma.AIUsageUncheckedUpdateManyWithoutProjectInput>
+}
+
+export type AIUsageScalarWhereInput = {
+  AND?: Prisma.AIUsageScalarWhereInput | Prisma.AIUsageScalarWhereInput[]
+  OR?: Prisma.AIUsageScalarWhereInput[]
+  NOT?: Prisma.AIUsageScalarWhereInput | Prisma.AIUsageScalarWhereInput[]
+  id?: Prisma.StringFilter<"AIUsage"> | string
+  projectId?: Prisma.StringFilter<"AIUsage"> | string
+  businessName?: Prisma.StringFilter<"AIUsage"> | string
+  industry?: Prisma.StringFilter<"AIUsage"> | string
+  targetAudience?: Prisma.StringFilter<"AIUsage"> | string
+  goal?: Prisma.StringFilter<"AIUsage"> | string
+  tone?: Prisma.StringFilter<"AIUsage"> | string
+  services?: Prisma.StringNullableListFilter<"AIUsage">
+  location?: Prisma.StringNullableFilter<"AIUsage"> | string | null
+  stylePreference?: Prisma.StringNullableFilter<"AIUsage"> | string | null
+  generationCount?: Prisma.IntFilter<"AIUsage"> | number
+  provider?: Prisma.StringNullableFilter<"AIUsage"> | string | null
+  model?: Prisma.StringNullableFilter<"AIUsage"> | string | null
+  success?: Prisma.BoolFilter<"AIUsage"> | boolean
+  durationMs?: Prisma.IntNullableFilter<"AIUsage"> | number | null
+  tokensUsed?: Prisma.IntNullableFilter<"AIUsage"> | number | null
+  requestId?: Prisma.StringFilter<"AIUsage"> | string
+  createdAt?: Prisma.DateTimeFilter<"AIUsage"> | Date | string
+  creditsConsumed?: Prisma.IntNullableFilter<"AIUsage"> | number | null
+  creditCategory?: Prisma.StringNullableFilter<"AIUsage"> | string | null
+}
+
+export type AIUsageCreateManyProjectInput = {
+  id?: string
+  businessName: string
+  industry: string
+  targetAudience: string
+  goal: string
+  tone: string
+  services?: Prisma.AIUsageCreateservicesInput | string[]
+  location?: string | null
+  stylePreference?: string | null
+  generationCount?: number
+  provider?: string | null
+  model?: string | null
+  success: boolean
+  durationMs?: number | null
+  tokensUsed?: number | null
+  requestId: string
+  createdAt?: Date | string
+  creditsConsumed?: number | null
+  creditCategory?: string | null
+}
+
+export type AIUsageUpdateWithoutProjectInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  businessName?: Prisma.StringFieldUpdateOperationsInput | string
+  industry?: Prisma.StringFieldUpdateOperationsInput | string
+  targetAudience?: Prisma.StringFieldUpdateOperationsInput | string
+  goal?: Prisma.StringFieldUpdateOperationsInput | string
+  tone?: Prisma.StringFieldUpdateOperationsInput | string
+  services?: Prisma.AIUsageUpdateservicesInput | string[]
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stylePreference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  generationCount?: Prisma.IntFieldUpdateOperationsInput | number
+  provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  success?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  durationMs?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tokensUsed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requestId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  creditsConsumed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  creditCategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type AIUsageUncheckedUpdateWithoutProjectInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  businessName?: Prisma.StringFieldUpdateOperationsInput | string
+  industry?: Prisma.StringFieldUpdateOperationsInput | string
+  targetAudience?: Prisma.StringFieldUpdateOperationsInput | string
+  goal?: Prisma.StringFieldUpdateOperationsInput | string
+  tone?: Prisma.StringFieldUpdateOperationsInput | string
+  services?: Prisma.AIUsageUpdateservicesInput | string[]
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stylePreference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  generationCount?: Prisma.IntFieldUpdateOperationsInput | number
+  provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  success?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  durationMs?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tokensUsed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requestId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  creditsConsumed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  creditCategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type AIUsageUncheckedUpdateManyWithoutProjectInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  businessName?: Prisma.StringFieldUpdateOperationsInput | string
+  industry?: Prisma.StringFieldUpdateOperationsInput | string
+  targetAudience?: Prisma.StringFieldUpdateOperationsInput | string
+  goal?: Prisma.StringFieldUpdateOperationsInput | string
+  tone?: Prisma.StringFieldUpdateOperationsInput | string
+  services?: Prisma.AIUsageUpdateservicesInput | string[]
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stylePreference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  generationCount?: Prisma.IntFieldUpdateOperationsInput | number
+  provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  success?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  durationMs?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tokensUsed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requestId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  creditsConsumed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  creditCategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -528,7 +968,16 @@ export type AIUsageSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   location?: boolean
   stylePreference?: boolean
   generationCount?: boolean
+  provider?: boolean
+  model?: boolean
+  success?: boolean
+  durationMs?: boolean
+  tokensUsed?: boolean
+  requestId?: boolean
   createdAt?: boolean
+  creditsConsumed?: boolean
+  creditCategory?: boolean
+  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["aIUsage"]>
 
 export type AIUsageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -543,7 +992,16 @@ export type AIUsageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   location?: boolean
   stylePreference?: boolean
   generationCount?: boolean
+  provider?: boolean
+  model?: boolean
+  success?: boolean
+  durationMs?: boolean
+  tokensUsed?: boolean
+  requestId?: boolean
   createdAt?: boolean
+  creditsConsumed?: boolean
+  creditCategory?: boolean
+  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["aIUsage"]>
 
 export type AIUsageSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -558,7 +1016,16 @@ export type AIUsageSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   location?: boolean
   stylePreference?: boolean
   generationCount?: boolean
+  provider?: boolean
+  model?: boolean
+  success?: boolean
+  durationMs?: boolean
+  tokensUsed?: boolean
+  requestId?: boolean
   createdAt?: boolean
+  creditsConsumed?: boolean
+  creditCategory?: boolean
+  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["aIUsage"]>
 
 export type AIUsageSelectScalar = {
@@ -573,14 +1040,33 @@ export type AIUsageSelectScalar = {
   location?: boolean
   stylePreference?: boolean
   generationCount?: boolean
+  provider?: boolean
+  model?: boolean
+  success?: boolean
+  durationMs?: boolean
+  tokensUsed?: boolean
+  requestId?: boolean
   createdAt?: boolean
+  creditsConsumed?: boolean
+  creditCategory?: boolean
 }
 
-export type AIUsageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "projectId" | "businessName" | "industry" | "targetAudience" | "goal" | "tone" | "services" | "location" | "stylePreference" | "generationCount" | "createdAt", ExtArgs["result"]["aIUsage"]>
+export type AIUsageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "projectId" | "businessName" | "industry" | "targetAudience" | "goal" | "tone" | "services" | "location" | "stylePreference" | "generationCount" | "provider" | "model" | "success" | "durationMs" | "tokensUsed" | "requestId" | "createdAt" | "creditsConsumed" | "creditCategory", ExtArgs["result"]["aIUsage"]>
+export type AIUsageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
+}
+export type AIUsageIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
+}
+export type AIUsageIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
+}
 
 export type $AIUsagePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "AIUsage"
-  objects: {}
+  objects: {
+    project: Prisma.$ProjectPayload<ExtArgs>
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     projectId: string
@@ -593,7 +1079,15 @@ export type $AIUsagePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     location: string | null
     stylePreference: string | null
     generationCount: number
+    provider: string | null
+    model: string | null
+    success: boolean
+    durationMs: number | null
+    tokensUsed: number | null
+    requestId: string
     createdAt: Date
+    creditsConsumed: number | null
+    creditCategory: string | null
   }, ExtArgs["result"]["aIUsage"]>
   composites: {}
 }
@@ -988,6 +1482,7 @@ readonly fields: AIUsageFieldRefs;
  */
 export interface Prisma__AIUsageClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  project<T extends Prisma.ProjectDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProjectDefaultArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1028,7 +1523,15 @@ export interface AIUsageFieldRefs {
   readonly location: Prisma.FieldRef<"AIUsage", 'String'>
   readonly stylePreference: Prisma.FieldRef<"AIUsage", 'String'>
   readonly generationCount: Prisma.FieldRef<"AIUsage", 'Int'>
+  readonly provider: Prisma.FieldRef<"AIUsage", 'String'>
+  readonly model: Prisma.FieldRef<"AIUsage", 'String'>
+  readonly success: Prisma.FieldRef<"AIUsage", 'Boolean'>
+  readonly durationMs: Prisma.FieldRef<"AIUsage", 'Int'>
+  readonly tokensUsed: Prisma.FieldRef<"AIUsage", 'Int'>
+  readonly requestId: Prisma.FieldRef<"AIUsage", 'String'>
   readonly createdAt: Prisma.FieldRef<"AIUsage", 'DateTime'>
+  readonly creditsConsumed: Prisma.FieldRef<"AIUsage", 'Int'>
+  readonly creditCategory: Prisma.FieldRef<"AIUsage", 'String'>
 }
     
 
@@ -1045,6 +1548,10 @@ export type AIUsageFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Omit specific fields from the AIUsage
    */
   omit?: Prisma.AIUsageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AIUsageInclude<ExtArgs> | null
   /**
    * Filter, which AIUsage to fetch.
    */
@@ -1064,6 +1571,10 @@ export type AIUsageFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extension
    */
   omit?: Prisma.AIUsageOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AIUsageInclude<ExtArgs> | null
+  /**
    * Filter, which AIUsage to fetch.
    */
   where: Prisma.AIUsageWhereUniqueInput
@@ -1081,6 +1592,10 @@ export type AIUsageFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the AIUsage
    */
   omit?: Prisma.AIUsageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AIUsageInclude<ExtArgs> | null
   /**
    * Filter, which AIUsage to fetch.
    */
@@ -1130,6 +1645,10 @@ export type AIUsageFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions
    */
   omit?: Prisma.AIUsageOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AIUsageInclude<ExtArgs> | null
+  /**
    * Filter, which AIUsage to fetch.
    */
   where?: Prisma.AIUsageWhereInput
@@ -1177,6 +1696,10 @@ export type AIUsageFindManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the AIUsage
    */
   omit?: Prisma.AIUsageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AIUsageInclude<ExtArgs> | null
   /**
    * Filter, which AIUsages to fetch.
    */
@@ -1226,6 +1749,10 @@ export type AIUsageCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   omit?: Prisma.AIUsageOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AIUsageInclude<ExtArgs> | null
+  /**
    * The data needed to create a AIUsage.
    */
   data: Prisma.XOR<Prisma.AIUsageCreateInput, Prisma.AIUsageUncheckedCreateInput>
@@ -1259,6 +1786,10 @@ export type AIUsageCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    */
   data: Prisma.AIUsageCreateManyInput | Prisma.AIUsageCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AIUsageIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1273,6 +1804,10 @@ export type AIUsageUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the AIUsage
    */
   omit?: Prisma.AIUsageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AIUsageInclude<ExtArgs> | null
   /**
    * The data needed to update a AIUsage.
    */
@@ -1325,6 +1860,10 @@ export type AIUsageUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    * Limit how many AIUsages to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AIUsageIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1339,6 +1878,10 @@ export type AIUsageUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the AIUsage
    */
   omit?: Prisma.AIUsageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AIUsageInclude<ExtArgs> | null
   /**
    * The filter to search for the AIUsage to update in case it exists.
    */
@@ -1365,6 +1908,10 @@ export type AIUsageDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the AIUsage
    */
   omit?: Prisma.AIUsageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AIUsageInclude<ExtArgs> | null
   /**
    * Filter which AIUsage to delete.
    */
@@ -1397,4 +1944,8 @@ export type AIUsageDefaultArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the AIUsage
    */
   omit?: Prisma.AIUsageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AIUsageInclude<ExtArgs> | null
 }

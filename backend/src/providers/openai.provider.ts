@@ -69,7 +69,7 @@ export class OpenAIProvider implements AIService.AIProviderAdapter {
             modelUsed: this.model,
             promptTokens: response.usage?.prompt_tokens,
             completionTokens: response.usage?.completion_tokens,
-          },
+          } as AIGenerateResponse,
           warnings: validation.errors,
         }
       }

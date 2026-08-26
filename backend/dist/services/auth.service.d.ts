@@ -1,3 +1,4 @@
+import { User } from "../generated/client";
 export interface AuthUser {
     id: string;
     name: string | null;

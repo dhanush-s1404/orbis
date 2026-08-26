@@ -31,8 +31,8 @@ exports.PaymentStatus = {
     PENDING: 'PENDING',
     SUCCESS: 'SUCCESS',
     FAILED: 'FAILED',
-    CANCELLED: 'CANCELLED',
-    REFUNDED: 'REFUNDED'
+    REFUNDED: 'REFUNDED',
+    CANCELLED: 'CANCELLED'
 };
 exports.ProjectStatus = {
     SUBMITTED: 'SUBMITTED',
@@ -44,7 +44,8 @@ exports.ProjectStatus = {
     CUSTOMER_REVIEW: 'CUSTOMER_REVIEW',
     REVISIONS: 'REVISIONS',
     DEPLOYMENT: 'DEPLOYMENT',
-    COMPLETED: 'COMPLETED'
+    COMPLETED: 'COMPLETED',
+    ARCHIVED: 'ARCHIVED'
 };
 exports.ProjectRequirementType = {
     WEBSITE_TYPE: 'WEBSITE_TYPE',

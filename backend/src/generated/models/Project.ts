@@ -332,6 +332,7 @@ export type ProjectWhereInput = {
   requirements?: Prisma.ProjectRequirementListRelationFilter
   messages?: Prisma.ProjectMessageListRelationFilter
   files?: Prisma.ProjectFileListRelationFilter
+  aiUsage?: Prisma.AIUsageListRelationFilter
 }
 
 export type ProjectOrderByWithRelationInput = {
@@ -357,6 +358,7 @@ export type ProjectOrderByWithRelationInput = {
   requirements?: Prisma.ProjectRequirementOrderByRelationAggregateInput
   messages?: Prisma.ProjectMessageOrderByRelationAggregateInput
   files?: Prisma.ProjectFileOrderByRelationAggregateInput
+  aiUsage?: Prisma.AIUsageOrderByRelationAggregateInput
 }
 
 export type ProjectWhereUniqueInput = Prisma.AtLeast<{
@@ -385,6 +387,7 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   requirements?: Prisma.ProjectRequirementListRelationFilter
   messages?: Prisma.ProjectMessageListRelationFilter
   files?: Prisma.ProjectFileListRelationFilter
+  aiUsage?: Prisma.AIUsageListRelationFilter
 }, "id" | "projectId">
 
 export type ProjectOrderByWithAggregationInput = {
@@ -459,6 +462,7 @@ export type ProjectCreateInput = {
   requirements?: Prisma.ProjectRequirementCreateNestedManyWithoutProjectInput
   messages?: Prisma.ProjectMessageCreateNestedManyWithoutProjectInput
   files?: Prisma.ProjectFileCreateNestedManyWithoutProjectInput
+  aiUsage?: Prisma.AIUsageCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateInput = {
@@ -483,6 +487,7 @@ export type ProjectUncheckedCreateInput = {
   requirements?: Prisma.ProjectRequirementUncheckedCreateNestedManyWithoutProjectInput
   messages?: Prisma.ProjectMessageUncheckedCreateNestedManyWithoutProjectInput
   files?: Prisma.ProjectFileUncheckedCreateNestedManyWithoutProjectInput
+  aiUsage?: Prisma.AIUsageUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUpdateInput = {
@@ -507,6 +512,7 @@ export type ProjectUpdateInput = {
   requirements?: Prisma.ProjectRequirementUpdateManyWithoutProjectNestedInput
   messages?: Prisma.ProjectMessageUpdateManyWithoutProjectNestedInput
   files?: Prisma.ProjectFileUpdateManyWithoutProjectNestedInput
+  aiUsage?: Prisma.AIUsageUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateInput = {
@@ -531,6 +537,7 @@ export type ProjectUncheckedUpdateInput = {
   requirements?: Prisma.ProjectRequirementUncheckedUpdateManyWithoutProjectNestedInput
   messages?: Prisma.ProjectMessageUncheckedUpdateManyWithoutProjectNestedInput
   files?: Prisma.ProjectFileUncheckedUpdateManyWithoutProjectNestedInput
+  aiUsage?: Prisma.AIUsageUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateManyInput = {
@@ -773,6 +780,20 @@ export type ProjectUpdateOneRequiredWithoutFilesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutFilesInput, Prisma.ProjectUpdateWithoutFilesInput>, Prisma.ProjectUncheckedUpdateWithoutFilesInput>
 }
 
+export type ProjectCreateNestedOneWithoutAiUsageInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutAiUsageInput, Prisma.ProjectUncheckedCreateWithoutAiUsageInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutAiUsageInput
+  connect?: Prisma.ProjectWhereUniqueInput
+}
+
+export type ProjectUpdateOneRequiredWithoutAiUsageNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutAiUsageInput, Prisma.ProjectUncheckedCreateWithoutAiUsageInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutAiUsageInput
+  upsert?: Prisma.ProjectUpsertWithoutAiUsageInput
+  connect?: Prisma.ProjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutAiUsageInput, Prisma.ProjectUpdateWithoutAiUsageInput>, Prisma.ProjectUncheckedUpdateWithoutAiUsageInput>
+}
+
 export type ProjectCreateWithoutUserInput = {
   id?: string
   projectId: string
@@ -794,6 +815,7 @@ export type ProjectCreateWithoutUserInput = {
   requirements?: Prisma.ProjectRequirementCreateNestedManyWithoutProjectInput
   messages?: Prisma.ProjectMessageCreateNestedManyWithoutProjectInput
   files?: Prisma.ProjectFileCreateNestedManyWithoutProjectInput
+  aiUsage?: Prisma.AIUsageCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutUserInput = {
@@ -817,6 +839,7 @@ export type ProjectUncheckedCreateWithoutUserInput = {
   requirements?: Prisma.ProjectRequirementUncheckedCreateNestedManyWithoutProjectInput
   messages?: Prisma.ProjectMessageUncheckedCreateNestedManyWithoutProjectInput
   files?: Prisma.ProjectFileUncheckedCreateNestedManyWithoutProjectInput
+  aiUsage?: Prisma.AIUsageUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutUserInput = {
@@ -890,6 +913,7 @@ export type ProjectCreateWithoutRequirementsInput = {
   user: Prisma.UserCreateNestedOneWithoutProjectsInput
   messages?: Prisma.ProjectMessageCreateNestedManyWithoutProjectInput
   files?: Prisma.ProjectFileCreateNestedManyWithoutProjectInput
+  aiUsage?: Prisma.AIUsageCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutRequirementsInput = {
@@ -913,6 +937,7 @@ export type ProjectUncheckedCreateWithoutRequirementsInput = {
   publishedCount?: number
   messages?: Prisma.ProjectMessageUncheckedCreateNestedManyWithoutProjectInput
   files?: Prisma.ProjectFileUncheckedCreateNestedManyWithoutProjectInput
+  aiUsage?: Prisma.AIUsageUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutRequirementsInput = {
@@ -952,6 +977,7 @@ export type ProjectUpdateWithoutRequirementsInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutProjectsNestedInput
   messages?: Prisma.ProjectMessageUpdateManyWithoutProjectNestedInput
   files?: Prisma.ProjectFileUpdateManyWithoutProjectNestedInput
+  aiUsage?: Prisma.AIUsageUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutRequirementsInput = {
@@ -975,6 +1001,7 @@ export type ProjectUncheckedUpdateWithoutRequirementsInput = {
   publishedCount?: Prisma.IntFieldUpdateOperationsInput | number
   messages?: Prisma.ProjectMessageUncheckedUpdateManyWithoutProjectNestedInput
   files?: Prisma.ProjectFileUncheckedUpdateManyWithoutProjectNestedInput
+  aiUsage?: Prisma.AIUsageUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutMessagesInput = {
@@ -998,6 +1025,7 @@ export type ProjectCreateWithoutMessagesInput = {
   user: Prisma.UserCreateNestedOneWithoutProjectsInput
   requirements?: Prisma.ProjectRequirementCreateNestedManyWithoutProjectInput
   files?: Prisma.ProjectFileCreateNestedManyWithoutProjectInput
+  aiUsage?: Prisma.AIUsageCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutMessagesInput = {
@@ -1021,6 +1049,7 @@ export type ProjectUncheckedCreateWithoutMessagesInput = {
   publishedCount?: number
   requirements?: Prisma.ProjectRequirementUncheckedCreateNestedManyWithoutProjectInput
   files?: Prisma.ProjectFileUncheckedCreateNestedManyWithoutProjectInput
+  aiUsage?: Prisma.AIUsageUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutMessagesInput = {
@@ -1060,6 +1089,7 @@ export type ProjectUpdateWithoutMessagesInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutProjectsNestedInput
   requirements?: Prisma.ProjectRequirementUpdateManyWithoutProjectNestedInput
   files?: Prisma.ProjectFileUpdateManyWithoutProjectNestedInput
+  aiUsage?: Prisma.AIUsageUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutMessagesInput = {
@@ -1083,6 +1113,7 @@ export type ProjectUncheckedUpdateWithoutMessagesInput = {
   publishedCount?: Prisma.IntFieldUpdateOperationsInput | number
   requirements?: Prisma.ProjectRequirementUncheckedUpdateManyWithoutProjectNestedInput
   files?: Prisma.ProjectFileUncheckedUpdateManyWithoutProjectNestedInput
+  aiUsage?: Prisma.AIUsageUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutFilesInput = {
@@ -1106,6 +1137,7 @@ export type ProjectCreateWithoutFilesInput = {
   user: Prisma.UserCreateNestedOneWithoutProjectsInput
   requirements?: Prisma.ProjectRequirementCreateNestedManyWithoutProjectInput
   messages?: Prisma.ProjectMessageCreateNestedManyWithoutProjectInput
+  aiUsage?: Prisma.AIUsageCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutFilesInput = {
@@ -1129,6 +1161,7 @@ export type ProjectUncheckedCreateWithoutFilesInput = {
   publishedCount?: number
   requirements?: Prisma.ProjectRequirementUncheckedCreateNestedManyWithoutProjectInput
   messages?: Prisma.ProjectMessageUncheckedCreateNestedManyWithoutProjectInput
+  aiUsage?: Prisma.AIUsageUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutFilesInput = {
@@ -1168,6 +1201,7 @@ export type ProjectUpdateWithoutFilesInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutProjectsNestedInput
   requirements?: Prisma.ProjectRequirementUpdateManyWithoutProjectNestedInput
   messages?: Prisma.ProjectMessageUpdateManyWithoutProjectNestedInput
+  aiUsage?: Prisma.AIUsageUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutFilesInput = {
@@ -1191,6 +1225,119 @@ export type ProjectUncheckedUpdateWithoutFilesInput = {
   publishedCount?: Prisma.IntFieldUpdateOperationsInput | number
   requirements?: Prisma.ProjectRequirementUncheckedUpdateManyWithoutProjectNestedInput
   messages?: Prisma.ProjectMessageUncheckedUpdateManyWithoutProjectNestedInput
+  aiUsage?: Prisma.AIUsageUncheckedUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectCreateWithoutAiUsageInput = {
+  id?: string
+  projectId: string
+  name: string
+  description?: string | null
+  budget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  timeline: string
+  status?: $Enums.ProjectStatus
+  progress?: number
+  assignedDeveloper?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  builderState?: string | null
+  templateId?: string | null
+  publishStatus?: string | null
+  publishedAt?: Date | string | null
+  publishedSlug?: string | null
+  publishedCount?: number
+  user: Prisma.UserCreateNestedOneWithoutProjectsInput
+  requirements?: Prisma.ProjectRequirementCreateNestedManyWithoutProjectInput
+  messages?: Prisma.ProjectMessageCreateNestedManyWithoutProjectInput
+  files?: Prisma.ProjectFileCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectUncheckedCreateWithoutAiUsageInput = {
+  id?: string
+  projectId: string
+  userId: string
+  name: string
+  description?: string | null
+  budget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  timeline: string
+  status?: $Enums.ProjectStatus
+  progress?: number
+  assignedDeveloper?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  builderState?: string | null
+  templateId?: string | null
+  publishStatus?: string | null
+  publishedAt?: Date | string | null
+  publishedSlug?: string | null
+  publishedCount?: number
+  requirements?: Prisma.ProjectRequirementUncheckedCreateNestedManyWithoutProjectInput
+  messages?: Prisma.ProjectMessageUncheckedCreateNestedManyWithoutProjectInput
+  files?: Prisma.ProjectFileUncheckedCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectCreateOrConnectWithoutAiUsageInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutAiUsageInput, Prisma.ProjectUncheckedCreateWithoutAiUsageInput>
+}
+
+export type ProjectUpsertWithoutAiUsageInput = {
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutAiUsageInput, Prisma.ProjectUncheckedUpdateWithoutAiUsageInput>
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutAiUsageInput, Prisma.ProjectUncheckedCreateWithoutAiUsageInput>
+  where?: Prisma.ProjectWhereInput
+}
+
+export type ProjectUpdateToOneWithWhereWithoutAiUsageInput = {
+  where?: Prisma.ProjectWhereInput
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutAiUsageInput, Prisma.ProjectUncheckedUpdateWithoutAiUsageInput>
+}
+
+export type ProjectUpdateWithoutAiUsageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  budget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  timeline?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+  progress?: Prisma.IntFieldUpdateOperationsInput | number
+  assignedDeveloper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  builderState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  publishStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  publishedSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  publishedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  user?: Prisma.UserUpdateOneRequiredWithoutProjectsNestedInput
+  requirements?: Prisma.ProjectRequirementUpdateManyWithoutProjectNestedInput
+  messages?: Prisma.ProjectMessageUpdateManyWithoutProjectNestedInput
+  files?: Prisma.ProjectFileUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectUncheckedUpdateWithoutAiUsageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  budget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  timeline?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+  progress?: Prisma.IntFieldUpdateOperationsInput | number
+  assignedDeveloper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  builderState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  publishStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  publishedSlug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  publishedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  requirements?: Prisma.ProjectRequirementUncheckedUpdateManyWithoutProjectNestedInput
+  messages?: Prisma.ProjectMessageUncheckedUpdateManyWithoutProjectNestedInput
+  files?: Prisma.ProjectFileUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateManyUserInput = {
@@ -1234,6 +1381,7 @@ export type ProjectUpdateWithoutUserInput = {
   requirements?: Prisma.ProjectRequirementUpdateManyWithoutProjectNestedInput
   messages?: Prisma.ProjectMessageUpdateManyWithoutProjectNestedInput
   files?: Prisma.ProjectFileUpdateManyWithoutProjectNestedInput
+  aiUsage?: Prisma.AIUsageUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutUserInput = {
@@ -1257,6 +1405,7 @@ export type ProjectUncheckedUpdateWithoutUserInput = {
   requirements?: Prisma.ProjectRequirementUncheckedUpdateManyWithoutProjectNestedInput
   messages?: Prisma.ProjectMessageUncheckedUpdateManyWithoutProjectNestedInput
   files?: Prisma.ProjectFileUncheckedUpdateManyWithoutProjectNestedInput
+  aiUsage?: Prisma.AIUsageUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateManyWithoutUserInput = {
@@ -1288,12 +1437,14 @@ export type ProjectCountOutputType = {
   requirements: number
   messages: number
   files: number
+  aiUsage: number
 }
 
 export type ProjectCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   requirements?: boolean | ProjectCountOutputTypeCountRequirementsArgs
   messages?: boolean | ProjectCountOutputTypeCountMessagesArgs
   files?: boolean | ProjectCountOutputTypeCountFilesArgs
+  aiUsage?: boolean | ProjectCountOutputTypeCountAiUsageArgs
 }
 
 /**
@@ -1327,6 +1478,13 @@ export type ProjectCountOutputTypeCountFilesArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.ProjectFileWhereInput
 }
 
+/**
+ * ProjectCountOutputType without action
+ */
+export type ProjectCountOutputTypeCountAiUsageArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AIUsageWhereInput
+}
+
 
 export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1351,6 +1509,7 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   requirements?: boolean | Prisma.Project$requirementsArgs<ExtArgs>
   messages?: boolean | Prisma.Project$messagesArgs<ExtArgs>
   files?: boolean | Prisma.Project$filesArgs<ExtArgs>
+  aiUsage?: boolean | Prisma.Project$aiUsageArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["project"]>
 
@@ -1425,6 +1584,7 @@ export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   requirements?: boolean | Prisma.Project$requirementsArgs<ExtArgs>
   messages?: boolean | Prisma.Project$messagesArgs<ExtArgs>
   files?: boolean | Prisma.Project$filesArgs<ExtArgs>
+  aiUsage?: boolean | Prisma.Project$aiUsageArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProjectIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1441,6 +1601,7 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     requirements: Prisma.$ProjectRequirementPayload<ExtArgs>[]
     messages: Prisma.$ProjectMessagePayload<ExtArgs>[]
     files: Prisma.$ProjectFilePayload<ExtArgs>[]
+    aiUsage: Prisma.$AIUsagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1859,6 +2020,7 @@ export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends runtime.
   requirements<T extends Prisma.Project$requirementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$requirementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectRequirementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   messages<T extends Prisma.Project$messagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   files<T extends Prisma.Project$filesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$filesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectFilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  aiUsage<T extends Prisma.Project$aiUsageArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$aiUsageArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AIUsagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2376,6 +2538,30 @@ export type Project$filesArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.ProjectFileScalarFieldEnum | Prisma.ProjectFileScalarFieldEnum[]
+}
+
+/**
+ * Project.aiUsage
+ */
+export type Project$aiUsageArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AIUsage
+   */
+  select?: Prisma.AIUsageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AIUsage
+   */
+  omit?: Prisma.AIUsageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AIUsageInclude<ExtArgs> | null
+  where?: Prisma.AIUsageWhereInput
+  orderBy?: Prisma.AIUsageOrderByWithRelationInput | Prisma.AIUsageOrderByWithRelationInput[]
+  cursor?: Prisma.AIUsageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AIUsageScalarFieldEnum | Prisma.AIUsageScalarFieldEnum[]
 }
 
 /**

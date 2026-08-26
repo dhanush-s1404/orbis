@@ -332,13 +332,6 @@ export type ProductImageUncheckedUpdateManyWithoutProductNestedInput = {
     updateMany?: Prisma.ProductImageUpdateManyWithWhereWithoutProductInput | Prisma.ProductImageUpdateManyWithWhereWithoutProductInput[];
     deleteMany?: Prisma.ProductImageScalarWhereInput | Prisma.ProductImageScalarWhereInput[];
 };
-export type IntFieldUpdateOperationsInput = {
-    set?: number;
-    increment?: number;
-    decrement?: number;
-    multiply?: number;
-    divide?: number;
-};
 export type ProductImageCreateWithoutProductInput = {
     id?: string;
     url: string;

@@ -40,6 +40,8 @@ export declare const ModelName: {
     readonly ProjectFile: "ProjectFile";
     readonly Notification: "Notification";
     readonly AuditLog: "AuditLog";
+    readonly Template: "Template";
+    readonly AIUsage: "AIUsage";
 };
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
 export declare const TransactionIsolationLevel: {
@@ -59,6 +61,11 @@ export declare const UserScalarFieldEnum: {
     readonly emailVerified: "emailVerified";
     readonly createdAt: "createdAt";
     readonly updatedAt: "updatedAt";
+    readonly passwordResetToken: "passwordResetToken";
+    readonly passwordResetExpires: "passwordResetExpires";
+    readonly emailVerificationToken: "emailVerificationToken";
+    readonly emailVerificationSent: "emailVerificationSent";
+    readonly credits: "credits";
 };
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum];
 export declare const CategoryScalarFieldEnum: {
@@ -140,6 +147,12 @@ export declare const ProjectScalarFieldEnum: {
     readonly assignedDeveloper: "assignedDeveloper";
     readonly createdAt: "createdAt";
     readonly updatedAt: "updatedAt";
+    readonly builderState: "builderState";
+    readonly templateId: "templateId";
+    readonly publishStatus: "publishStatus";
+    readonly publishedAt: "publishedAt";
+    readonly publishedSlug: "publishedSlug";
+    readonly publishedCount: "publishedCount";
 };
 export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum];
 export declare const ProjectRequirementScalarFieldEnum: {
@@ -174,7 +187,6 @@ export declare const NotificationScalarFieldEnum: {
     readonly type: "type";
     readonly message: "message";
     readonly read: "read";
-    readonly createdAt: "createdAt";
 };
 export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum];
 export declare const AuditLogScalarFieldEnum: {
@@ -187,6 +199,44 @@ export declare const AuditLogScalarFieldEnum: {
     readonly createdAt: "createdAt";
 };
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum];
+export declare const TemplateScalarFieldEnum: {
+    readonly id: "id";
+    readonly name: "name";
+    readonly description: "description";
+    readonly previewUrl: "previewUrl";
+    readonly category: "category";
+    readonly pages: "pages";
+    readonly sections: "sections";
+    readonly defaultContent: "defaultContent";
+    readonly defaultStyles: "defaultStyles";
+    readonly isActive: "isActive";
+    readonly createdAt: "createdAt";
+    readonly updatedAt: "updatedAt";
+};
+export type TemplateScalarFieldEnum = (typeof TemplateScalarFieldEnum)[keyof typeof TemplateScalarFieldEnum];
+export declare const AIUsageScalarFieldEnum: {
+    readonly id: "id";
+    readonly projectId: "projectId";
+    readonly businessName: "businessName";
+    readonly industry: "industry";
+    readonly targetAudience: "targetAudience";
+    readonly goal: "goal";
+    readonly tone: "tone";
+    readonly services: "services";
+    readonly location: "location";
+    readonly stylePreference: "stylePreference";
+    readonly generationCount: "generationCount";
+    readonly provider: "provider";
+    readonly model: "model";
+    readonly success: "success";
+    readonly durationMs: "durationMs";
+    readonly tokensUsed: "tokensUsed";
+    readonly requestId: "requestId";
+    readonly createdAt: "createdAt";
+    readonly creditsConsumed: "creditsConsumed";
+    readonly creditCategory: "creditCategory";
+};
+export type AIUsageScalarFieldEnum = (typeof AIUsageScalarFieldEnum)[keyof typeof AIUsageScalarFieldEnum];
 export declare const SortOrder: {
     readonly asc: "asc";
     readonly desc: "desc";

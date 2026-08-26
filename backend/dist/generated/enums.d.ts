@@ -22,8 +22,8 @@ export declare const PaymentStatus: {
     readonly PENDING: "PENDING";
     readonly SUCCESS: "SUCCESS";
     readonly FAILED: "FAILED";
-    readonly CANCELLED: "CANCELLED";
     readonly REFUNDED: "REFUNDED";
+    readonly CANCELLED: "CANCELLED";
 };
 export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus];
 export declare const ProjectStatus: {
@@ -37,6 +37,7 @@ export declare const ProjectStatus: {
     readonly REVISIONS: "REVISIONS";
     readonly DEPLOYMENT: "DEPLOYMENT";
     readonly COMPLETED: "COMPLETED";
+    readonly ARCHIVED: "ARCHIVED";
 };
 export type ProjectStatus = (typeof ProjectStatus)[keyof typeof ProjectStatus];
 export declare const ProjectRequirementType: {

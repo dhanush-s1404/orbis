@@ -4,10 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
-const client_1 = __importDefault(require("@prisma/client"));
+const client_1 = require("../generated/client");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const prisma = new client_1.default();
+const prisma = new client_1.PrismaClient();
 class AuthService {
     static async register(name, email, password) {
         const hashedPassword = await bcryptjs_1.default.hash(password, 12);

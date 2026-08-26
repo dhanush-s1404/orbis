@@ -20,8 +20,18 @@ export type UserModel = runtime.Types.Result.DefaultSelection<Prisma.$UserPayloa
 
 export type AggregateUser = {
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
+}
+
+export type UserAvgAggregateOutputType = {
+  credits: number | null
+}
+
+export type UserSumAggregateOutputType = {
+  credits: number | null
 }
 
 export type UserMinAggregateOutputType = {
@@ -38,6 +48,7 @@ export type UserMinAggregateOutputType = {
   passwordResetExpires: Date | null
   emailVerificationToken: string | null
   emailVerificationSent: Date | null
+  credits: number | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -54,6 +65,7 @@ export type UserMaxAggregateOutputType = {
   passwordResetExpires: Date | null
   emailVerificationToken: string | null
   emailVerificationSent: Date | null
+  credits: number | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -70,9 +82,18 @@ export type UserCountAggregateOutputType = {
   passwordResetExpires: number
   emailVerificationToken: number
   emailVerificationSent: number
+  credits: number
   _all: number
 }
 
+
+export type UserAvgAggregateInputType = {
+  credits?: true
+}
+
+export type UserSumAggregateInputType = {
+  credits?: true
+}
 
 export type UserMinAggregateInputType = {
   id?: true
@@ -88,6 +109,7 @@ export type UserMinAggregateInputType = {
   passwordResetExpires?: true
   emailVerificationToken?: true
   emailVerificationSent?: true
+  credits?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -104,6 +126,7 @@ export type UserMaxAggregateInputType = {
   passwordResetExpires?: true
   emailVerificationToken?: true
   emailVerificationSent?: true
+  credits?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -120,6 +143,7 @@ export type UserCountAggregateInputType = {
   passwordResetExpires?: true
   emailVerificationToken?: true
   emailVerificationSent?: true
+  credits?: true
   _all?: true
 }
 
@@ -161,6 +185,18 @@ export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: UserAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: UserSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: UserMinAggregateInputType
@@ -191,6 +227,8 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: UserCountAggregateInputType | true
+  _avg?: UserAvgAggregateInputType
+  _sum?: UserSumAggregateInputType
   _min?: UserMinAggregateInputType
   _max?: UserMaxAggregateInputType
 }
@@ -209,7 +247,10 @@ export type UserGroupByOutputType = {
   passwordResetExpires: Date | null
   emailVerificationToken: string | null
   emailVerificationSent: Date | null
+  credits: number
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
@@ -246,6 +287,7 @@ export type UserWhereInput = {
   passwordResetExpires?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   emailVerificationToken?: Prisma.StringNullableFilter<"User"> | string | null
   emailVerificationSent?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  credits?: Prisma.IntFilter<"User"> | number
   orders?: Prisma.OrderListRelationFilter
   projects?: Prisma.ProjectListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
@@ -266,6 +308,7 @@ export type UserOrderByWithRelationInput = {
   passwordResetExpires?: Prisma.SortOrderInput | Prisma.SortOrder
   emailVerificationToken?: Prisma.SortOrderInput | Prisma.SortOrder
   emailVerificationSent?: Prisma.SortOrderInput | Prisma.SortOrder
+  credits?: Prisma.SortOrder
   orders?: Prisma.OrderOrderByRelationAggregateInput
   projects?: Prisma.ProjectOrderByRelationAggregateInput
   notifications?: Prisma.NotificationOrderByRelationAggregateInput
@@ -289,6 +332,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   passwordResetExpires?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   emailVerificationToken?: Prisma.StringNullableFilter<"User"> | string | null
   emailVerificationSent?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  credits?: Prisma.IntFilter<"User"> | number
   orders?: Prisma.OrderListRelationFilter
   projects?: Prisma.ProjectListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
@@ -309,9 +353,12 @@ export type UserOrderByWithAggregationInput = {
   passwordResetExpires?: Prisma.SortOrderInput | Prisma.SortOrder
   emailVerificationToken?: Prisma.SortOrderInput | Prisma.SortOrder
   emailVerificationSent?: Prisma.SortOrderInput | Prisma.SortOrder
+  credits?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
+  _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
+  _sum?: Prisma.UserSumOrderByAggregateInput
 }
 
 export type UserScalarWhereWithAggregatesInput = {
@@ -331,6 +378,7 @@ export type UserScalarWhereWithAggregatesInput = {
   passwordResetExpires?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   emailVerificationToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   emailVerificationSent?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  credits?: Prisma.IntWithAggregatesFilter<"User"> | number
 }
 
 export type UserCreateInput = {
@@ -347,6 +395,7 @@ export type UserCreateInput = {
   passwordResetExpires?: Date | string | null
   emailVerificationToken?: string | null
   emailVerificationSent?: Date | string | null
+  credits?: number
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
@@ -367,6 +416,7 @@ export type UserUncheckedCreateInput = {
   passwordResetExpires?: Date | string | null
   emailVerificationToken?: string | null
   emailVerificationSent?: Date | string | null
+  credits?: number
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -387,6 +437,7 @@ export type UserUpdateInput = {
   passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerificationSent?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  credits?: Prisma.IntFieldUpdateOperationsInput | number
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
@@ -407,6 +458,7 @@ export type UserUncheckedUpdateInput = {
   passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerificationSent?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  credits?: Prisma.IntFieldUpdateOperationsInput | number
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -427,6 +479,7 @@ export type UserCreateManyInput = {
   passwordResetExpires?: Date | string | null
   emailVerificationToken?: string | null
   emailVerificationSent?: Date | string | null
+  credits?: number
 }
 
 export type UserUpdateManyMutationInput = {
@@ -443,6 +496,7 @@ export type UserUpdateManyMutationInput = {
   passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerificationSent?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  credits?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -459,6 +513,7 @@ export type UserUncheckedUpdateManyInput = {
   passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerificationSent?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  credits?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -475,6 +530,11 @@ export type UserCountOrderByAggregateInput = {
   passwordResetExpires?: Prisma.SortOrder
   emailVerificationToken?: Prisma.SortOrder
   emailVerificationSent?: Prisma.SortOrder
+  credits?: Prisma.SortOrder
+}
+
+export type UserAvgOrderByAggregateInput = {
+  credits?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -491,6 +551,7 @@ export type UserMaxOrderByAggregateInput = {
   passwordResetExpires?: Prisma.SortOrder
   emailVerificationToken?: Prisma.SortOrder
   emailVerificationSent?: Prisma.SortOrder
+  credits?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -507,6 +568,11 @@ export type UserMinOrderByAggregateInput = {
   passwordResetExpires?: Prisma.SortOrder
   emailVerificationToken?: Prisma.SortOrder
   emailVerificationSent?: Prisma.SortOrder
+  credits?: Prisma.SortOrder
+}
+
+export type UserSumOrderByAggregateInput = {
+  credits?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -541,6 +607,14 @@ export type NullableDateTimeFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type UserCreateNestedOneWithoutOrdersInput = {
@@ -615,6 +689,7 @@ export type UserCreateWithoutOrdersInput = {
   passwordResetExpires?: Date | string | null
   emailVerificationToken?: string | null
   emailVerificationSent?: Date | string | null
+  credits?: number
   projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
@@ -634,6 +709,7 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   passwordResetExpires?: Date | string | null
   emailVerificationToken?: string | null
   emailVerificationSent?: Date | string | null
+  credits?: number
   projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
@@ -669,6 +745,7 @@ export type UserUpdateWithoutOrdersInput = {
   passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerificationSent?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  credits?: Prisma.IntFieldUpdateOperationsInput | number
   projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
@@ -688,6 +765,7 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerificationSent?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  credits?: Prisma.IntFieldUpdateOperationsInput | number
   projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
@@ -707,6 +785,7 @@ export type UserCreateWithoutProjectsInput = {
   passwordResetExpires?: Date | string | null
   emailVerificationToken?: string | null
   emailVerificationSent?: Date | string | null
+  credits?: number
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
@@ -726,6 +805,7 @@ export type UserUncheckedCreateWithoutProjectsInput = {
   passwordResetExpires?: Date | string | null
   emailVerificationToken?: string | null
   emailVerificationSent?: Date | string | null
+  credits?: number
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
@@ -761,6 +841,7 @@ export type UserUpdateWithoutProjectsInput = {
   passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerificationSent?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  credits?: Prisma.IntFieldUpdateOperationsInput | number
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
@@ -780,6 +861,7 @@ export type UserUncheckedUpdateWithoutProjectsInput = {
   passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerificationSent?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  credits?: Prisma.IntFieldUpdateOperationsInput | number
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
@@ -799,6 +881,7 @@ export type UserCreateWithoutNotificationsInput = {
   passwordResetExpires?: Date | string | null
   emailVerificationToken?: string | null
   emailVerificationSent?: Date | string | null
+  credits?: number
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
@@ -818,6 +901,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   passwordResetExpires?: Date | string | null
   emailVerificationToken?: string | null
   emailVerificationSent?: Date | string | null
+  credits?: number
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
@@ -853,6 +937,7 @@ export type UserUpdateWithoutNotificationsInput = {
   passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerificationSent?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  credits?: Prisma.IntFieldUpdateOperationsInput | number
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
@@ -872,6 +957,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerificationSent?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  credits?: Prisma.IntFieldUpdateOperationsInput | number
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
@@ -891,6 +977,7 @@ export type UserCreateWithoutAuditLogsInput = {
   passwordResetExpires?: Date | string | null
   emailVerificationToken?: string | null
   emailVerificationSent?: Date | string | null
+  credits?: number
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
@@ -910,6 +997,7 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   passwordResetExpires?: Date | string | null
   emailVerificationToken?: string | null
   emailVerificationSent?: Date | string | null
+  credits?: number
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -945,6 +1033,7 @@ export type UserUpdateWithoutAuditLogsInput = {
   passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerificationSent?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  credits?: Prisma.IntFieldUpdateOperationsInput | number
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
@@ -964,6 +1053,7 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   passwordResetExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emailVerificationSent?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  credits?: Prisma.IntFieldUpdateOperationsInput | number
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -1041,6 +1131,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   passwordResetExpires?: boolean
   emailVerificationToken?: boolean
   emailVerificationSent?: boolean
+  credits?: boolean
   orders?: boolean | Prisma.User$ordersArgs<ExtArgs>
   projects?: boolean | Prisma.User$projectsArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
@@ -1062,6 +1153,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   passwordResetExpires?: boolean
   emailVerificationToken?: boolean
   emailVerificationSent?: boolean
+  credits?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1078,6 +1170,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   passwordResetExpires?: boolean
   emailVerificationToken?: boolean
   emailVerificationSent?: boolean
+  credits?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -1094,9 +1187,10 @@ export type UserSelectScalar = {
   passwordResetExpires?: boolean
   emailVerificationToken?: boolean
   emailVerificationSent?: boolean
+  credits?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "role" | "status" | "emailVerified" | "createdAt" | "updatedAt" | "passwordResetToken" | "passwordResetExpires" | "emailVerificationToken" | "emailVerificationSent", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "role" | "status" | "emailVerified" | "createdAt" | "updatedAt" | "passwordResetToken" | "passwordResetExpires" | "emailVerificationToken" | "emailVerificationSent" | "credits", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   orders?: boolean | Prisma.User$ordersArgs<ExtArgs>
   projects?: boolean | Prisma.User$projectsArgs<ExtArgs>
@@ -1129,6 +1223,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     passwordResetExpires: Date | null
     emailVerificationToken: string | null
     emailVerificationSent: Date | null
+    credits: number
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1569,6 +1664,7 @@ export interface UserFieldRefs {
   readonly passwordResetExpires: Prisma.FieldRef<"User", 'DateTime'>
   readonly emailVerificationToken: Prisma.FieldRef<"User", 'String'>
   readonly emailVerificationSent: Prisma.FieldRef<"User", 'DateTime'>
+  readonly credits: Prisma.FieldRef<"User", 'Int'>
 }
     
 
