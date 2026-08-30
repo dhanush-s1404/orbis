@@ -1,13 +1,15 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getPublishedWebsite = getPublishedWebsite;
 exports.handlePublicRoute = handlePublicRoute;
-const client_1 = require("../generated/client");
-const prisma = new client_1.PrismaClient();
+const prisma_1 = __importDefault(require("../lib/prisma"));
 // GET /api/public/:slug - Get published website data by slug
 // Returns only publishable data, no builder metadata
 async function getPublishedWebsite(slug) {
-    const project = await prisma.Project.findFirst({
+    const project = await prisma_1.default.Project.findFirst({
         where: { publishedSlug: slug },
         include: {
             user: {

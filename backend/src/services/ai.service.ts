@@ -1,7 +1,4 @@
-import { PrismaClient } from "../generated/client"
-import { Prisma } from "../generated/client"
-
-const prisma = new PrismaClient()
+import prisma from "../lib/prisma"
 
 export interface AIBusinessProfile {
   businessName: string
@@ -73,6 +70,9 @@ export interface AIProviderAdapter {
   generateContent(profile: AIBusinessProfile, templateSections: string[]): Promise<AIGenerateResponse>
   rewriteContent(existingContent: string, instruction: string): Promise<{ success: boolean; content: string; error?: string }>
   validateOutput(output: any): boolean
+  generateProductDescription(profile: AIBusinessProfile, productName: string, productType: string): Promise<{ success: boolean; content: string; error?: string }>
+  generateSEO(profile: AIBusinessProfile, businessName: string): Promise<{ success: boolean; title: string; description: string; error?: string }>
+  generateMarketingCopy(profile: AIBusinessProfile, campaignType: "email" | "social" | "ad"): Promise<{ success: boolean; content: string; error?: string }>
 }
 
 /** Template section support mapping */
@@ -293,11 +293,237 @@ export class AIService {
   }
 
   /**
-   * Build a restaurant template prompt with section priorities.
-   * The AI should generate content prioritizing menu messaging, reservations,
-   * location, and food-focused CTAs for restaurant templates.
+   * Generate product description using AI.
+   * Cost: 2 AI credits per generation.
    */
-  static buildRestaurantPrompt(profile: AIBusinessProfile): string {
+  static async generateProductDescription(
+    profile: AIBusinessProfile,
+    productName: string,
+    productType: string
+  ): Promise<{ success: boolean; content: string; error?: string }> {
+    const provider = AIService.provider
+    if (!provider) {
+      return {
+        success: false,
+        content: "",
+        error: "AI provider not configured",
+      }
+    }
+
+    const prompt = `Generate a compelling product description for an ORBIS website builder platform.
+
+Product Name: ${productName}
+Product Type: ${productType}
+Business: ${profile.businessName}
+Industry: ${profile.industry}
+Target Audience: ${profile.targetAudience}
+Goal: ${profile.goal}
+Tone: ${profile.tone}
+
+Write a product description that:
+- Highlights key benefits and features
+- Uses the specified tone of voice
+- Includes a call-to-action
+- Is concise and persuasive (max 200 words)
+- Focuses on solving customer problems
+- Includes relevant keywords for SEO
+
+Return only the description text, no headings or formatting.`
+    
+    try {
+      const response = await provider.generateContent(profile, [])
+      if (response.success && response.sections && response.sections.length > 0) {
+        const description = response.sections[0]?.content || ""
+        return { success: true, content: description }
+      }
+      return { success: false, content: "", error: "Empty response from AI" }
+    } catch (err) {
+      return { success: false, content: "", error: "AI generation failed" }
+    }
+  }
+
+  /**
+   * Generate SEO title and description using AI.
+   * Cost: 1 AI credit per generation.
+   */
+  static async generateSEO(
+    profile: AIBusinessProfile,
+    businessName: string
+  ): Promise<{ success: boolean; title: string; description: string; error?: string }> {
+    const provider = AIService.provider
+    if (!provider) {
+      return {
+        success: false,
+        title: "",
+        description: "",
+        error: "AI provider not configured",
+      }
+    }
+
+    const prompt = `Generate SEO optimized title and meta description for an ORBIS website builder platform.
+
+Business Name: ${businessName}
+Industry: ${profile.industry}
+Target Audience: ${profile.targetAudience}
+Goal: ${profile.goal}
+Tone: ${profile.tone}
+
+Generate:
+1. SEO Title: Max 60 characters, compelling, includes primary keyword
+2. SEO Description: Max 160 characters, summarizes the business value, includes secondary keyword
+
+Return as JSON: {"title": "...", "description": "..."}`
+    
+    try {
+      const response = await provider.generateContent(profile, [])
+      if (response.success && response.sections && response.sections.length > 0) {
+        const section = response.sections[0]
+        // Try to parse the content as JSON with title and description
+        try {
+          const parsed = JSON.parse(section.content || "{}")
+          return {
+            success: true,
+            title: parsed.title || `${businessName} - ORBIS`,
+            description: parsed.description || `${businessName} provides AI-powered website building and e-commerce solutions.`,
+          }
+        } catch {
+          return {
+            success: true,
+            title: `${businessName} - ORBIS`,
+            description: `${businessName} provides AI-powered website building and e-commerce solutions.`,
+          }
+        }
+      }
+      return {
+        success: false,
+        title: `${businessName} - ORBIS`,
+        description: `${businessName} provides AI-powered website building and e-commerce solutions.`,
+      }
+    } catch (err) {
+      return { success: false, title: "", description: "", error: "AI generation failed" }
+    }
+  }
+
+  /**
+   * Generate marketing copy using AI.
+   * Cost: 1 AI credit per generation.
+   */
+  static async generateMarketingCopy(
+    profile: AIBusinessProfile,
+    campaignType: "email" | "social" | "ad"
+  ): Promise<{ success: boolean; content: string; error?: string }> {
+    const provider = AIService.provider
+    if (!provider) {
+      return {
+        success: false,
+        content: "",
+        error: "AI provider not configured",
+      }
+    }
+
+    const typeLabels: Record<"email" | "social" | "ad", string> = {
+      email: "Email Campaign",
+      social: "Social Media Post",
+      ad: "Facebook/Google Ad",
+    }
+
+    const prompt = `Generate marketing copy for an ORBIS website builder platform.
+
+Business: ${profile.businessName}
+Industry: ${profile.industry}
+Tone: ${profile.tone}
+Campaign Type: ${typeLabels[campaignType]}
+
+Write compelling ${typeLabels[campaignType].toLowerCase()} that:
+- Highlights the key value proposition
+- Includes a clear call-to-action
+- Uses the specified tone of voice
+- Is concise and action-oriented
+- Focuses on converting the target audience
+
+Return only the copy text, no headings or formatting.`
+    
+    try {
+      const response = await provider.generateContent(profile, [])
+      if (response.success && response.sections && response.sections.length > 0) {
+        return { success: true, content: response.sections[0].content || "" }
+      }
+      return { success: false, content: "", error: "Empty response from AI" }
+    } catch (err) {
+      return { success: false, content: "", error: "AI generation failed" }
+    }
+  }
+
+  /**
+   * Generate product tags using AI.
+   * Cost: 1 AI credit per generation.
+   */
+  static async generateProductTags(
+    profile: AIBusinessProfile,
+    productName: string,
+    productDescription: string
+  ): Promise<{ success: boolean; tags: string[]; error?: string }> {
+    const provider = AIService.provider
+    if (!provider) {
+      return {
+        success: false,
+        tags: [],
+        error: "AI provider not configured",
+      }
+    }
+
+    const prompt = `Generate 5-7 relevant product tags for an ORBIS product.
+
+Product Name: ${productName}
+Product Description: ${productDescription}
+Industry: ${profile.industry}
+Target Audience: ${profile.targetAudience}
+
+Write 5-7 short tags (1-3 words each) that:
+- Are relevant to the product and industry
+- Include keywords for search and discovery
+- Mix of descriptive and benefit-focused tags
+- Are separated by commas only, no hashtags
+
+Return as a comma-separated string: "tag1, tag2, tag3, tag4, tag5, tag6, tag7"`
+    
+    try {
+      const response = await provider.generateContent(profile, [])
+      if (response.success && response.sections && response.sections.length > 0) {
+        const tagsString = response.sections[0].content || ""
+        const tags = tagsString
+          .split(",")
+          .map((tag: string) => tag.trim())
+          .filter((tag: string) => tag.length > 0)
+        return { success: true, tags }
+      }
+      return { success: false, tags: [], error: "Empty response from AI" }
+    } catch (err) {
+      return { success: false, tags: [], error: "AI generation failed" }
+    }
+  }
+
+  /**
+   * Check AI credits before expensive operations.
+   */
+  static canAfford(actionCost: number, userCredits: number): { canAfford: boolean; remaining: number; message: string } {
+    const remaining = userCredits - actionCost
+    if (remaining >= 0) {
+      return { canAfford: true, remaining, message: `This action costs ${actionCost} credits. You have ${userCredits} credits remaining.` }
+    }
+    return { canAfford: false, remaining: 0, message: `Insufficient credits. This action costs ${actionCost} credits. You have ${remaining.abs()} credits.` }
+  }
+
+  private static defaultMetadata(): AIGenerationMetadata {
+    return {
+      generationId: `gen-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+      templateId: "",
+      sectionsGenerated: [],
+      generationTime: 0,
+      modelUsed: "none",
+    }
+  }
+}
     return `Generate content for a restaurant website:
     - Name: ${profile.businessName}
     - Cuisine type: inferred from description

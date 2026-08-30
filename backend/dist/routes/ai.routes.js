@@ -1,13 +1,15 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.aiRoutes = void 0;
 exports.handleAIGenerate = handleAIGenerate;
 exports.handleAIRewrite = handleAIRewrite;
 exports.handleAIHistory = handleAIHistory;
 exports.handleAIStatus = handleAIStatus;
-const client_1 = require("../generated/client");
+const prisma_1 = __importDefault(require("../lib/prisma"));
 const ai_service_1 = require("../services/ai.service");
-const prisma = new client_1.PrismaClient();
 // AI credit costs (from configuration)
 const AI_COSTS = {
     fullGeneration: 5, // AI_COST_FULL_GENERATION
@@ -50,7 +52,7 @@ async function handleAIGenerate(req, res) {
             s === "services" || s === "cta" || s === "footer" ||
             s === "testimonials" || s === "pricing" || s === "contact");
         // Check user's AI credits before generation
-        const user = (await prisma.user.findUnique({
+        const user = (await prisma_1.default.user.findUnique({
             where: { id: userId },
         }));
         if (!user || (user.credits ?? 0) < AI_COSTS.fullGeneration) {
@@ -65,15 +67,15 @@ async function handleAIGenerate(req, res) {
             return res.status(500).json({ message: "AI generation failed", errors: response.errors });
         }
         // Deduct credits after successful AI generation
-        await prisma.user.update({
+        await prisma_1.default.user.update({
             where: { id: userId },
             data: { credits: { decrement: AI_COSTS.fullGeneration } },
         });
         // Persist AI usage record with the user's project
-        const userProject = (await prisma.project.findFirst({
+        const userProject = (await prisma_1.default.project.findFirst({
             where: { userId },
         }));
-        await prisma.aIUsage.create({
+        await prisma_1.default.aIUsage.create({
             data: {
                 ...(userProject ? { project: { connect: { id: userProject.id } } } : { projectId: userId }),
                 businessName: profile.businessName,
@@ -126,7 +128,7 @@ async function handleAIRewrite(req, res) {
             return res.status(500).json({ message: "AI rewrite failed", error: result.error });
         }
         // Deduct credits after successful AI rewrite
-        await prisma.user.update({
+        await prisma_1.default.user.update({
             where: { id: userId },
             data: { credits: { decrement: AI_COSTS.rewrite } },
         });
@@ -147,7 +149,7 @@ async function handleAIHistory(req, res) {
         if (!userId) {
             return res.status(401).json({ message: "Unauthorized" });
         }
-        const history = await prisma.aIUsage.findMany({
+        const history = await prisma_1.default.aIUsage.findMany({
             where: { project: { userId } },
             orderBy: { createdAt: "desc" },
             take: 10,

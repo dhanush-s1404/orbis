@@ -4,14 +4,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
-const client_1 = require("../generated/client");
+const prisma_1 = __importDefault(require("../lib/prisma"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const prisma = new client_1.PrismaClient();
 class AuthService {
     static async register(name, email, password) {
         const hashedPassword = await bcryptjs_1.default.hash(password, 12);
-        const user = await prisma.user.create({
+        const user = await prisma_1.default.user.create({
             data: {
                 name,
                 email,
@@ -29,7 +28,7 @@ class AuthService {
         return { user: authUser, token };
     }
     static async login(email, password) {
-        const user = await prisma.user.findUnique({
+        const user = await prisma_1.default.user.findUnique({
             where: { email },
         });
         if (!user)
@@ -49,7 +48,7 @@ class AuthService {
     static async validateToken(token) {
         try {
             const payload = jsonwebtoken_1.default.verify(token, process.env.NEXTAUTH_SECRET || "default-secret");
-            const user = await prisma.user.findUnique({
+            const user = await prisma_1.default.user.findUnique({
                 where: { id: payload.userId },
             });
             if (!user)
@@ -66,7 +65,7 @@ class AuthService {
         }
     }
     static async getProfile(userId) {
-        const user = await prisma.user.findUnique({
+        const user = await prisma_1.default.user.findUnique({
             where: { id: userId },
             include: {
                 orders: { take: 5, orderBy: { createdAt: "desc" } },
@@ -83,7 +82,7 @@ class AuthService {
         };
     }
     static async assignRole(userId, role) {
-        return prisma.user.update({
+        return prisma_1.default.user.update({
             where: { id: userId },
             data: { role },
         });

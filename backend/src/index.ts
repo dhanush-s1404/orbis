@@ -10,6 +10,8 @@ import orderRoutes from "./routes/order.routes"
 import projectRoutes from "./routes/project.routes"
 import builderRoutes from "./routes/builder.routes"
 import adminRoutes from "./routes/admin.routes"
+import customerRoutes from "./routes/customer.routes"
+import { analyticsRoutes } from "./routes/analytics.routes"
 import { errorHandler } from "./middleware/error.middleware"
 
 const app = express()
@@ -35,22 +37,24 @@ interface RateLimitCache {
   [key: string]: number
 }
 
+const rateLimitStore: { [ip: string]: RateLimitCache } = {}
+
 const rateLimit = (req: any, res: any, next: any) => {
   const now = Date.now()
   const { ip } = req
   // Simple in-memory rate limit
-  const cache: RateLimitCache = rateLimit.cache || {}
+  const store: RateLimitCache = rateLimitStore[ip] || {}
   const ipKey = ip || "unknown"
-  const lastReq = cache[ipKey] || 0
+  const lastReq = store[ipKey] || 0
   if (now - lastReq < 1000) {
-    const count = (cache[ipKey + "_count"] || 1) + 1
-    cache[ipKey + "_count"] = count
+    const count = (store[ipKey + "_count"] || 1) + 1
+    store[ipKey + "_count"] = count
     if (count > 10) return res.status(429).json({ message: "Too many requests" })
   } else {
-    cache[ipKey] = now
-    cache[ipKey + "_count"] = 1
+    store[ipKey] = now
+    store[ipKey + "_count"] = 1
+    rateLimitStore[ip] = store
   }
-  ;(rateLimit as any).cache = cache
   next()
 }
 
@@ -64,6 +68,8 @@ app.use("/api/orders", orderRoutes)
 app.use("/api/projects", projectRoutes)
 app.use("/api/builder", builderRoutes)
 app.use("/api/admin", adminRoutes)
+app.use("/api/customers", customerRoutes)
+app.use("/api/analytics", analyticsRoutes)
 
 // Health check
 app.get("/health", (req, res) => {

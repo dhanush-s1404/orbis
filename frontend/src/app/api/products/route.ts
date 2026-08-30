@@ -8,7 +8,9 @@ export async function GET(request: Request) {
   const limit = parseInt(searchParams.get("limit") || "12")
   const sort = searchParams.get("sort") || "latest"
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:4000'}/api/products?category=${category}&search=${search}&page=${page}&limit=${limit}&sort=${sort}`, {
+  const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
+
+  const res = await fetch(`${apiBase}/api/products?category=${category}&search=${search}&page=${page}&limit=${limit}&sort=${sort}`, {
     cache: 'no-store',
   })
   const data = await res.json()
@@ -18,7 +20,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   const body = await request.json()
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:4000'}/api/products`, {
+  const res = await fetch(`${apiBase}/api/products`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

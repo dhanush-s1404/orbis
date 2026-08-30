@@ -1,9 +1,12 @@
-import { PrismaClient, Prisma } from "@prisma/client"
+import { PrismaClient } from "../generated/client"
+import { PrismaPg } from "@prisma/adapter-pg"
+
+const adapter = new PrismaPg({
+  connectionString: process.env.DATABASE_URL!,
+})
 
 const prisma = new PrismaClient({
-  // Configure the PostgreSQL driver adapter
-  // This is required for Prisma 7.x with PostgreSQL
-  // The DATABASE_URL is loaded from environment variables
+  adapter,
 })
 
 export default prisma

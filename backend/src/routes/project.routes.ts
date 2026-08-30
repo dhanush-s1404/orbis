@@ -1,8 +1,6 @@
 import { Request, Response } from "express"
 import { AuthService } from "../services/auth.service"
-import { PrismaClient } from "@prisma/client"
-
-const prisma = new PrismaClient()
+import prisma from "../lib/prisma"
 
 // Helper: validate project ownership
 async function verifyProjectOwnership(projectId: string, userId: string) {

@@ -1,0 +1,24 @@
+src/routes/customer.routes.ts(43,9): error TS1128: Declaration or statement expected.
+src/routes/customer.routes.ts(60,6): error TS1472: 'catch' or 'finally' expected.
+src/routes/customer.routes.ts(63,3): error TS1128: Declaration or statement expected.
+src/routes/customer.routes.ts(63,5): error TS1005: 'try' expected.
+src/routes/customer.routes.ts(66,1): error TS1128: Declaration or statement expected.
+src/routes/customer.routes.ts(66,2): error TS1128: Declaration or statement expected.
+src/services/ai.service.ts(533,3): error TS1128: Declaration or statement expected.
+src/services/ai.service.ts(540,3): error TS1128: Declaration or statement expected.
+src/services/ai.service.ts(540,38): error TS1005: ',' expected.
+src/services/ai.service.ts(540,58): error TS1005: ';' expected.
+src/services/ai.service.ts(540,60): error TS1434: Unexpected keyword or identifier.
+src/services/ai.service.ts(552,3): error TS1128: Declaration or statement expected.
+src/services/ai.service.ts(552,33): error TS1005: ',' expected.
+src/services/ai.service.ts(552,53): error TS1005: ';' expected.
+src/services/ai.service.ts(552,55): error TS1434: Unexpected keyword or identifier.
+src/services/ai.service.ts(564,3): error TS1128: Declaration or statement expected.
+src/services/ai.service.ts(564,37): error TS1005: ',' expected.
+src/services/ai.service.ts(564,57): error TS1005: ';' expected.
+src/services/ai.service.ts(564,59): error TS1434: Unexpected keyword or identifier.
+src/services/ai.service.ts(570,3): error TS1128: Declaration or statement expected.
+src/services/ai.service.ts(570,11): error TS1128: Declaration or statement expected.
+src/services/ai.service.ts(570,35): error TS1005: ';' expected.
+src/services/ai.service.ts(570,37): error TS1434: Unexpected keyword or identifier.
+src/services/ai.service.ts(579,1): error TS1128: Declaration or statement expected.

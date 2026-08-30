@@ -1,7 +1,5 @@
 import { Request, Response } from "express"
-import { PrismaClient } from "../generated/client"
-
-const prisma = new PrismaClient()
+import prisma from "../lib/prisma"
 
 // GET /api/public/:slug - Get published website data by slug
 // Returns only publishable data, no builder metadata

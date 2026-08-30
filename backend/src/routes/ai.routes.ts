@@ -1,8 +1,6 @@
 import { Request, Response } from "express"
-import { PrismaClient } from "../generated/client"
+import prisma from "../lib/prisma"
 import { AIService, AIBusinessProfile, AISectionContent, AIGenerationMetadata, AIGenerateResponse } from "../services/ai.service"
-
-const prisma = new PrismaClient()
 
 // AI credit costs (from configuration)
 const AI_COSTS = {

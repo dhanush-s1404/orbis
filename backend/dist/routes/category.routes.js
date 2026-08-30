@@ -1,13 +1,15 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.categoryRoutes = void 0;
-const client_1 = require("../generated/client");
-const prisma = new client_1.PrismaClient();
+const prisma_1 = __importDefault(require("../lib/prisma"));
 exports.categoryRoutes = require("express").Router();
 // GET /api/categories - List all categories with product counts
 exports.categoryRoutes.get("/", async (req, res) => {
     try {
-        const categories = await prisma.category.findMany({
+        const categories = await prisma_1.default.category.findMany({
             include: {
                 products: {
                     where: { status: "ACTIVE" },
@@ -58,14 +60,14 @@ exports.categoryRoutes.get("/:slug", async (req, res) => {
         };
         const skip = (Number(page) - 1) * Number(limit);
         const [products, total] = await Promise.all([
-            prisma.product.findMany({
+            prisma_1.default.product.findMany({
                 where,
                 include: { category: true, images: true, features: true },
                 orderBy: sort === "latest" ? { createdAt: "desc" } : sort === "price-low" ? { price: "asc" } : sort === "price-high" ? { price: "desc" } : { createdAt: "desc" },
                 skip,
                 take: Number(limit),
             }),
-            prisma.product.count({ where }),
+            prisma_1.default.product.count({ where }),
         ]);
         const totalPages = Math.ceil(total / Number(limit));
         res.json({ products, total, page: Number(page), totalPages, categorySlug: slug });

@@ -1,9 +1,8 @@
-import { PrismaClient } from "../generated/client"
 import { User } from "../generated/client"
+import prisma from "../lib/prisma"
+
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
-
-const prisma = new PrismaClient()
 
 export interface AuthUser {
   id: string

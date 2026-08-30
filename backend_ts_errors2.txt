@@ -1,0 +1,84 @@
+backend/src/index.ts(11,8): error TS2613: Module '"D:/-CODINGS-/website-sales/backend/src/routes/builder.routes"' has no default export. Did you mean to use 'import { builderRoutes } from "D:/-CODINGS-/website-sales/backend/src/routes/builder.routes"' instead?
+backend/src/index.ts(42,43): error TS2339: Property 'cache' does not exist on type '(req: any, res: any, next: any) => any'.
+backend/src/index.ts(74,9): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(err: any, req: any, res: Response, next: any) => void' is not assignable to parameter of type 'PathParams'.
+backend/src/lib/prisma.ts(1,10): error TS2305: Module '"@prisma/client"' has no exported member 'Prisma'.
+backend/src/middleware/error.middleware.ts(7,7): error TS2349: This expression is not callable.
+  Type 'Number' has no call signatures.
+backend/src/providers/anthropic.provider.ts(11,43): error TS2702: 'AIService' only refers to a type, but is being used as a namespace here.
+backend/src/providers/openai.provider.ts(1,20): error TS2307: Cannot find module 'openai' or its corresponding type declarations.
+backend/src/providers/openai.provider.ts(9,40): error TS2702: 'AIService' only refers to a type, but is being used as a namespace here.
+backend/src/providers/openai.provider.ts(40,7): error TS2741: Property 'sections' is missing in type '{ success: false; errors: string[]; metadata: { generationId: string; templateId: string; sectionsGenerated: never[]; generationTime: number; modelUsed: string; }; }' but required in type 'AIGenerateResponse'.
+backend/src/providers/openai.provider.ts(59,23): error TS2339: Property 'valid' does not exist on type 'Promise<{ valid: boolean; errors: string[]; }>'.
+backend/src/providers/openai.provider.ts(64,11): error TS2739: Type 'AIGenerateResponse' is missing the following properties from type 'AIGenerationMetadata': generationId, templateId, sectionsGenerated, generationTime, modelUsed
+backend/src/providers/openai.provider.ts(64,21): error TS2352: Conversion of type '{ generationId: string; templateId: string; sectionsGenerated: any; generationTime: number; modelUsed: string; promptTokens: any; completionTokens: any; }' to type 'AIGenerateResponse' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type '{ generationId: string; templateId: string; sectionsGenerated: any; generationTime: number; modelUsed: string; promptTokens: any; completionTokens: any; }' is missing the following properties from type 'AIGenerateResponse': success, sections, metadata
+backend/src/providers/openai.provider.ts(73,32): error TS2339: Property 'errors' does not exist on type 'Promise<{ valid: boolean; errors: string[]; }>'.
+backend/src/providers/openai.provider.ts(90,28): error TS2339: Property 'errors' does not exist on type 'Promise<{ valid: boolean; errors: string[]; }>'.
+backend/src/providers/openai.provider.ts(94,7): error TS2741: Property 'sections' is missing in type '{ success: false; errors: string[]; metadata: { generationId: string; templateId: string; sectionsGenerated: never[]; generationTime: number; modelUsed: string; }; }' but required in type 'AIGenerateResponse'.
+backend/src/providers/openai.provider.ts(163,22): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{ hero: string; features: string; about: string; services: string; testimonials: string; pricing: string; cta: string; contact: string; footer: string; }'.
+  No index signature with a parameter of type 'string' was found on type '{ hero: string; features: string; about: string; services: string; testimonials: string; pricing: string; cta: string; contact: string; footer: string; }'.
+backend/src/providers/openai.provider.ts(218,15): error TS2304: Cannot find name 'systemPrompt'.
+backend/src/routes/admin.routes.ts(4,16): error TS2554: Expected 1 arguments, but got 0.
+backend/src/routes/admin.routes.ts(15,83): error TS2353: Object literal may only specify known properties, and 'createdAt' does not exist in type 'NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]'.
+backend/src/routes/ai.routes.ts(5,16): error TS2554: Expected 1 arguments, but got 0.
+backend/src/routes/ai.routes.ts(85,15): error TS2353: Object literal may only specify known properties, and 'credits' does not exist in type '((Without<UserUpdateInput, UserUncheckedUpdateInput> & UserUncheckedUpdateInput) | (Without<...> & UserUpdateInput)) & object'.
+backend/src/routes/ai.routes.ts(103,9): error TS2322: Type '{ businessName: any; industry: any; targetAudience: any; goal: any; tone: any; services: any; generationCount: number; creditsConsumed: number; project: { connect: { id: any; }; }; } | { businessName: any; ... 7 more ...; projectId: any; }' is not assignable to type '((Without<AIUsageCreateInput, AIUsageUncheckedCreateInput> & AIUsageUncheckedCreateInput) | (Without<...> & AIUsageCreateInput)) & object'.
+  Object literal may only specify known properties, and 'creditsConsumed' does not exist in type '((Without<AIUsageCreateInput, AIUsageUncheckedCreateInput> & AIUsageUncheckedCreateInput) | (Without<...> & AIUsageCreateInput)) & object'.
+backend/src/routes/ai.routes.ts(149,36): error TS2339: Property 'rewriteContent' does not exist on type 'typeof AIService'.
+backend/src/routes/ai.routes.ts(158,61): error TS2503: Cannot find namespace 'Prisma'.
+backend/src/routes/ai.routes.ts(158,83): error TS2503: Cannot find namespace 'Prisma'.
+backend/src/routes/ai.routes.ts(181,16): error TS2561: Object literal may only specify known properties, but 'project' does not exist in type 'AIUsageWhereInput'. Did you mean to write 'projectId'?
+backend/src/routes/builder.routes.ts(5,16): error TS2554: Expected 1 arguments, but got 0.
+backend/src/routes/builder.routes.ts(9,32): error TS2551: Property 'Project' does not exist on type 'PrismaClient<never, GlobalOmitConfig | undefined, DefaultArgs>'. Did you mean 'project'?
+backend/src/routes/builder.routes.ts(23,1): error TS2448: Block-scoped variable 'builderRoutes' used before its declaration.
+backend/src/routes/builder.routes.ts(38,35): error TS2551: Property 'Template' does not exist on type 'PrismaClient<never, GlobalOmitConfig | undefined, DefaultArgs>'. Did you mean 'template'?
+backend/src/routes/builder.routes.ts(47,34): error TS2551: Property 'Project' does not exist on type 'PrismaClient<never, GlobalOmitConfig | undefined, DefaultArgs>'. Did you mean 'project'?
+backend/src/routes/builder.routes.ts(74,1): error TS2448: Block-scoped variable 'builderRoutes' used before its declaration.
+backend/src/routes/builder.routes.ts(84,61): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+backend/src/routes/builder.routes.ts(109,1): error TS2448: Block-scoped variable 'builderRoutes' used before its declaration.
+backend/src/routes/builder.routes.ts(124,61): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+backend/src/routes/builder.routes.ts(135,41): error TS2551: Property 'Project' does not exist on type 'PrismaClient<never, GlobalOmitConfig | undefined, DefaultArgs>'. Did you mean 'project'?
+backend/src/routes/builder.routes.ts(154,1): error TS2448: Block-scoped variable 'builderRoutes' used before its declaration.
+backend/src/routes/builder.routes.ts(156,36): error TS2551: Property 'Template' does not exist on type 'PrismaClient<never, GlobalOmitConfig | undefined, DefaultArgs>'. Did you mean 'template'?
+backend/src/routes/builder.routes.ts(168,1): error TS2448: Block-scoped variable 'builderRoutes' used before its declaration.
+backend/src/routes/builder.routes.ts(179,61): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+backend/src/routes/builder.routes.ts(207,39): error TS2551: Property 'Project' does not exist on type 'PrismaClient<never, GlobalOmitConfig | undefined, DefaultArgs>'. Did you mean 'project'?
+backend/src/routes/builder.routes.ts(230,39): error TS2551: Property 'Project' does not exist on type 'PrismaClient<never, GlobalOmitConfig | undefined, DefaultArgs>'. Did you mean 'project'?
+backend/src/routes/builder.routes.ts(243,39): error TS2551: Property 'Project' does not exist on type 'PrismaClient<never, GlobalOmitConfig | undefined, DefaultArgs>'. Did you mean 'project'?
+backend/src/routes/category.routes.ts(4,16): error TS2554: Expected 1 arguments, but got 0.
+backend/src/routes/category.routes.ts(68,9): error TS2322: Type '{ category: { slug: string | string[]; }; status: string; }' is not assignable to type 'ProductWhereInput'.
+  Types of property 'status' are incompatible.
+    Type 'string' is not assignable to type 'Status | EnumStatusFilter<"Product"> | undefined'.
+backend/src/routes/category.routes.ts(74,30): error TS2322: Type '{ category: { slug: string | string[]; }; status: string; }' is not assignable to type 'ProductWhereInput'.
+  Types of property 'status' are incompatible.
+    Type 'string' is not assignable to type 'Status | EnumStatusFilter<"Product"> | undefined'.
+backend/src/routes/order.routes.ts(4,16): error TS2554: Expected 1 arguments, but got 0.
+backend/src/routes/order.routes.ts(32,9): error TS2322: Type '"UNPAID"' is not assignable to type 'PaymentStatus | undefined'.
+backend/src/routes/project.routes.ts(3,10): error TS2305: Module '"@prisma/client"' has no exported member 'PrismaClient'.
+backend/src/routes/project.routes.ts(98,61): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+backend/src/routes/project.routes.ts(125,61): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+backend/src/routes/project.routes.ts(177,61): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+backend/src/routes/project.routes.ts(210,61): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+backend/src/routes/project.routes.ts(272,61): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+backend/src/routes/project.routes.ts(312,61): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.
+backend/src/services/ai.service.ts(4,16): error TS2554: Expected 1 arguments, but got 0.
+backend/src/services/ai.service.ts(106,27): error TS2345: Argument of type 'null' is not assignable to parameter of type 'AIProviderAdapter'.
+backend/src/services/ai.service.ts(118,50): error TS2307: Cannot find module './providers/openai.provider' or its corresponding type declarations.
+backend/src/services/ai.service.ts(137,53): error TS2307: Cannot find module './providers/anthropic.provider' or its corresponding type declarations.
+backend/src/services/ai.service.ts(157,7): error TS2741: Property 'sections' is missing in type '{ success: false; errors: string[]; metadata: AIGenerationMetadata; }' but required in type 'AIGenerateResponse'.
+backend/src/services/auth.service.ts(6,16): error TS2554: Expected 1 arguments, but got 0.
+backend/src/services/publishing.service.ts(4,16): error TS2554: Expected 1 arguments, but got 0.
+backend/src/services/publishing.service.ts(9,32): error TS2551: Property 'Project' does not exist on type 'PrismaClient<never, GlobalOmitConfig | undefined, DefaultArgs>'. Did you mean 'project'?
+backend/src/services/publishing.service.ts(58,51): error TS2345: Argument of type 'string | string[]' is not assignable to parameter of type 'string'.
+  Type 'string[]' is not assignable to type 'string'.

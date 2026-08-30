@@ -1,11 +1,9 @@
-import { Request, Response } from "express"
-import { PrismaClient } from "../generated/client"
+import { Router, Request, Response } from "express"
+import prisma from "../lib/prisma"
 
-const prisma = new PrismaClient()
+const router = Router()
 
-export const adminRoutes = require("express").Router()
-
-adminRoutes.get("/", async (req: Request, res: Response) => {
+router.get("/", async (req: Request, res: Response) => {
   try {
     const [users, products, orders, projects, notifications] = await Promise.all([
       prisma.user.findMany({ select: { id: true, name: true, email: true, role: true, status: true } }),
@@ -54,4 +52,4 @@ adminRoutes.get("/", async (req: Request, res: Response) => {
   }
 })
 
-export default adminRoutes
+export default router

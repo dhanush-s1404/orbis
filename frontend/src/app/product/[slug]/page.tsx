@@ -1,260 +1,449 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import Image from "next/image"
-import { useParams, useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
 import Link from "next/link"
+import { useParams } from "next/navigation"
 
 interface Product {
   id: string
-  projectId: string
   name: string
   slug: string
   shortDescription: string | null
   fullDescription: string | null
   price: number
   discountPrice: number | null
+  compareAtPrice: number | null
+  sku: string | null
+  inventory: number
   category: any
-  demoUrl: string | null
-  status: string
+  images: { url: string }[]
+  features: string[]
+  tags: string[]
+  status: "DRAFT" | "ACTIVE" | "ARCHIVED"
   featured: boolean
-  license: string
-  createdAt: string
-  updatedAt: string
-  technologies: any[]
-  features: any[]
-  images: any[]
 }
 
-interface RelatedProduct {
-  id: string
-  name: string
-  slug: string
-  price: number | null
-  discountPrice: number | null
-  image: string | null
+interface CartItem {
+  product: Product
+  quantity: number
 }
 
-export default function ProductPage() {
-  const router = useRouter()
-  const { slug } = router.params
+interface CartContextValue {
+  items: CartItem[]
+  addItem: (product: Product, quantity?: number) => void
+  removeItem: (productId: string) => void
+  updateQuantity: (productId: string, quantity: number) => void
+  total: number
+  itemCount: number
+}
 
+const CartContext = React.createContext<CartContextValue | undefined>(undefined)
+
+function useCart(): CartContextValue {
+  const [items, setItems] = React.useState<CartItem[]>([])
+
+  const addItem = (product: Product, quantity = 1) => {
+    setItems((prev) => {
+      const existing = prev.find((item) => item.product.id === product.id)
+      if (existing) {
+        return prev.map((item) =>
+          item.product.id === product.id
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
+        )
+      }
+      return [{ ...product, quantity }, ...prev.filter((item) => item.product.id !== product.id)]
+    })
+  }
+
+  const removeItem = (productId: string) => {
+    setItems((prev) => prev.filter((item) => item.product.id !== productId))
+  }
+
+  const updateQuantity = (productId: string, quantity: number) => {
+    if (quantity <= 0) {
+      removeItem(productId)
+    } else {
+      setItems((prev) =>
+        prev.map((item) =>
+          item.product.id === productId ? { ...item, quantity } : item
+        )
+      )
+    }
+  }
+
+  const total = items.reduce((sum, item) => sum + item.product.price * item.quantity, 0)
+  const itemCount = items.reduce((count, item) => count + item.quantity, 0)
+
+  return { items, addItem, removeItem, updateQuantity, total, itemCount }
+}
+
+export default function ProductDetailPage() {
+  const { slug } = useParams()
   const [product, setProduct] = useState<Product | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [relatedProducts, setRelatedProducts] = useState<Product[]>([])
+  const { user, isAuthenticated } = useAuth()
+  const cart = useCart()
 
   useEffect(() => {
-    fetchProduct()
-    fetchRelatedProducts()
+    // Fetch product by slug
+    fetch(`/api/products/${slug}`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch product")
+        return res.json()
+      })
+      .then((data) => {
+        setProduct(data.product)
+        setLoading(false)
+      })
+      .catch((err) => {
+        console.error(err)
+        setError("Failed to load product")
+        setLoading(false)
+      })
   }, [slug])
 
-  const fetchProduct = async () => {
-    try {
-      const response = await fetch(`/api/products?category=${slug}`, {
-        cache: "no-store",
-      })
-      if (!response.ok) {
-        throw new Error("Failed to fetch product")
-      }
-      const data = await response.json()
-      if (data.products.length > 0) {
-        setProduct(data.products[0])
-      }
-      setLoading(false)
-    } catch (err) {
-      console.error("Error fetching product:", err)
-      setLoading(false)
-    }
-  }
-
-  const fetchRelatedProducts = async () => {
-    try {
-      const response = await fetch("/api/products/featured", {
-        cache: "no-store",
-      })
-      if (!response.ok) {
-        throw new Error("Failed to fetch related products")
-      }
-      const data = await response.json()
-      setRelatedProducts(data.slice(0, 3))
-    } catch (err) {
-      console.error("Error fetching related products:", err)
-    }
-  }
-
-  if (loading || !product) {
+  if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
-        <div className="max-w-7xl mx-auto px-6 py-12">
-          <div className="text-center">
-            <h1 className="text-3xl font-bold text-zinc-900 mb-4">Product not found</h1>
-            <p className="text-zinc-500">The product you are looking for does not exist.</p>
-            <a href="/marketplace" className="mt-4 bg-orange-600 text-white font-medium py-2 rounded-md hover:bg-orange-500 transition-colors text-center">
-              ← Back to Marketplace
-            </a>
+      <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950 flex items-center justify-center">
+        <div className="max-w-md w-full bg-white dark:bg-zinc-900 rounded-3xl p-8 shadow-2xl text-center">
+          <h1 className="text-3xl font-bold text-zinc-900 mb-4 dark:text-zinc-100">
+            Sign In
+          </h1>
+          <p className="text-zinc-500 dark:text-zinc-400">
+            Please sign in to view product details.
+          </p>
+          <button className="py-3 px-6 bg-orange-600 text-white font-medium rounded-md hover:bg-orange-500 transition-colors">
+            Continue Without Signing In
+          </button>
+        </div>
+      </main>
+    )
+  }
+
+  if (loading) {
+    return (
+      <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+        <div className="max-w-2xl mx-auto px-6 py-12">
+          <div className="flex items-center justify-center h-64">
+            <p className="text-lg text-zinc-600">Loading product...</p>
           </div>
         </div>
-      </div>
+      </main>
+    )
+  }
+
+  if (error) {
+    return (
+      <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+        <div className="max-w-2xl mx-auto px-6 py-12">
+          <div className="bg-zinc-100 dark:bg-zinc-800/30 rounded-3xl p-6 text-zinc-800">
+            <p>{error}</p>
+            <button onClick={() => setError(null)} className="mt-4 py-2 px-4 text-orange-600 font-medium rounded-md hover:underline transition-colors">
+              Try Again
+            </button>
+          </div>
+        </div>
+      </main>
+    )
+  }
+
+  if (!product) {
+    return (
+      <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+        <div className="max-w-2xl mx-auto px-6 py-12">
+          <div className="text-center">
+            <h1 className="text-3xl font-bold text-zinc-900 mb-4 dark:text-zinc-100">
+              Product not found
+            </h1>
+            <p className="text-zinc-500">
+              The product you are looking for does not exist.
+            </p>
+            <Link to="/marketplace" className="mt-4 py-2 px-4 bg-orange-600 text-white font-medium rounded-md hover:bg-orange-500 transition-colors">
+              ← Back to Marketplace
+            </button>
+          </div>
+        </div>
+      </main>
     )
   }
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+    <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
       <div className="max-w-7xl mx-auto px-6 py-12">
-        {/* Breadcrumbs */}
-        <nav className="mb-8 flex items-center gap-2 text-zinc-500 text-sm">
-          <a href="/marketplace" className="hover:text-orange-600 transition-colors">
-            ← Marketplace
-          </a>
-          <span>→</span>
-          <span>{product?.name}</span>
-        </nav>
-
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Product Image Gallery */}
-          <div className="space-y-6">
-            <div className="grid grid-cols-3 gap-2 mb-6">
-              {product.images.map((image: any, index: number) => (
-                <Image
-                  key={index}
-                  src={image.url}
-                  alt={`${product.name} image ${index + 1}`}
-                  width={560}
-                  height={400}
-                  className="object-cover rounded-b-lg cursor-pointer hover:opacity-90 transition-opacity"
-                />
-              ))}
-            </div>
-
-            {/* Main Product Image */}
-            <div className="relative">
+        {/* Product Images Carousel */}
+        <section className="mb-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Main Image */}
+            <div>
               <Image
-                src={product.images?.[0]?.url || "/placeholder.svg?height=600&width=800"}
-                alt={product.name}
-                className="rounded-2xl overflow-hidden h-[600] object-cover"
+                src={product?.images?.[0]?.url || "/placeholder.svg?height=600&width=800"}
+                alt={product?.name}
+                className="rounded-2xl overflow-hidden h-[600] w-full"
                 width={800}
                 height={600}
               />
-              {product.discountPrice && (
-                <span
-                  className="absolute top-3 left-3 bg-orange-600 text-xs font-bold px-2 rounded"
-                >
-                  ₹{product.price} (₹{product.discountPrice})
-                </span>
-              )}
-              {!product.discountPrice && (
-                <span
-                  className="absolute top-3 left-3 bg-zinc-900 text-xs font-bold px-2 rounded"
-                >
-                  ₹{product.price}
-                </span>
-              )}
             </div>
-
-            {/* Features Chips */}
-            <div className="grid grid-cols-2 gap-2 mb-6">
-              {product.features?.map((feature: any) => (
-                <span
-                  key={feature}
-                  className="inline-flex items-center rounded-full bg-zinc-100 text-zinc-800 text-xs font-medium px-2.5 py-0.5"
-                >
-                  {feature}
-                </span>
+            {/* Thumbnails */}
+            <div className="space-y-2">
+              {product?.images.map((image, index) => (
+                <Image
+                  key={index}
+                  src={image.url}
+                  alt={`${product?.name} thumbnail ${index + 1}`}
+                  width={400}
+                  height={300}
+                  className="rounded-lg cursor-pointer opacity-60 transition-opacity group-hover:opacity-100"
+                />
               ))}
             </div>
           </div>
+        </section>
 
-          {/* Product Details */}
-          <div>
-            <div className="mb-6">
-              <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-100 mb-2">
-                {product.name}
-              </h1>
-              {product.discountPrice && (
-                <p className="text-orange-600 text-2xl font-bold">
-                  ₹{product.price} (₹{product.discountPrice})
-                </p>
-              )}
-              {!product.discountPrice && (
-                <p className="text-zinc-500 text-2xl font-bold">
-                  ₹{product.price}
-                </p>
-              )}
+        {/* Product Info */}
+        <section className="mb-8">
+          <div className="grid lg:grid-cols-2 gap-6">
+            <div>
+              {/* Price */}
+              <div className="mb-4">
+                {product?.discountPrice ? (
+                  <p className="text-orange-600 text-3xl font-bold">
+                    ₹{product?.price} (₹{product?.discountPrice})
+                  </p>
+                ) : (
+                  <p className="text-zinc-900 text-3xl font-bold">
+                    ₹{product?.price}
+                  </p>
+                )}
+                {product?.compareAtPrice && (
+                  <p className="text-zinc-500 text-sm line-through mt-1">
+                    ₹{product?.compareAtPrice}
+                  </p>
+                )}
+              </div>
+
+              {/* Action Buttons */}
+              <div>
+                {isAuthenticated ? (
+                  <div className="mt-4">
+                    <button
+                      onClick={() => cart.addItem(product, 1)}
+                      className="w-full py-3 px-4 bg-orange-600 text-white font-medium rounded-md hover:bg-orange-500 transition-colors text-center"
+                    >
+                      {product.inventory > 0 ? "Add to Cart" : "Out of Stock"}
+                    </button>
+                  </button>
+                ) : (
+                  <button
+                    className="w-full py-3 px-4 bg-zinc-900 text-white font-medium rounded-md hover:bg-zinc-800 transition-colors text-center"
+                    disabled>
+                      Sign in to add to cart
+                  </button>
+                )}
+              </div>
             </div>
 
-            <p className="text-zinc-500 mb-6 line-clamp-3">{product.shortDescription || "No description available"}</p>
-
-            {/* Category & Status */}
-            <div className="grid grid-cols-2 gap-4 mb-6 text-zinc-600 text-sm">
-              <div>
-                <span className="font-medium">Category:</span>
-                <span>{product.category?.name || "Uncategorized"}</span>
-              </div>
-              <div>
-                <span className="font-medium">Status:</span>
-                <span
-                  className={`px-2 py-1 text-xs font-medium rounded ${product.status === "ACTIVE" ? "bg-zinc-100 text-zinc-800" : "bg-orange-100 text-orange-800"}`}
-                >
-                  {product.status}
-                </span>
-              </div>
-            </div>
-
-            {/* Technologies */}
-            {product.technologies && product.technologies.length > 0 && (
-              <div className="mb-6">
-                <h2 className="text-xl font-medium text-zinc-700 mb-3">Technologies</h2>
-                <div className="flex flex-wrap gap-2">
-                  {product.technologies.map((tech: any) => (
-                    <span
-                      key={tech}
-                      className="inline-flex items-center rounded-full bg-zinc-100 text-zinc-800 text-xs font-medium px-3 py-1"
-                    >
-                      {tech}
-                    </span>
-                  ))}
+            {/* Product Details */}
+            <div>
+              <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">
+                Product Details
+              </h2>
+              
+              {product?.features && product?.features.length > 0 && (
+                <div className="mb-4">
+                  <p className="text-zinc-600 text-sm mb-2">Features:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {product.features.map((feature) => (
+                      <span
+                        key={feature}
+                        className="inline-flex items-center rounded-full bg-zinc-100 text-zinc-800 text-xs font-medium px-2.5 py-0.5"
+                      >
+                        {feature}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {/* Features */}
-            {product.features && product.features.length > 0 && (
-              <div className="mb-6">
-                <h2 className="text-xl font-medium text-zinc-700 mb-3">Features</h2>
-                <div className="grid grid-cols-2 gap-2">
-                  {product.features.map((feature: any) => (
-                    <span
-                      key={feature}
-                      className="inline-flex items-center rounded-full bg-zinc-100 text-zinc-800 text-xs font-medium px-2.5 py-0.5"
-                    >
-                      {feature}
-                    </span>
-                  ))}
+              {product?.tags && product?.tags.length > 0 && (
+                <div className="mb-4">
+                  <p className="text-zinc-600 text-sm mb-2">Tags:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {product.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="inline-flex items-center rounded-full bg-zinc-100 text-zinc-800 text-xs font-medium px-2.5 py-0.5"
+                      >
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {/* Action Buttons */}
-            <div className="mt-8 pt-6 border-t border-zinc-200/50">
-              <div className="flex gap-3">
-                <a
-                  href "/build"
-                  className="flex-1 py-3 px-4 bg-orange-600 text-white font-medium rounded-md hover:bg-orange-500 transition-colors text-center"
-                >
-                  Build a Similar Website
-                </a>
-                <a
-                  href "/marketplace"
-                  className="flex-1 py-3 px-4 text-orange-600 font-medium rounded-md border border-orange-600 hover:bg-orange-100 transition-colors text-center"
-                >
-                  ← Back to Marketplace
-                </a>
-              </div>
+              <p className="text-zinc-600 mb-4">
+                SKU: {product?.sku || "Not available"}
+              </p>
+              <p className="text-zinc-600 mb-4">
+                Stock: {product?.inventory > 0 ? `${product.inventory} available` : "Out of stock"}
+              </p>
+              <p className="text-zinc-600 mb-4">
+                Status: {product?.status === "ACTIVE" ? "Active" : product?.status === "DRAFT" ? "Draft" : "Archived"}
+              </p>
             </div>
           </div>
-        </div>
-      </div>
+        </section>
+
+        {/* Description */}
+        {product?.fullDescription && (
+          <section>
+            <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">
+              Description
+            </h2>
+            <p className="text-zinc-600 dark:text-zinc-400 line-clamp-4">
+              {product.fullDescription}
+            </p>
+          </section>
+        )}
+
+        {/* Related Products */}
+        {/* Would fetch related products by category or featured */}
+        {/* <RelatedProducts section /> */}
+
+        {/* Cart Sidebar */}
+        {isAuthenticated && (
+          <section className="mt-8 bg-white dark:bg-zinc-900 rounded-2xl p-6 shadow-sm fixed bottom-0 left-0 right-0">
+            <div className="max-w-2xl mx-auto">
+              <h3 className="text-xl font-bold text-zinc-900 mb-4 dark:text-zinc-100">
+                Cart
+              </h3>
+              {cart.items.length === 0 ? (
+                <p className="text-zinc-500">Your cart is empty</p>
+              ) : (
+                <div className="space-y-4 max-h-80 overflow-y-auto">
+                  {cart.items.map((item) => (
+                    <div
+                      key={item.product.id}
+                      className="flex items-center gap-4 p-3 rounded-lg bg-zinc-50 dark:bg-zinc-800/30"
+                    >
+                      <Image
+                        src={item.product.images?.[0]?.url || "/placeholder.svg?height=80&width=80"}
+                        alt={item.product.name}
+                        width={80}
+                        height={80}
+                        className="object-cover rounded"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-medium text-zinc-900 dark:text-zinc-100">
+                          {item.product.name}
+                        </h4>
+                        <p className="text-zinc-500 text-sm">
+                          ₹{item.product.price}
+                        </p>
+                      </div>
+                      <div className="w-16">
+                        <button
+                          onClick={() => cart.updateQuantity(item.product.id, 1)}
+                          className="py-1 px-1 rounded bg-orange-100 text-orange-600 text-xs hover:bg-orange-200 transition-colors"
+                        >
+                          +
+                        </button>
+                        <span className="ml-2 text-sm font-medium">
+                          {item.quantity}
+                        </span>
+                        <button
+                          onClick={() => cart.updateQuantity(item.product.id, -1)}
+                          className="py-1 px-1 rounded bg-orange-100 text-orange-600 text-xs hover:bg-orange-200 transition-colors"
+                        >
+                          -
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              <div className="pt-4 border-t border-zinc-200/50">
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-zinc-600 text-sm">Items: {cart.itemCount}</span>
+                  <span className="text-orange-600 font-medium text-lg">
+                    ₹{cart.total}
+                  </span>
+                </div>
+                <button
+                  onClick={() => window.location.href="/cart"}
+                  className="w-full py-3 px-4 bg-orange-600 text-white font-medium rounded-md hover:bg-orange-500 transition-colors text-center"
+                >
+                  Checkout (₹{cart.total})
+                </button>
+              </div>
+            </div>
+          </section>
+        )}
+      </main>
     </main>
+  )
+}
+
+interface ProductCardProps {
+  product: Product
+  showActions?: boolean
+}
+
+function ProductCard({ product, showActions = true }: ProductCardProps) {
+  return (
+    <div className="group bg-zinc-50 dark:bg-zinc-800 rounded-2xl overflow-hidden hover:shadow-xl transition-shadow border">
+      <div className="relative h-48">
+        <Image
+          src={product.images?.[0]?.url || "/placeholder.svg?height=280&width=400"}
+          alt={product.name}
+          className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+          width={400}
+          height={280}
+        />
+        {product.discountPrice && (
+          <span
+            className="absolute top-3 left-3 bg-orange-600 text-xs font-bold px-2 rounded"
+          >
+            ₹{product.price} (₹{product.discountPrice})
+          </span>
+        )}
+        {!product.discountPrice && (
+          <span
+            className="absolute top-3 left-3 bg-zinc-900 text-xs font-bold px-2 rounded"
+          >
+            ₹{product.price}
+          </span>
+        )}
+        {product.featured && (
+          <span
+            className="absolute top-3 right-3 bg-orange-100 text-orange-800 text-xs font-medium px-2 rounded"
+          >
+            Featured
+          </span>
+        )}
+      </div>
+      <div className="p-4">
+        <h3 className="text-base font-medium text-zinc-900 dark:text-zinc-100 group-hover:text-orange-600 transition-colors mb-1">
+          {product.name}
+        </h3>
+        <p className="text-zinc-500 text-sm line-clamp-2">
+          {product.shortDescription || "No description available"}
+        </p>
+
+        {showActions && (
+          <div className="mt-3 pt-3 border-t border-zinc-200/50">
+            <Link
+              href `/product/${product.slug}`
+              className="block w-full bg-orange-600 text-white font-medium py-2 rounded-md hover:bg-orange-500 transition-colors text-center text-sm"
+            >
+              View Details
+            </Link>
+          </div>
+        )}
+      </div>
+    </div>
   )
 }

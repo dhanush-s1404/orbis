@@ -1,12 +1,14 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.builderRoutes = void 0;
 exports.verifyProjectOwnership = verifyProjectOwnership;
-const client_1 = require("../generated/client");
-const prisma = new client_1.PrismaClient();
+const prisma_1 = __importDefault(require("../lib/prisma"));
 // Helper: validate project ownership
 async function verifyProjectOwnership(projectId, userId) {
-    const project = await prisma.Project.findUnique({
+    const project = await prisma_1.default.Project.findUnique({
         where: { id: projectId },
         include: { user: true },
     });
@@ -28,14 +30,14 @@ exports.builderRoutes.post("/create", async (req, res) => {
             return res.status(400).json({ message: "Template ID is required" });
         }
         // Validate template exists
-        const template = await prisma.Template.findUnique({
+        const template = await prisma_1.default.Template.findUnique({
             where: { id: templateId, isActive: true },
         });
         if (!template) {
             return res.status(404).json({ message: "Template not found" });
         }
         // Create project associated with template
-        const project = await prisma.Project.create({
+        const project = await prisma_1.default.Project.create({
             data: {
                 name: name || `Website Project ${new Date().getFullYear()}`,
                 description: "Website built using ORBIS Builder",
@@ -111,7 +113,7 @@ exports.builderRoutes.patch("/:id", async (req, res) => {
             return res.status(403).json({ message: "Access denied: You do not own this project" });
         }
         // Update builder state
-        const updatedProject = await prisma.Project.update({
+        const updatedProject = await prisma_1.default.Project.update({
             where: { id: projectId },
             data: { builderState },
         });
@@ -131,7 +133,7 @@ exports.builderRoutes.patch("/:id", async (req, res) => {
 // GET /api/builder/templates - Get available templates
 exports.builderRoutes.get("/templates", async (req, res) => {
     try {
-        const templates = await prisma.Template.findMany({
+        const templates = await prisma_1.default.Template.findMany({
             where: { isActive: true },
             orderBy: { name: "asc" },
         });
@@ -173,7 +175,7 @@ exports.builderRoutes.post("/:id/pages", async (req, res) => {
                     styles: pageData?.styles || {},
                 };
                 currentState.pages.push(newPage);
-                updatedProject = await prisma.Project.update({
+                updatedProject = await prisma_1.default.Project.update({
                     where: { id: projectId },
                     data: { builderState: JSON.stringify(currentState) },
                 });
@@ -191,7 +193,7 @@ exports.builderRoutes.post("/:id/pages", async (req, res) => {
                         styles: pageData?.styles,
                     };
                 }
-                updatedProject = await prisma.Project.update({
+                updatedProject = await prisma_1.default.Project.update({
                     where: { id: projectId },
                     data: { builderState: JSON.stringify(state) },
                 });
@@ -200,7 +202,7 @@ exports.builderRoutes.post("/:id/pages", async (req, res) => {
                 // Delete a page
                 const stateDelete = JSON.parse(project.builderState || "{}");
                 stateDelete.pages = stateDelete.pages.filter((p) => p.id !== pageData?.id);
-                updatedProject = await prisma.Project.update({
+                updatedProject = await prisma_1.default.Project.update({
                     where: { id: projectId },
                     data: { builderState: JSON.stringify(stateDelete) },
                 });

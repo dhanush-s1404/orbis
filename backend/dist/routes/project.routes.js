@@ -1,12 +1,14 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.projectRoutes = void 0;
 exports.verifyProjectOwnership = verifyProjectOwnership;
-const client_1 = require("@prisma/client");
-const prisma = new client_1.PrismaClient();
+const prisma_1 = __importDefault(require("../lib/prisma"));
 // Helper: validate project ownership
 async function verifyProjectOwnership(projectId, userId) {
-    const project = await prisma.Project.findUnique({
+    const project = await prisma_1.default.Project.findUnique({
         where: { id: projectId },
         include: { user: true },
     });
@@ -24,7 +26,7 @@ exports.projectRoutes.get("/", async (req, res) => {
         if (!userId) {
             return res.status(401).json({ message: "Unauthorized" });
         }
-        const projects = await prisma.Project.findMany({
+        const projects = await prisma_1.default.Project.findMany({
             where: { userId },
             include: {
                 user: {
@@ -56,7 +58,7 @@ exports.projectRoutes.post("/", async (req, res) => {
             return res.status(400).json({ message: "Project name is required" });
         }
         // Create project with authenticated user ownership
-        const project = await prisma.Project.create({
+        const project = await prisma_1.default.Project.create({
             data: {
                 name: name.trim(),
                 description: description?.trim(),
@@ -128,7 +130,7 @@ exports.projectRoutes.patch("/:id", async (req, res) => {
         if (timeline !== undefined) {
             updateData.timeline = timeline;
         }
-        const updatedProject = await prisma.Project.update({
+        const updatedProject = await prisma_1.default.Project.update({
             where: { id: projectId },
             data: updateData,
         });
@@ -155,7 +157,7 @@ exports.projectRoutes.delete("/:id", async (req, res) => {
             return res.status(403).json({ message: "Access denied: You do not own this project" });
         }
         // Soft delete: set status to ARCHIVED instead of permanent delete
-        const updatedProject = await prisma.Project.update({
+        const updatedProject = await prisma_1.default.Project.update({
             where: { id: projectId },
             data: { status: "ARCHIVED" },
         });
@@ -197,7 +199,7 @@ exports.projectRoutes.post("/:id/publish", async (req, res) => {
         // Generate a slug from project name or use timestamp-based slug
         const slug = `project-${projectId}-${Date.now()}`.replace(/[^a-z0-9]/gi, "-").toLowerCase();
         // Update project with publishing info
-        const updatedProject = await prisma.Project.update({
+        const updatedProject = await prisma_1.default.Project.update({
             where: { id: projectId },
             data: {
                 publishStatus: "PUBLISHED",
@@ -233,7 +235,7 @@ exports.projectRoutes.post("/:id/unpublish", async (req, res) => {
             return res.status(403).json({ message: "Access denied: You do not own this project" });
         }
         // Update project to unpublish
-        const updatedProject = await prisma.Project.update({
+        const updatedProject = await prisma_1.default.Project.update({
             where: { id: projectId },
             data: {
                 publishStatus: "UNPUBLISHED",

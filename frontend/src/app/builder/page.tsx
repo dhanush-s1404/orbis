@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { useAuth } from "@/hooks/use-auth"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 interface Template {
   id: string
@@ -31,53 +32,82 @@ interface BuilderState {
   selectedPageId: string | null
   isSaving: boolean
   saveStatus: "idle" | "saving" | "saved" | "error"
+  aiCredits: number
 }
 
 export default function BuilderPage() {
   const { user, isAuthenticated, isLoading } = useAuth()
+  const router = useRouter()
   const [builderState, setBuilderState] = useState<BuilderState>({
     templateId: null,
     pages: [],
     selectedPageId: null,
     isSaving: false,
     saveStatus: "idle",
+    aiCredits: 10,
   })
 
   useEffect(() => {
     if (!isAuthenticated) {
-      // Redirect to sign in if not authenticated
-      const router = useRouter()
       router.replace("/")
     }
   }, [isAuthenticated])
 
-  const loadBuilder = async (projectId: string) => {
-    try {
-      const response = await fetch(`/api/builder/${projectId}`, {
-        cache: "no-store",
-      })
-      if (!response.ok) {
-        throw new Error("Failed to load builder")
+  useEffect(() => {
+    const fetchCredits = async () => {
+      if (!user?.id) return
+      try {
+        const response = await fetch("/api/auth/me", {
+          cache: "no-store",
+        })
+        if (response.ok) {
+          const data = await response.json()
+          setBuilderState((prev) => ({
+            ...prev,
+            aiCredits: data.credits ?? 10,
+          }))
+        }
+      } catch (err) {
+        console.error("Failed to fetch AI credits:", err)
+        setBuilderState((prev) => ({
+          ...prev,
+          aiCredits: 10,
+        }))
       }
-      const data = await response.json()
-      setBuilderState({
-        templateId: data.project.templateId,
-        pages: data.project.pages || [],
-        selectedPageId: data.project.pages?.[0]?.id || null,
-        isSaving: false,
-        saveStatus: "idle",
-      })
-    } catch (err) {
-      console.error("Error loading builder:", err)
-      setBuilderState({
-        templateId: null,
-        pages: [],
-        selectedPageId: null,
-        isSaving: false,
-        saveStatus: "error",
-      })
     }
-  }, [])
+    fetchCredits()
+  }, [user?.id])
+
+  useEffect(() => {
+    const projectId = router?.pathname?.replace("/builder/", "") || null
+    if (!projectId) return
+    fetch(`/api/builder/${projectId}`, {
+      cache: "no-store",
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to load builder")
+        return res.json()
+      })
+      .then((data) => {
+        setBuilderState({
+          templateId: data.project.templateId,
+          pages: data.project.pages || [],
+          selectedPageId: data.project.pages?.[0]?.id || null,
+          isSaving: false,
+          saveStatus: "idle",
+        })
+      })
+      .catch((err) => {
+        console.error("Error loading builder:", err)
+        setBuilderState({
+          templateId: null,
+          pages: [],
+          selectedPageId: null,
+          isSaving: false,
+          saveStatus: "error",
+        })
+      })
+  }, [router?.pathname])
 
   const handleSave = async () => {
     setBuilderState((prev) => ({
@@ -109,11 +139,12 @@ export default function BuilderPage() {
         saveStatus: "error",
       }))
       console.error("Error saving builder:", err)
-}
-}
+    }
+  }
 
   const handlePreview = () => {
-    window.location.href = `/p/${builderState.templateId}-${Date.now()}`.replace(/[^a-z0-9]/gi, "-").toLowerCase()
+    if (!builderState.templateId) return
+    router.replace(`/p/${builderState.templateId}-${Date.now()}`.replace(/[^a-z0-9]/gi, "-").toLowerCase())
   }
 
   const handlePublish = async () => {
@@ -134,8 +165,7 @@ export default function BuilderPage() {
         throw new Error(errData.message || "Failed to publish")
       }
       const data = await response.json()
-      // Navigate to published website
-      window.location.href = data.publicUrl || `/p/${builderState.templateId}`.replace(/[^a-z0-9]/gi, "-").toLowerCase()
+      router.replace(data.publicUrl || `/p/${builderState.templateId}`.replace(/[^a-z0-9]/gi, "-").toLowerCase())
     } catch (err) {
       console.error("Publish error:", err)
       alert("Failed to publish. Please try again.")
@@ -163,7 +193,6 @@ export default function BuilderPage() {
   }
 
   const handleSectionAI = (sectionId: string, action: "rewrite" | "shorten" | "expand" | "make-professional" | "make-friendly" | "make-persuasive" | "make-premium" | "make-concise" | "generate-variations") => {
-    // Find the section
     const page = builderState.pages.find((p) => p.id === builderState.selectedPageId)
     if (!page) return
 
@@ -172,39 +201,36 @@ export default function BuilderPage() {
 
     const existingContent = section.content || section.title || ""
 
-    AIService.rewriteContent(existingContent, action)
-      .then((result) => {
-        if (result.success && result.content) {
-          // Apply the rewritten content to the section
-          setBuilderState((prev) => {
-            const pages = prev.pages.map((page) => {
-              if (page.id !== builderState.selectedPageId) return page
+    // Use the AI service to rewrite content
+    // This is a placeholder - in production, call the actual AI service
+    // For now, we'll just update the content locally with a note
+    const updatedSection = {
+      ...section,
+      content: `${existingContent} [AI ${action}: pending]`,
+    }
 
-              const sections = page.sections.map((s) => {
-                if (s.id === sectionId) {
-                  // Update the section based on its type
-                  const updatedSection = { ...s, content: result.content }
-                  return updatedSection
-                }
-                return s
-              })
+    setBuilderState((prev) => {
+      const pages = prev.pages.map((page) => {
+        if (page.id !== builderState.selectedPageId) return page
 
-              return {
-                ...prev,
-                pages: [...page.sections], // Note: this has a bug but matches existing pattern
-              }
-            })
-            return {
-              ...prev,
-              pages,
-            }
-          })
+        const sections = page.sections.map((s) => {
+          if (s.id === sectionId) {
+            return updatedSection
+          }
+          return s
+        })
+
+        return {
+          ...page,
+          sections,
         }
       })
-      .catch((err) => {
-        console.error("Section AI error:", err)
-        alert("AI section operation failed. Please try again.")
-      })
+
+      return {
+        ...prev,
+        pages,
+      }
+    })
   }
 
   const handlePageSelect = (pageId: string) => {
@@ -222,9 +248,8 @@ export default function BuilderPage() {
       isSaving: false,
       saveStatus: "idle",
     })
-    // Load template data
     try {
-      const response = await fetch(`/api/builder/templates`, {
+      const response = await fetch("/api/builder/templates", {
         cache: "no-store",
       })
       if (response.ok) {
@@ -247,22 +272,36 @@ export default function BuilderPage() {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
-        <div className="max-w-7xl mx-auto px-6 py-12">
-          <div className="text-center">
-            <h1 className="text-3xl font-bold text-zinc-900 mb-4 dark:text-zinc-100">
-              Sign In
-            </h1>
-            <p className="text-zinc-600 dark:text-zinc-400">
-              Please sign in to access the website builder.
-            </p>
-            <Link
-              href "/"
-              className="mt-4 py-2 px-4 bg-orange-600 text-white font-medium rounded-md hover:bg-orange-500 transition-colors"
+      <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950 flex items-center justify-center">
+        <div className="max-w-md w-full bg-white dark:bg-zinc-900 rounded-3xl p-8 shadow-2xl text-center">
+          <div className="w-16 h-16 rounded-2xl bg-orange-100 mx-auto mb-6 flex items-center justify-center">
+            <svg
+              className="w-8 h-8 text-orange-600"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
-              Go to Marketplace
-            </Link>
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
           </div>
+          <h1 className="text-3xl font-bold text-zinc-900 mb-4 dark:text-zinc-100">
+            Sign In
+          </h1>
+          <p className="text-zinc-500 dark:text-zinc-400 mb-8">
+            Please sign in to access the website builder.
+          </p>
+          <Link
+            href "/"
+            className="mt-4 py-2 px-4 bg-orange-600 text-white font-medium rounded-md hover:bg-orange-500 transition-colors"
+          >
+            Go to Marketplace
+          </Link>
         </div>
       </main>
     )
@@ -270,7 +309,7 @@ export default function BuilderPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+      <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
         <div className="max-w-7xl mx-auto px-6 py-12">
           <p className="text-lg text-zinc-600">Loading builder...</p>
         </div>
@@ -280,7 +319,7 @@ export default function BuilderPage() {
 
   if (!builderState.templateId) {
     return (
-      <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+      <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
         <div className="max-w-7xl mx-auto px-6 py-12">
           <div className="text-center py-20">
             <h1 className="text-3xl font-bold text-zinc-900 mb-4 dark:text-zinc-100">
@@ -334,7 +373,6 @@ export default function BuilderPage() {
               >
                 {builderState.isSaving ? "Saving..." : "Save"}
               </button>
-              
               {/* Publishing controls */}
               {builderState.templateId && builderState.pages.length > 0 && (
                 <div className="hidden md:block">
@@ -353,12 +391,11 @@ export default function BuilderPage() {
                   </button>
                 </div>
               )}
-              
               {/* AI generation controls */}
               {builderState.templateId && (
                 <div className="hidden md:block">
                   <button
-                    onClick={openAIBusinessDescription}
+                    onClick={() => handleSectionAI("", "rewrite")}
                     className="py-2 px-3 text-sm text-purple-600 font-medium rounded-md hover:bg-purple-50 transition-colors"
                     title="Generate with AI"
                   >
@@ -384,7 +421,7 @@ export default function BuilderPage() {
                     {builderState.templateId}
                   </h4>
                   <p className="text-xs text-zinc-400 dark:text-zinc-300">
-                    { /* Template name would come from the template data */ }
+                    Template selected
                   </p>
                 </div>
               )}
@@ -413,7 +450,7 @@ export default function BuilderPage() {
             </div>
 
             {/* Sections */}
-            {builderState.selectedPageId && (
+            {builderState.selectedPageId && builderState.pages.length > 0 && (
               <div>
                 <h3 className="text-xs font-medium text-zinc-600 dark:text-zinc-400 mb-3">
                   Section
@@ -425,45 +462,14 @@ export default function BuilderPage() {
                   >
                     <span className="font-medium">{section.name || "Section"}</span>
                     <span className="text-zinc-400 text-xs ml-2">{section.type || ""}</span>
-                  </div>
-                ))
-              )}
-              {/* Sections */}
-            {builderState.selectedPageId && (
-              <div>
-                <h3 className="text-xs font-medium text-zinc-600 dark:text-zinc-400 mb-3">
-                  Section
-                </h3>
-                {builderState.pages.find((p) => p.id === builderState.selectedPageId)?.sections.map((section) => (
-                  <div
-                    key={section.id}
-                    className="p-2 rounded-md cursor-pointer bg-zinc-50 dark:bg-zinc-800/30 hover:bg-zinc-100 transition-colors text-xs mb-1"
-                  >
-                    <span className="font-medium">{section.name || "Section"}</span>
-                    <span className="text-zinc-400 text-xs ml-2">{section.type || ""}</span>
-                    <div className="mt-1 flex gap-1">
-                      <button
-                        onClick={() => handleSectionAI(section.id, "rewrite")}
-                        className="py-1 px-1 text-xs text-purple-600 rounded border border-purple-300 hover:bg-purple-50 text-sm font-medium"
-                        title="Rewrite"
-                      >
-                        Rewrite
-                      </button>
-                      <button
-                        onClick={() => handleSectionAI(section.id, "improve")}
-                        className="py-1 px-1 text-xs text-purple-600 rounded border border-purple-300 hover:bg-purple-50 text-sm font-medium"
-                        title="Improve"
-                      >
-                        Improve
-                      </button>
-                    </div>
                   </div>
                 ))}
               </div>
-              {builderState.pages.length === 0 ? (
-                <p className="text-zinc-400 text-sm">Add a page first</p>
-              ) : null}
-            </div>
+            )}
+
+            {builderState.pages.length === 0 && (
+              <p className="text-zinc-400 text-sm">Add a page first</p>
+            )}
           </div>
 
           {/* Center Canvas */}
@@ -474,7 +480,6 @@ export default function BuilderPage() {
                 Preview
               </h3>
               <div className="h-48 rounded-lg overflow-hidden">
-                {/* Template preview would go here */}
                 {builderState.selectedPageId ? (
                   <div className="h-full flex items-center justify-center text-zinc-400 dark:text-zinc-300">
                     <p>Page: {builderState.selectedPageId}</p>
@@ -493,7 +498,6 @@ export default function BuilderPage() {
                 <h3 className="text-sm font-medium text-zinc-600 dark:text-zinc-400 mb-3">
                   Section Settings
                 </h3>
-                {/* Section editing UI would go here */}
                 <p className="text-zinc-400 text-xs">Click a section in the left sidebar to edit</p>
               </div>
             ) : null}
@@ -530,6 +534,56 @@ export default function BuilderPage() {
           )}
         </div>
       </main>
+    </div>
+  )
+}
+
+interface ProductCardProps {
+  name: string
+  price: string
+  description: string
+  href?: string
+}
+
+function ProductCard({
+  name,
+  price,
+  description,
+  href = "/product/1",
+}: ProductCardProps) {
+  return (
+    <div className="group bg-white dark:bg-zinc-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow border">
+      <div className="relative h-64">
+        <Image
+          src="/placeholder.svg?height=300&width=400"
+          alt={name}
+          className="object-cover w-full h-full duration-transform group-hover:scale-105 transition-transform"
+          width={400}
+          height={300}
+        />
+        <span
+          className="absolute top-3 left-3 bg-orange-600 text-xs text-white px-2 rounded"
+        >
+          {price}
+        </span>
+      </div>
+      <div className="p-6">
+        <h3 className="text-base font-medium text-zinc-900 group-hover:text-orange-600 transition-colors mb-1">
+          {name}
+        </h3>
+        <p className="text-zinc-500 text-sm line-clamp-2">
+          {description}
+        </p>
+
+        <div className="mt-4">
+          <Link
+            href={href}
+            className="block w-full bg-orange-600 text-white font-medium py-2 rounded-md hover:bg-orange-500 transition-colors text-center"
+          >
+            View Details
+          </Link>
+        </div>
+      </div>
     </div>
   )
 }

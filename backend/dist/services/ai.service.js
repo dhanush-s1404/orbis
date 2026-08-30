@@ -34,8 +34,6 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AIService = void 0;
-const client_1 = require("../generated/client");
-const prisma = new client_1.PrismaClient();
 class AIService {
     static setProvider(provider) {
         AIService.provider = provider;

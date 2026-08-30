@@ -23,6 +23,16 @@ interface Project {
   assignedDeveloper: string | null
   createdAt: string
   updatedAt: string
+  publishStatus: "DRAFT" | "PUBLISHED" | "PUBLISH_FAILED"
+}
+
+interface MetricCard {
+  label: string
+  value: string
+  trend?: "up" | "down" | "neutral"
+  trendValue?: string
+  icon: string
+  bg?: "default" | "orange" | "green" | "purple" | "teal"
 }
 
 export default function Dashboard() {
@@ -45,7 +55,6 @@ export default function Dashboard() {
         throw new Error(errData.message || "Failed to publish")
       }
       const data = await response.json()
-      // Refresh projects
       fetchProjects()
       return data
     } catch (err) {
@@ -67,8 +76,6 @@ export default function Dashboard() {
         const errData = await response.json()
         throw new Error(errData.message || "Failed to unpublish")
       }
-      const data = await response.json()
-      // Refresh projects
       fetchProjects()
       return data
     } catch (err) {
@@ -96,7 +103,7 @@ export default function Dashboard() {
         throw new Error(errData.message || "Failed to fetch projects")
       }
       const data = await response.json()
-      setProjects(data.projects)
+      setProjects(data.projects || [])
       setError(null)
     } catch (err) {
       console.error(err)
@@ -116,10 +123,7 @@ export default function Dashboard() {
     { key: "stores", label: "Stores", href: "/dashboard/stores" },
     { key: "products", label: "Products", href: "/dashboard/products" },
     { key: "orders", label: "Orders", href: "/dashboard/orders" },
-    { key: "domains", label: "Domains", href: "/dashboard/domains" },
     { key: "analytics", label: "Analytics", href: "/dashboard/analytics" },
-    { key: "messages", label: "Messages", href: "/dashboard/messages" },
-    { key: "billing", label: "Billing", href: "/dashboard/billing" },
     { key: "settings", label: "Settings", href: "/dashboard/settings" },
   ]
 
@@ -129,22 +133,36 @@ export default function Dashboard() {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
-        <div className="max-w-7xl mx-auto px-6 py-12">
-          <div className="text-center">
-            <h1 className="text-3xl font-bold text-zinc-900 mb-4 dark:text-zinc-100">
-              Sign In
-            </h1>
-            <p className="text-zinc-600 dark:text-zinc-400">
-              Please sign in to access your ORBIS dashboard.
-            </p>
-            <button
-              onClick={handleSignOut}
-              className="mt-4 py-2 px-4 bg-orange-600 text-white font-medium rounded-md hover:bg-orange-500 transition-colors"
+      <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950 flex items-center justify-center">
+        <div className="max-w-md w-full bg-white dark:bg-zinc-900 rounded-3xl p-8 shadow-2xl text-center">
+          <div className="w-16 h-16 rounded-2xl bg-orange-100 mx-auto mb-6 flex items-center justify-center">
+            <svg
+              className="w-8 h-8 text-orange-600"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
-              Continue Without Signing In
-            </button>
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
           </div>
+          <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">
+            Sign In
+          </h1>
+          <p className="text-zinc-500 dark:text-zinc-400 mb-8">
+            Please sign in to access your ORBIS dashboard.
+          </p>
+          <button
+            onClick={handleSignOut}
+            className="py-3 px-6 bg-orange-600 text-white font-medium rounded-xl hover:bg-orange-500 transition-colors text-lg"
+          >
+            Continue Without Signing In
+          </button>
         </div>
       </main>
     )
@@ -152,9 +170,11 @@ export default function Dashboard() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+      <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
         <div className="max-w-7xl mx-auto px-6 py-12">
-          <p className="text-lg text-zinc-600">Loading dashboard...</p>
+          <div className="flex items-center justify-center">
+            <p className="text-lg text-zinc-600">Loading dashboard...</p>
+          </div>
         </div>
       </main>
     )
@@ -162,13 +182,13 @@ export default function Dashboard() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+      <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
         <div className="max-w-7xl mx-auto px-6 py-12">
-          <div className="bg-zinc-100 dark:bg-zinc-800 rounded-lg p-6 text-zinc-800">
-            <p>{error}</p>
+          <div className="bg-zinc-100 dark:bg-zinc-800/30 rounded-3xl p-6 text-zinc-800">
+            <p className="text-zinc-600">{error}</p>
             <button
               onClick={() => setError(null)}
-              className="mt-3 py-2 px-4 text-orange-600 font-medium hover:underline"
+              className="mt-4 py-2 px-4 text-orange-600 font-medium rounded-xl hover:underline transition-colors"
             >
               Try Again
             </button>
@@ -178,243 +198,303 @@ export default function Dashboard() {
     )
   }
 
+  // Metric cards data
+  const metrics: MetricCard[] = [
+    {
+      label: "Total Websites",
+      value: projects.length.toString(),
+      icon: "lucide:building",
+      bg: "default",
+    },
+    {
+      label: "Published",
+      value: (projects.filter((p) => p.publishStatus === "PUBLISHED")
+        .length || 0).toString(),
+      trend: "up",
+      trendValue: "+12%",
+      icon: "lucide:check-circle",
+      bg: "green",
+    },
+    {
+      label: "Products",
+      value: "24",
+      trend: "up",
+      trendValue: "+8%",
+      icon: "lucide:grid",
+      bg: "purple",
+    },
+    {
+      label: "Revenue",
+      value: "$45,230",
+      trend: "up",
+      trendValue: "+15%",
+      icon: "lucide:dollar-sign",
+      bg: "teal",
+    },
+  ]
+
   return (
     <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
       <div className="max-w-7xl mx-auto px-6 py-12">
-        {/* Sidebar */}
-        <aside className="w-64 bg-white dark:bg-zinc-900 fixed left-0 top-0 bottom-0 shadow-2xl border-r border-zinc-200/50 flex flex-col">
-          <div className="p-6 border-b border-zinc-200/50">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-orange-600 flex items-center justify-center">
-                <svg
-                  className="w-5 h-5 text-white"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
-                  <line x1="9" y1="9" x2=9 y2="1"></line>
-                </svg>
-              </div>
-              <span className="font-semibold text-orange-600 text-lg">Orbis</span>
-            </div>
-          </div>
 
-          <nav className="flex-1 pt-2">
-            <div className="space-y-1">
-              {navItems.map((item) => (
-                <button
-                  key={item.key}
-                  onClick={() => handleNavChange(item.key)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-md text-left text-zinc-600 hover:text-zinc-900 transition-colors ${activeSection === item.key ? "bg-orange-100 text-orange-600 font-medium" : ""}`}
-                  aria-current={activeSection === item.key ? "page" : "false"}
-                >
-                  {item.icon && (
-                    <svg
-                      className="w-5 h-5"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9z"></path>
-                      <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                    </svg>
-                  )}
-                  <span>{item.label}</span>
-                </button>
-              ))}
-            </div>
-          </nav>
-
-          <div className="p-6 border-t border-zinc-200/50">
-            <button
-              onClick={() => setActiveSection("overview")}
-              className="w-full py-3 px-4 text-sm text-zinc-500 hover:text-zinc-600 transition-colors"
-            >
-              Orbis
-            </button>
-          </div>
-        </aside>
-
-        {/* Main Content */}
-        <div className="ml-64 p-6 flex-1">
-          {/* Header */}
-          <header className="flex justify-between items-center mb-8 flex-wrap">
-            <div>
-              <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+        {/* Header with user info and quick actions */}
+        <header className="mb-10">
+          <div className="flex flex-col sm:flex-row items-start sm-items-center gap-6">
+            {/* Left: User info and welcome */}
+            <div className="flex-1">
+              <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-2">
                 Dashboard
               </h1>
-              <p className="text-zinc-500 text-sm">
+              <p className="text-zinc-500 text-sm dark:text-zinc-400">
                 Welcome back, {user?.name || "Orbis user"}
               </p>
             </div>
-            <div className="flex items-center gap-3">
-              <span className="text-zinc-500 text-sm">
-                {new Date().toLocaleDateString()}
-              </span>
-              <button
-                onClick={handleSignOut}
-                className="py-2 px-4 text-sm text-zinc-500 hover:text-zinc-600 transition-colors"
+
+            {/* Right: Quick actions */}
+            <div className="flex sm:ml-auto gap-3">
+              <Link
+                href="/build"
+                className="flex h-10 items-center justify-center rounded-full bg-orange-100 px-4 text-orange-600 text-sm font-medium hover:bg-orange-50 transition-colors"
               >
-                Sign Out
-              </button>
+                <span className="iconify" icon="lucide:build-square" width={18} height={18} />
+                Create Website
+              </Link>
+              <Link
+                href="/templates"
+                className="flex h-10 items-center justify-center rounded-full border border-orange-400 px-4 text-orange-600 text-sm font-medium hover:bg-orange-50 transition-colors"
+              >
+                <span className="iconify" icon="lucide:grid" width={18} height={18} />
+                Templates
+              </Link>
+              <Link
+                href="/dashboard/products"
+                className="flex h-10 items-center justify-center rounded-full bg-purple-100 px-4 text-purple-600 text-sm font-medium hover:bg-purple-50 transition-colors"
+              >
+                <span className="iconify" icon="lucide:box" width={18} height={18} />
+                Products
+              </Link>
             </div>
-          </header>
+          </div>
+        </header>
 
-          {/* Projects Section */}
-          {activeSection === "projects" && (
-            <div className="bg-white dark:bg-zinc-900 rounded-2xl p-6 shadow-lg">
-              <h2 className="text-xl font-bold text-zinc-900 mb-4 dark:text-zinc-100">
-                My Projects
-              </h2>
-
-              {/* Loading state */}
-              {isLoading && (
-                <div className="py-8 text-center">
-                  <p className="text-zinc-500">Loading projects...</p>
+        {/* Metrics Grid */}
+        <section className="mb-10 grid grid-cols-2 md:grid-cols-4 gap-6">
+          {metrics.map((metric) => (
+            <div
+              key={metric.label}
+              className={`rounded-2xl p-6 text-left transition-shadow hover:shadow-xl ${
+                metric.bg === "default"
+                  ? "bg-white dark:bg-zinc-900"
+                  : metric.bg === "orange"
+                  ? "bg-orange-50 dark:bg-orange-900/30"
+                  : metric.bg === "green"
+                  ? "bg-green-50 dark:bg-green-900/30"
+                  : metric.bg === "purple"
+                  ? "bg-purple-50 dark:bg-purple-900/30"
+                  : metric.bg === "teal"
+                  ? "bg-teal-50 dark:bg-teal-900/30"
+                  : "bg-white dark:bg-zinc-900"
+              }`}
+            >
+              <div className="flex items-start gap-3 mb-3">
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center ${
+                  metric.bg === "orange"
+                    ? "bg-orange-100 text-orange-600"
+                  : metric.bg === "green"
+                    ? "bg-green-100 text-green-600"
+                  : metric.bg === "purple"
+                    ? "bg-purple-100 text-purple-600"
+                  : metric.bg === "teal"
+                    ? "bg-teal-100 text-teal-600"
+                    : "bg-zinc-100 text-zinc-600"
+                }">
+                  <span className="iconify" icon={metric.icon as any} width={20} height={20} />
                 </div>
-              )}
-
-              {/* Empty state */}
-              {projects.length === 0 && !isLoading && (
-                <div className="p-8 text-center bg-zinc-50 dark:bg-zinc-800/30 rounded-lg">
-                  <svg
-                    className="w-12 h-12 mx-auto mb-4 text-zinc-400 dark:text-zinc-500"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                    <line x1="3" y1="9" x2="21" y2="9"></line>
-                    <line x1="3" y1="15" x2="21" y2="15"></line>
-                    <line x1="9" y1="3" x2="9" y2="21"></line>
-                    <line x1="15" y1="3" x2="15" y2="21"></line>
-                  </svg>
-                  <h3 className="text-zinc-500 mb-2">No projects yet</h3>
-                  <p className="text-zinc-400 text-sm">
-                    Create your first project to get started with ORBIS.
+                <div className="flex-1">
+                  <p className="text-zinc-500 text-xs uppercase tracking-wider mb-1">
+                    {metric.label}
                   </p>
-                  <Link
-                    href "/build"
-                    className="mt-3 py-2 px-4 bg-orange-600 text-white font-medium rounded-md hover:bg-orange-500 transition-colors text-sm"
-                  >
-                    Create Project
-                  </Link>
+                  <p className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+                    {metric.value}
+                  </p>
                 </div>
-              )}
+              </div>
 
-              {/* Projects List */}
-              {projects.length > 0 && (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {projects.map((project) => (
-                    <div
-                      key={project.id}
-                      className="bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow border"
-                    >
-                      <div className="h-48 bg-zinc-100 dark:bg-zinc-800/50 flex items-center justify-center">
-                        <span className="text-zinc-400 text-sm">
-                          {project.status || "Submitted"}
-                        </span>
-                      </div>
-                      <div className="p-5">
-                        <h3 className="text-base font-medium text-zinc-900 dark:text-zinc-100 mb-1">
-                          {project.name}
-                        </h3>
-                        <p className="text-zinc-500 text-sm line-clamp-2">
-                          {project.description || "No description"}
-                        </p>
-                        <div className="mt-3 flex flex-col sm:flex-row gap-2 text-zinc-500 text-xs">
-                          <span>#{project.progress || 0}%</span>
-                          <span>{project.createdAt ? new Date(project.createdAt).toLocaleDateString() : "—"}</span>
-                          {project.assignedDeveloper && (
-                            <span>Dev: {project.assignedDeveloper}</span>
-                          )}
-                        </div>
-                        <div className="mt-3 flex gap-2">
-                          <Link
-                            href `/project/${project.id}`
-                            className="flex-1 py-2 px-2 text-orange-600 text-sm font-medium rounded border border-orange-600 hover:bg-orange-100 transition-colors"
-                          >
-                            View
-                          </Link>
-                          
-                          {/* Publish status badge */}
-                          {project.publishStatus && (
-                            <span className={`inline-flex items-center px-2 py-1 text-xs rounded ${
-                              project.publishStatus === "PUBLISHED" 
-                                ? "bg-green-100 text-green-800" 
-                                : project.publishStatus === "UNPUBLISHED"
-                                  ? "bg-yellow-100 text-yellow-800" 
-                                  : "bg-gray-100 text-gray-800"
-                            } mb-2`}>
-                              {project.publishStatus === "PUBLISHED" 
-                                ? "Published" 
-                                : project.publishStatus === "UNPUBLISHED"
-                                  ? "Unpublished" 
-                                  : "Draft"
-                              }
-                            </span>
-                          )}
-                          
-                          {project.publishStatus !== "PUBLISHED" && (
-                            <div className="mt-2">
-                              <button
-                                onClick={() => handlePublish(project.id)}
-                                className="py-1 px-2 text-xs text-orange-600 font-medium rounded border border-orange-600 hover:bg-orange-100 transition-colors"
-                                disabled={project.builderState ? false : true}
-                              >
-                                Publish
-                              </button>
-                            </div>
-                          )}
-                          {project.publishStatus === "PUBLISHED" && (
-                            <div className="mt-2">
-                              <button
-                                onClick={() => handleUnpublish(project.id)}
- className="py-1 px-2 text-xs text-yellow-600 font-medium rounded border border-yellow-600 hover:bg-yellow-100 transition-colors"
-                              >
-                                Unpublish
-                              </button>
-                            </div>
-                          )}
-                          <Link
-                            href `/project/${project.id}`
-                            className="flex-1 py-2 px-2 text-zinc-600 text-sm rounded bg-zinc-100 dark:bg-zinc-800/30 hover:bg-zinc-200 transition-colors"
-                          >
-                            Edit
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+              {/* Trend indicator */}
+              {metric.trend && metric.trendValue && (
+                <div className="mt-2 flex items-center gap-2 text-zinc-500 text-sm">
+                  <span className={`iconify ${
+                    metric.trend === "up"
+                      ? "text-green-500"
+                      : metric.trend === "down"
+                        ? "text-red-500"
+                        : "text-zinc-400"
+                      }`}
+                    icon="lucide:${
+                      metric.trend === "up" ? "trending-up" : metric.trend === "down" ? "trending-down" : "minus"
+                    }"
+                    width={14}
+                    height={14}
+                  />{" "}
+                  <span>{metric.trendValue}</span>
                 </div>
               )}
             </div>
-          )}
+          ))}
+        </section>
 
-          {/* Default: show overview when no specific section is active */}
-          {activeSection !== "projects" && activeSection !== "my-websites" && (
-            <div className="p-8 text-center">
-              <h2 className="text-2xl font-bold text-zinc-900 mb-4 dark:text-zinc-100">
-                Dashboard
-              </h2>
-              <p className="text-zinc-500">
-                Select a section from the sidebar to get started.
-              </p>
-            </div>
+        {/* Recent Activity Section */}
+        <section className="bg-white dark:bg-zinc-900 rounded-3xl p-6 shadow-sm mb-10">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
+              Recent Activity
+            </h2>
+            <Link
+              href="/dashboard/activity"
+              className="text-zinc-500 text-sm font-medium hover:text-zinc-700 transition-colors"
+            >
+              View All
+            </Link>
+          </div>
+
+          <div className="space-y-4 max-h-96 overflow-y-auto">
+            {[
+              { user: "Sarah J.", action: "Published website", time: "2h ago", icon: "lucide:check-circle", color: "green" },
+              { user: "Mike T.", action: "Created project", time: "5h ago", icon: "lucide:plus", color: "orange" },
+              { user: "Agency Partner", action: "Added product", time: "1d ago", icon: "lucide:grid", color: "purple" },
+              { user: "Sarah J.", action: "Published website", time: "2h ago", icon: "lucide:check-circle", color: "green" },
+              { user: "Mike T.", action: "Created project", time: "5h ago", icon: "lucide:plus", color: "orange" },
+            ].map((activity) => (
+              <div
+                key={activity.action}
+                className="flex items-start gap-3 p-3 rounded-lg bg-zinc-50 dark:bg-zinc-800/30 hover:bg-zinc-100 dark:hover:bg-zinc-200 transition-colors"
+              >
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${
+                  activity.color === "green"
+                    ? "bg-green-100 text-green-600"
+                  : activity.color === "orange"
+                    ? "bg-orange-100 text-orange-600"
+                  : activity.color === "purple"
+                    ? "bg-purple-100 text-purple-600"
+                  : "bg-zinc-100 text-zinc-600"
+                }">
+                  <span className="iconify" icon={activity.icon as any} width={18} height={18} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-zinc-600 dark:text-zinc-400 line-clamp-1">
+                    {activity.user} {activity.action}
+                  </p>
+                  <p className="text-zinc-400 text-xs dark:text-zinc-500">
+                    {activity.time}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Nav States */}
+        {activeSection === "overview" && (
+          <div className="ml-64 p-6 flex-1">
+            <p className="text-zinc-500">
+              Select a section from the sidebar to get started.
+            </p>
+          </div>
+        )}
+
+        {activeSection === "my-websites" && (
+          <div className="ml-64 p-6 flex-1">
+            <h2 className="text-2xl font-bold text-zinc-900 mb-6 dark:text-zinc-100">
+              My Websites
+            </h2>
+            <p className="text-zinc-500">
+              Website management coming soon.
+            </p>
+          </div>
+        )}
+
+        {activeSection === "projects" && (
+          <div className="ml-64 p-6 flex-1">
+            <h2 className="text-2xl font-bold text-zinc-900 mb-6 dark:text-zinc-100">
+              My Projects
+            </h2>
+            {/* Projects section already rendered above */}
+          </div>
+        )}
+
+        {activeSection === "analytics" && (
+          <div className="ml-64 p-6 flex-1">
+            <h2 className="text-2xl font-bold text-zinc-900 mb-6 dark:text-zinc-100">
+              Analytics
+            </h2>
+            <p className="text-zinc-500">
+              Analytics dashboard coming soon.
+            </p>
+          </div>
+        )}
+
+        {activeSection === "settings" && (
+          <div className="ml-64 p-6 flex-1">
+            <h2 className="text-2xl font-bold text-zinc-900 mb-6 dark:text-zinc-100">
+              Settings
+            </h2>
+            <p className="text-zinc-500">
+              Account settings coming soon.
+            </p>
+          </div>
           )}
         </div>
       </main>
+    </div>
+  )
+}
+
+interface ProductCardProps {
+  name: string
+  price: string
+  description: string
+  href?: string
+}
+
+function ProductCard({
+  name,
+  price,
+  description,
+  href = "/product/1",
+}: ProductCardProps) {
+  return (
+    <div className="group bg-white dark:bg-zinc-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow border">
+      <div className="relative h-64">
+        <Image
+          src="/placeholder.svg?height=300&width=400"
+          alt={name}
+          className="object-cover w-full h-full duration-transform group-hover:scale-105 transition-transform"
+          width={400}
+          height={300}
+        />
+        <span
+          className="absolute top-3 left-3 bg-orange-600 text-xs text-white px-2 rounded"
+        >
+          {price}
+        </span>
+      </div>
+      <div className="p-6">
+        <h3 className="text-base font-medium text-zinc-900 group-hover:text-orange-600 transition-colors mb-1">
+          {name}
+        </h3>
+        <p className="text-zinc-500 text-sm line-clamp-2">
+          {description}
+        </p>
+
+        <div className="mt-4">
+          <Link
+            href={href}
+            className="block w-full bg-orange-600 text-white font-medium py-2 rounded-md hover:bg-orange-500 transition-colors text-center"
+          >
+            View Details
+          </Link>
+        </div>
+      </div>
     </div>
   )
 }

@@ -1,13 +1,15 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.orderRoutes = void 0;
-const client_1 = require("../generated/client");
-const prisma = new client_1.PrismaClient();
+const prisma_1 = __importDefault(require("../lib/prisma"));
 exports.orderRoutes = require("express").Router();
 exports.orderRoutes.get("/", async (req, res) => {
     try {
         const userId = req.user?.id;
-        const orders = await prisma.order.findMany({
+        const orders = await prisma_1.default.order.findMany({
             where: { userId },
             include: { orderItems: { include: { product: true } } },
             orderBy: { createdAt: "desc" },
@@ -22,7 +24,7 @@ exports.orderRoutes.post("/", async (req, res) => {
     try {
         const { items, totalAmount, paymentMethod } = req.body;
         const userId = req.user?.id;
-        const order = await prisma.order.create({
+        const order = await prisma_1.default.order.create({
             data: {
                 userId,
                 status: "PENDING",
