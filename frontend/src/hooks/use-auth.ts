@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 
 interface AuthState {
-  isAuthenticated: boolean
+  isAuthenticated: booleansxc
   isLoading: boolean
   user: any | null
 }
@@ -22,8 +22,27 @@ export function useAuth() {
     const token = typeof window !== "undefined" ? localStorage.getItem("token") : null
 
     if (token) {
-      // Validate token on client side (simple check)
-      setAuthState({ isAuthenticated: true, isLoading: false, user: null })
+      // Validate token against backend
+      fetch("/api/auth/profile", {
+        headers: { Authorization: `Bearer ${token}` },
+        cache: "no-store",
+      })
+        .then((res) => {
+          if (!res.ok) {
+            // Invalid token - clear it
+            localStorage.removeItem("token")
+            setAuthState({ isAuthenticated: false, isLoading: false, user: null })
+            return
+          }
+          res.json().then((data) => {
+            setAuthState({ isAuthenticated: true, isLoading: false, user: data.user })
+          })
+        })
+        .catch((err) => {
+          console.error("Auth validation error:", err)
+          localStorage.removeItem("token")
+          setAuthState({ isAuthenticated: false, isLoading: false, user: null })
+        })
     } else {
       setAuthState({ isAuthenticated: false, isLoading: false, user: null })
     }
@@ -89,9 +108,9 @@ export function useAuth() {
   }
 
   return {
-    isAuthenticated,
-    isLoading,
-    user,
+    isAuthenticated: authState.isAuthenticated,
+    isLoading: authState.isLoading,
+    user: authState.user,
     login,
     logout,
     register,

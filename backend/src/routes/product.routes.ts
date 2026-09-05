@@ -11,6 +11,7 @@ productRoutes.get("/", async (req: Request, res: Response) => {
       category,
       search,
       status,
+      featured,
       page = 1,
       limit = 12,
       sort = "latest",
@@ -55,10 +56,10 @@ productRoutes.get("/", async (req: Request, res: Response) => {
     }
 
     // Featured filter
-    if (featured) {
-      where.featured = Boolean(featured)
+    if (featured !== undefined) {
+      where.featured = String(featured).toLowerCase() === "true"
     }
-
+    
     const pageNumber = Math.max(Number(page) || 1, 1)
     const limitNumber = Math.min(
       Math.max(Number(limit) || 12, 1),

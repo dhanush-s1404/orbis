@@ -22,7 +22,7 @@ export default function TemplatesPage() {
 
   useEffect(() => {
     // Fetch templates from backend or use mock data
-    fetch("/api/templates", {
+    fetch("/api/builder/templates", {
       cache: "no-store",
     })
       .then((res) => {
@@ -179,7 +179,7 @@ export default function TemplatesPage() {
                 className="bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow border"
               >
                 <div className="relative h-64">
-                  <Image
+                  <img
                     src={template.previewUrl}
                     alt={template.name}
                     className="object-cover w-full h-full duration-slow"

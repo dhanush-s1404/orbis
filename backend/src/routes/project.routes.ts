@@ -1,6 +1,7 @@
 import { Request, Response } from "express"
 import { AuthService } from "../services/auth.service"
 import prisma from "../lib/prisma"
+import { authenticate, optionalAuth } from "../middleware/auth.middleware"
 
 // Helper: validate project ownership
 async function verifyProjectOwnership(projectId: string, userId: string) {
@@ -20,7 +21,7 @@ async function verifyProjectOwnership(projectId: string, userId: string) {
 export const projectRoutes = require("express").Router()
 
 // GET /api/projects - List projects for authenticated user
-projectRoutes.get("/", async (req: Request, res: Response) => {
+projectRoutes.get("/", authenticate, async (req: Request, res: Response) => {
   try {
     const userId = (req as any).user?.id
 
@@ -49,7 +50,7 @@ projectRoutes.get("/", async (req: Request, res: Response) => {
 })
 
 // POST /api/projects - Create a new project
-projectRoutes.post("/", async (req: Request, res: Response) => {
+projectRoutes.post("/", authenticate, async (req: Request, res: Response) => {
   try {
     const userId = (req as any).user?.id
 
@@ -64,12 +65,20 @@ projectRoutes.post("/", async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Project name is required" })
     }
 
+    if (!description || description.trim().length === 0) {
+      return res.status(400).json({ message: "Project description is required" })
+    }
+
+    // Validate status value
+    const validStatuses = ["SUBMITTED", "REVIEWING", "REQUIREMENTS_CONFIRMED", "PROPOSAL", "DEVELOPMENT", "TESTING", "CUSTOMER_REVIEW", "REVISIONS", "DEPLOYMENT", "COMPLETED", "ARCHIVED"]
+    const validStatus = validStatuses.includes(status) ? status : "SUBMITTED"
+
     // Create project with authenticated user ownership
     const project = await prisma.Project.create({
       data: {
         name: name.trim(),
-        description: description?.trim(),
-        status: status || "SUBMITTED",
+        description: description.trim(),
+        status: validStatus,
         budget: budget ?? undefined,
         timeline: timeline || undefined,
         user: { connect: { id: userId } },
@@ -83,7 +92,7 @@ projectRoutes.post("/", async (req: Request, res: Response) => {
 })
 
 // GET /api/projects/:id - Get project details
-projectRoutes.get("/:id", async (req: Request, res: Response) => {
+projectRoutes.get("/:id", authenticate, async (req: Request, res: Response) => {
   try {
     const userId = (req as any).user?.id
     const projectId = req.params.id
@@ -110,7 +119,7 @@ projectRoutes.get("/:id", async (req: Request, res: Response) => {
 })
 
 // PATCH /api/projects/:id - Update project
-projectRoutes.patch("/:id", async (req: Request, res: Response) => {
+projectRoutes.patch("/:id", authenticate, async (req: Request, res: Response) => {
   try {
     const userId = (req as any).user?.id
     const projectId = req.params.id
@@ -162,7 +171,7 @@ projectRoutes.patch("/:id", async (req: Request, res: Response) => {
 })
 
 // DELETE /api/projects/:id - Delete/Archive project
-projectRoutes.delete("/:id", async (req: Request, res: Response) => {
+projectRoutes.delete("/:id", authenticate, async (req: Request, res: Response) => {
   try {
     const userId = (req as any).user?.id
     const projectId = req.params.id
@@ -195,7 +204,7 @@ projectRoutes.delete("/:id", async (req: Request, res: Response) => {
 })
 
 // POST /api/projects/:id/publish - Publish a project
-projectRoutes.post("/:id/publish", async (req: Request, res: Response) => {
+projectRoutes.post("/:id/publish", authenticate, async (req: Request, res: Response) => {
   try {
     const userId = (req as any).user?.id
     const projectId = req.params.id
@@ -257,7 +266,7 @@ projectRoutes.post("/:id/publish", async (req: Request, res: Response) => {
 })
 
 // POST /api/projects/:id/unpublish - Unpublish a project
-projectRoutes.post("/:id/unpublish", async (req: Request, res: Response) => {
+projectRoutes.post("/:id/unpublish", authenticate, async (req: Request, res: Response) => {
   try {
     const userId = (req as any).user?.id
     const projectId = req.params.id
@@ -297,7 +306,7 @@ projectRoutes.post("/:id/unpublish", async (req: Request, res: Response) => {
 })
 
 // GET /api/projects/:id/publish-status - Get publish status
-projectRoutes.get("/:id/publish-status", async (req: Request, res: Response) => {
+projectRoutes.get("/:id/publish-status", authenticate, async (req: Request, res: Response) => {
   try {
     const userId = (req as any).user?.id
     const projectId = req.params.id

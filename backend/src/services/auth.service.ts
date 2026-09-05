@@ -31,9 +31,13 @@ export class AuthService {
       role: user.role,
     }
 
+    if (!process.env.NEXTAUTH_SECRET) {
+      throw new Error("NEXTAUTH_SECRET environment variable is not configured")
+    }
+
     const token = jwt.sign(
       { userId: user.id, role: user.role },
-      process.env.NEXTAUTH_SECRET || "default-secret",
+      process.env.NEXTAUTH_SECRET,
       { expiresIn: "7d" }
     )
 
@@ -50,6 +54,10 @@ export class AuthService {
     const isValid = await bcrypt.compare(password, user.passwordHash)
     if (!isValid) return null
 
+    if (!process.env.NEXTAUTH_SECRET) {
+      throw new Error("NEXTAUTH_SECRET environment variable is not configured")
+    }
+
     const authUser: AuthUser = {
       id: user.id,
       name: user.name,
@@ -59,7 +67,7 @@ export class AuthService {
 
     const token = jwt.sign(
       { userId: user.id, role: user.role },
-      process.env.NEXTAUTH_SECRET || "default-secret",
+      process.env.NEXTAUTH_SECRET,
       { expiresIn: "7d" }
     )
 

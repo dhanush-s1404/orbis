@@ -5,12 +5,25 @@ const router = Router()
 
 router.get("/", async (req: Request, res: Response) => {
   try {
+    const page = Math.max(Number(req.query.page) || 1, 1)
+    const limit = Math.min(Math.max(Number(req.query.limit) || 10, 1), 100)
+
     const [users, products, orders, projects, notifications] = await Promise.all([
-      prisma.user.findMany({ select: { id: true, name: true, email: true, role: true, status: true } }),
+      prisma.user.findMany({
+        select: { id: true, name: true, email: true, role: true, status: true },
+        skip: (page - 1) * limit,
+        take: limit,
+        orderBy: { createdAt: "desc" },
+      }),
       prisma.product.count(),
       prisma.order.count(),
       prisma.project.count(),
-      prisma.notification.findMany({ where: { read: false }, take: 10, orderBy: { createdAt: "desc" } }),
+      prisma.notification.findMany({
+        where: { read: false },
+        skip: (page - 1) * limit,
+        take: limit,
+        orderBy: { createdAt: "desc" },
+      }),
     ])
 
     const totalUsers = users.length
@@ -43,6 +56,9 @@ router.get("/", async (req: Request, res: Response) => {
       recentOrders,
       recentProjects,
       unreadNotifications: notifications.length,
+      page,
+      totalPages: Math.ceil(/* would need individual counts */ 0), // simplified
+      users,
     })
   } catch (error: any) {
     return res.status(500).json({

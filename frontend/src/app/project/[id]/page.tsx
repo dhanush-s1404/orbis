@@ -171,7 +171,7 @@ export default function ProjectDetailPage() {
       <div className="max-w-4xl mx-auto px-6 py-12">
         <nav className="mb-6">
           <Link
-            href "/dashboard/projects"
+            href="/dashboard/projects"
             className="btn-back text-orange-600 font-medium hover:underline"
           >
             ← Back to Projects

@@ -1,0 +1,117 @@
+src/app/analytics/page.tsx(213,13): error TS2657: JSX expressions must have one parent element.
+src/app/builder/page.tsx(300,18): error TS1003: Identifier expected.
+src/app/builder/page.tsx(302,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/app/builder/page.tsx(304,13): error TS17002: Expected corresponding JSX closing tag for 'div'.
+src/app/builder/page.tsx(305,11): error TS17002: Expected corresponding JSX closing tag for 'main'.
+src/app/builder/page.tsx(306,7): error TS1005: ')' expected.
+src/app/builder/page.tsx(307,5): error TS1109: Expression expected.
+src/app/builder/page.tsx(339,22): error TS1003: Identifier expected.
+src/app/builder/page.tsx(341,15): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/app/builder/page.tsx(343,17): error TS17002: Expected corresponding JSX closing tag for 'div'.
+src/app/builder/page.tsx(346,11): error TS17002: Expected corresponding JSX closing tag for 'main'.
+src/app/builder/page.tsx(347,7): error TS1005: ')' expected.
+src/app/builder/page.tsx(348,5): error TS1109: Expression expected.
+src/app/builder/page.tsx(353,8): error TS17008: JSX element 'div' has no corresponding closing tag.
+src/app/builder/page.tsx(537,5): error TS1005: ')' expected.
+src/app/builder/page.tsx(538,3): error TS1109: Expression expected.
+src/app/dashboard/customers/page.tsx(136,10): error TS17008: JSX element 'header' has no corresponding closing tag.
+src/app/dashboard/customers/page.tsx(147,20): error TS1003: Identifier expected.
+src/app/dashboard/customers/page.tsx(149,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/app/dashboard/customers/page.tsx(151,15): error TS17002: Expected corresponding JSX closing tag for 'div'.
+src/app/dashboard/customers/page.tsx(153,11): error TS17002: Expected corresponding JSX closing tag for 'main'.
+src/app/dashboard/customers/page.tsx(155,9): error TS1005: ')' expected.
+src/app/dashboard/customers/page.tsx(257,7): error TS1128: Declaration or statement expected.
+src/app/dashboard/customers/page.tsx(258,5): error TS1109: Expression expected.
+src/app/dashboard/customers/page.tsx(259,3): error TS1109: Expression expected.
+src/app/dashboard/page.tsx(112,11): error TS1005: ',' expected.
+src/app/dashboard/page.tsx(112,16): error TS1005: ',' expected.
+src/app/dashboard/page.tsx(281,10): error TS17008: JSX element 'section' has no corresponding closing tag.
+src/app/dashboard/page.tsx(301,40): error TS1003: Identifier expected.
+src/app/dashboard/page.tsx(301,41): error TS1002: Unterminated string literal.
+src/app/dashboard/page.tsx(310,17): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/app/dashboard/page.tsx(310,19): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/app/dashboard/page.tsx(323,15): error TS1005: ')' expected.
+src/app/dashboard/page.tsx(324,15): error TS1005: ',' expected.
+src/app/dashboard/page.tsx(324,22): error TS1005: ',' expected.
+src/app/dashboard/page.tsx(334,43): error TS1003: Identifier expected.
+src/app/dashboard/page.tsx(335,21): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/app/dashboard/page.tsx(338,20): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/app/dashboard/page.tsx(342,13): error TS1005: ',' expected.
+src/app/dashboard/page.tsx(343,13): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/app/dashboard/page.tsx(344,11): error TS17002: Expected corresponding JSX closing tag for 'main'.
+src/app/dashboard/page.tsx(346,9): error TS1005: ')' expected.
+src/app/dashboard/page.tsx(368,15): error TS2657: JSX expressions must have one parent element.
+src/app/dashboard/page.tsx(373,44): error TS1003: Identifier expected.
+src/app/dashboard/page.tsx(373,45): error TS1002: Unterminated string literal.
+src/app/dashboard/page.tsx(380,17): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/app/dashboard/page.tsx(380,19): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/app/dashboard/page.tsx(391,15): error TS1005: ')' expected.
+src/app/dashboard/page.tsx(392,15): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/app/dashboard/page.tsx(393,13): error TS17002: Expected corresponding JSX closing tag for 'section'.
+src/app/dashboard/page.tsx(394,9): error TS1128: Declaration or statement expected.
+src/app/dashboard/page.tsx(446,7): error TS1128: Declaration or statement expected.
+src/app/dashboard/page.tsx(447,5): error TS1109: Expression expected.
+src/app/dashboard/page.tsx(448,3): error TS1109: Expression expected.
+src/app/dashboard/store/page.tsx(358,10): error TS17008: JSX element 'section' has no corresponding closing tag.
+src/app/dashboard/store/page.tsx(437,30): error TS1003: Identifier expected.
+src/app/dashboard/store/page.tsx(439,23): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/app/dashboard/store/page.tsx(441,25): error TS17002: Expected corresponding JSX closing tag for 'div'.
+src/app/dashboard/store/page.tsx(443,19): error TS1005: ')' expected.
+src/app/dashboard/store/page.tsx(445,16): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/app/dashboard/store/page.tsx(472,11): error TS17002: Expected corresponding JSX closing tag for 'main'.
+src/app/dashboard/store/page.tsx(473,7): error TS1005: ')' expected.
+src/app/dashboard/store/page.tsx(474,5): error TS1109: Expression expected.
+src/app/dashboard/store/page.tsx(475,3): error TS1109: Expression expected.
+src/app/product/[slug]/page.tsx(166,15): error TS17002: Expected corresponding JSX closing tag for 'Link'.
+src/app/product/[slug]/page.tsx(175,8): error TS17008: JSX element 'div' has no corresponding closing tag.
+src/app/product/[slug]/page.tsx(237,21): error TS17002: Expected corresponding JSX closing tag for 'div'.
+src/app/product/[slug]/page.tsx(386,5): error TS1005: ')' expected.
+src/app/product/[slug]/page.tsx(387,3): error TS1109: Expression expected.
+src/app/product/[slug]/page.tsx(439,20): error TS1003: Identifier expected.
+src/app/product/[slug]/page.tsx(441,13): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/app/product/[slug]/page.tsx(443,15): error TS17002: Expected corresponding JSX closing tag for 'div'.
+src/app/product/[slug]/page.tsx(444,11): error TS1005: ')' expected.
+src/app/product/[slug]/page.tsx(445,10): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/app/product/[slug]/page.tsx(447,5): error TS1005: ')' expected.
+src/app/product/[slug]/page.tsx(448,3): error TS1109: Expression expected.
+src/app/project/[id]/page.tsx(258,17): error TS1005: ')' expected.
+src/app/project/[id]/page.tsx(261,15): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/app/project/[id]/page.tsx(301,17): error TS17002: Expected corresponding JSX closing tag for 'div'.
+src/app/project/[id]/page.tsx(353,9): error TS17002: Expected corresponding JSX closing tag for 'main'.
+src/app/project/[id]/page.tsx(354,5): error TS1005: ')' expected.
+src/app/project/[id]/page.tsx(355,3): error TS1109: Expression expected.
+src/components/navbar.tsx(22,5): error TS2657: JSX expressions must have one parent element.
+src/components/navbar.tsx(70,18): error TS1003: Identifier expected.
+src/components/navbar.tsx(73,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/navbar.tsx(75,13): error TS17002: Expected corresponding JSX closing tag for 'div'.
+src/components/navbar.tsx(77,18): error TS1003: Identifier expected.
+src/components/navbar.tsx(80,11): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/navbar.tsx(82,13): error TS17002: Expected corresponding JSX closing tag for 'div'.
+src/components/navbar.tsx(83,11): error TS17002: Expected corresponding JSX closing tag for 'nav'.
+src/components/navbar.tsx(106,7): error TS1005: ')' expected.
+src/components/navbar.tsx(186,5): error TS1128: Declaration or statement expected.
+src/components/navbar.tsx(187,3): error TS1109: Expression expected.
+src/components/renderer/sections/pricing.component.tsx(42,13): error TS2657: JSX expressions must have one parent element.
+src/components/renderer/sections/pricing.component.tsx(51,69): error TS1003: Identifier expected.
+src/components/renderer/sections/pricing.component.tsx(52,15): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/renderer/sections/pricing.component.tsx(52,22): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/renderer/sections/pricing.component.tsx(54,17): error TS17002: Expected corresponding JSX closing tag for 'div'.
+src/components/renderer/sections/pricing.component.tsx(56,69): error TS1003: Identifier expected.
+src/components/renderer/sections/pricing.component.tsx(56,69): error TS1005: ')' expected.
+src/components/renderer/sections/pricing.component.tsx(56,74): error TS1005: ',' expected.
+src/components/renderer/sections/pricing.component.tsx(56,88): error TS1005: ',' expected.
+src/components/renderer/sections/pricing.component.tsx(56,92): error TS1005: ',' expected.
+src/components/renderer/sections/pricing.component.tsx(57,15): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/renderer/sections/pricing.component.tsx(57,22): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/renderer/sections/pricing.component.tsx(57,38): error TS17002: Expected corresponding JSX closing tag for 'div'.
+src/components/renderer/sections/pricing.component.tsx(59,69): error TS1003: Identifier expected.
+src/components/renderer/sections/pricing.component.tsx(60,15): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/renderer/sections/pricing.component.tsx(60,22): error TS1382: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+src/components/renderer/sections/pricing.component.tsx(60,54): error TS17002: Expected corresponding JSX closing tag for 'div'.
+src/components/renderer/sections/pricing.component.tsx(88,15): error TS17002: Expected corresponding JSX closing tag for 'section'.
+src/components/renderer/sections/pricing.component.tsx(89,12): error TS1005: ';' expected.
+src/components/renderer/sections/pricing.component.tsx(90,9): error TS1128: Declaration or statement expected.
+src/components/renderer/sections/pricing.component.tsx(91,7): error TS1109: Expression expected.
+src/components/renderer/sections/pricing.component.tsx(92,5): error TS1109: Expression expected.
+src/components/renderer/sections/pricing.component.tsx(93,3): error TS1109: Expression expected.
+src/components/renderer/sections/pricing.component.tsx(94,1): error TS1128: Declaration or statement expected.

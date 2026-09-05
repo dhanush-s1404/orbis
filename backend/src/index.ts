@@ -19,46 +19,57 @@ const app = express()
 // Security headers via Helmet
 app.use(helmet())
 
-// CORS configuration - use frontend URL from env, restrict in production
-const corsOrigin = process.env.FRONTEND_URL || process.env.NEXT_PUBLIC_URL || "http://localhost:3000"
-const isDevelopment = process.env.NODE_ENV !== "production"
+// CORS configuration - support development and production
+// In development: allow local origins
+// In production: require explicit FRONTEND_URL environment variable
+const allowedOrigins = isDevelopment
+  ? ["http://localhost:3000", "http://localhost:4000", "http://127.0.0.1:3000"]
+  : [corsOrigin]
 
 app.use(
   cors({
-    origin: isDevelopment ? "*" : corsOrigin,
+    origin: allowedOrigins,
     credentials: true,
     optionsSuccessStatus: 200,
   })
 )
 app.use(express.json({ limit: "10mb" }))
 
-// Rate limiting basic
-interface RateLimitCache {
-  [key: string]: number
-}
+// Rate limiting using express-rate-limit for proper handling
+const limit = require("express-rate-limit")
 
-const rateLimitStore: { [ip: string]: RateLimitCache } = {}
+// Base rate limiter - 100 requests per 15 minutes
+const baseLimiter = limit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100,
+  message: { message: "Too many requests, please try again later." },
+  standardHeaders: true, // Return rate limit info in `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+})
 
-const rateLimit = (req: any, res: any, next: any) => {
-  const now = Date.now()
-  const { ip } = req
-  // Simple in-memory rate limit
-  const store: RateLimitCache = rateLimitStore[ip] || {}
-  const ipKey = ip || "unknown"
-  const lastReq = store[ipKey] || 0
-  if (now - lastReq < 1000) {
-    const count = (store[ipKey + "_count"] || 1) + 1
-    store[ipKey + "_count"] = count
-    if (count > 10) return res.status(429).json({ message: "Too many requests" })
-  } else {
-    store[ipKey] = now
-    store[ipKey + "_count"] = 1
-    rateLimitStore[ip] = store
-  }
-  next()
-}
+// Stricter limiter for auth endpoints - 5 requests per 15 minutes
+const authLimiter = limit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5,
+  message: { message: "Too many authentication attempts, please try again later." },
+  standardHeaders: true,
+  legacyHeaders: false,
+})
 
-app.use(rateLimit)
+// Stricter limiter for sensitive operations - 30 requests per 15 minutes
+const sensitiveLimiter = limit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 30,
+  message: { message: "Too many requests, please try again later." },
+  standardHeaders: true,
+  legacyHeaders: false,
+})
+
+// Apply rate limiters to specific routes
+app.use(baseLimiter) // Apply base limiter to all routes
+app.use("/api/auth", authLimiter) // Auth endpoints
+app.use("/api/projects", sensitiveLimiter) // Project endpoints
+app.use("/api/builder", sensitiveLimiter) // Builder endpoints
 
 // Routes
 app.use("/api/products", productRoutes)
@@ -80,9 +91,29 @@ app.get("/health", (req, res) => {
 app.use(errorHandler)
 
 const PORT = process.env.PORT || 4000
-app.listen(PORT, () => {
+
+const server = app.listen(PORT, () => {
   console.log(`🚀 Backend running on port ${PORT}`)
   console.log(`📅 Database: ${process.env.DATABASE_URL?.split("@")[1] || "localhost"}`)
+})
+
+// Graceful shutdown
+process.on("SIGTERM", async () => {
+  console.log("SIGTERM received. Shutting down gracefully...")
+  await prisma.$disconnect()
+  server.close(() => {
+    console.log("Server closed")
+    process.exit(0)
+  })
+})
+
+process.on("SIGINT", async () => {
+  console.log("SIGINT received. Shutting down gracefully...")
+  await prisma.$disconnect()
+  server.close(() => {
+    console.log("Server closed")
+    process.exit(0)
+  })
 })
 
 export { prisma }

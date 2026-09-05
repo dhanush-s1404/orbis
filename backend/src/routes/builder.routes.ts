@@ -2,28 +2,15 @@ import { Router, Request, Response } from "express"
 import prisma from "../lib/prisma"
 import { AuthService } from "../services/auth.service"
 
-// Type assertion for Prisma client models - bypasses strict type checking
-// for Prisma client with runtime data model resolution issues
-const prisma$ = prisma as unknown as {
-  Project: {
-    findUnique: (args: any) => Promise<any>
-    create: (args: any) => Promise<any>
-    update: (args: any) => Promise<any>
-    delete: (args: any) => Promise<any>
-    findMany: (args: any) => Promise<any>
-  }
-  Template: {
-    findUnique: (args: any) => Promise<any>
-    findMany: (args: any) => Promise<any>
-  }
-}
+// Use proper Prisma types instead of type bypass
+// The Prisma client types are imported via the generated client
 
 // ✅ Declare and initialize the router FIRST, before any routes are attached to it
 const builderRoutes = Router()
 
 // Helper: validate project ownership
 async function verifyProjectOwnership(projectId: string, userId: string) {
-  const project = await prisma$.Project.findUnique({
+  const project = await prisma.Project.findUnique({
     where: { id: projectId },
     include: { user: true },
   })
@@ -52,7 +39,7 @@ builderRoutes.post("/create", async (req: Request, res: Response) => {
     }
 
     // Validate template exists
-    const template = await prisma$.Template.findUnique({
+    const template = await prisma.Template.findUnique({
       where: { id: templateId, isActive: true },
     })
 
@@ -61,7 +48,7 @@ builderRoutes.post("/create", async (req: Request, res: Response) => {
     }
 
     // Create project associated with template
-    const project = await prisma$.Project.create({
+    const project = await prisma.Project.create({
       data: {
         name: name || `Website Project ${new Date().getFullYear()}`,
         description: "Website built using ORBIS Builder",
@@ -149,7 +136,7 @@ builderRoutes.patch("/:id", async (req: Request, res: Response) => {
     }
 
     // Update builder state
-    const updatedProject = await prisma$.Project.update({
+    const updatedProject = await prisma.Project.update({
       where: { id: projectId },
       data: { builderState },
     })
@@ -170,7 +157,7 @@ builderRoutes.patch("/:id", async (req: Request, res: Response) => {
 // GET /api/builder/templates - Get available templates
 builderRoutes.get("/templates", async (req: Request, res: Response) => {
   try {
-    const templates = await prisma$.Template.findMany({
+    const templates = await prisma.Template.findMany({
       where: { isActive: true },
       orderBy: { name: "asc" },
     })
@@ -221,7 +208,7 @@ builderRoutes.post("/:id/pages", async (req: Request, res: Response) => {
         }
 
         currentState.pages.push(newPage)
-        updatedProject = await prisma$.Project.update({
+        updatedProject = await prisma.Project.update({
           where: { id: projectId },
           data: { builderState: JSON.stringify(currentState) },
         })
@@ -245,7 +232,7 @@ builderRoutes.post("/:id/pages", async (req: Request, res: Response) => {
           }
         }
 
-        updatedProject = await prisma$.Project.update({
+        updatedProject = await prisma.Project.update({
           where: { id: projectId },
           data: { builderState: JSON.stringify(state) },
         })
@@ -259,7 +246,7 @@ builderRoutes.post("/:id/pages", async (req: Request, res: Response) => {
           (p: any) => p.id !== pageData?.id
         )
 
-        updatedProject = await prisma$.Project.update({
+        updatedProject = await prisma.Project.update({
           where: { id: projectId },
           data: { builderState: JSON.stringify(stateDelete) },
         })

@@ -524,16 +524,9 @@ Return as a comma-separated string: "tag1, tag2, tag3, tag4, tag5, tag6, tag7"`
     }
   }
 }
-    return `Generate content for a restaurant website:
-    - Name: ${profile.businessName}
-    - Cuisine type: inferred from description
-    - Must include: Menu/service messaging, Reservations, Location, Opening information, Food-focused CTAs
-    - Tone: ${profile.tone}
-    - Format: JSON with sections: hero, about, services, contact`
-  }
 
-  /**
-   * Build a portfolio template prompt with section priorities.
+/**
+ * Build a portfolio template prompt with section priorities.
    * The AI should generate content prioritizing personal branding,
    * work/project highlights, skills, and contact information.
    */
@@ -575,7 +568,7 @@ Return as a comma-separated string: "tag1, tag2, tag3, tag4, tag5, tag6, tag7"`
       generationTime: 0,
       modelUsed: "none",
     }
-  }
 }
+  }
 
 export default AIService

@@ -442,8 +442,7 @@ export default function Dashboard() {
               Account settings coming soon.
             </p>
           </div>
-          )}
-        </div>
+        )}
       </main>
     </div>
   )

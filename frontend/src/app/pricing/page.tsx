@@ -103,7 +103,7 @@ export default function PricingPage() {
 
         <div className="mt-12 pt-12 border-t border-zinc-200/50 text-center">
           <p className="text-zinc-500 mb-4">
-            Need something custom? <a href "/contact" className="text-orange-600 font-medium hover:underline">
+            Need something custom? <a href="/contact" className="text-orange-600 font-medium hover:underline">
               Request Custom Quote
             </a>
           </p>

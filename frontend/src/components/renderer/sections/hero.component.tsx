@@ -19,10 +19,15 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ id, title, subtitle, backgroundImage, backgroundColor, primaryCTA, secondaryCTA }: HeroSectionProps) {
+  // Use inline style for dynamic background color since Tailwind cannot
+  // statically detect runtime className values
+  const bgStyle = backgroundColor ? { backgroundColor } : {}
+
   return (
     <section
       id={id}
-      className="relative min-h-[600px] bg-[{backgroundColor}] flex items-center justify-center px-6 pb-24"
+      className="relative min-h-[600px] flex items-center justify-center px-6 pb-24"
+      style={bgStyle}
     >
       <div className="max-w-7xl mx-auto text-center px-4">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">

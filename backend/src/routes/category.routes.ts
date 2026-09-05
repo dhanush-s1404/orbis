@@ -18,7 +18,6 @@ categoryRoutes.get("/", async (req: Request, res: Response) => {
             slug: true,
             featured: true,
           },
-          take: 6,
         },
       },
       orderBy: { name: "asc" },

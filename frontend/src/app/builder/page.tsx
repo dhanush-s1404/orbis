@@ -330,7 +330,7 @@ export default function BuilderPage() {
             </p>
             <div className="mt-8">
               <Link
-                href "/marketplace"
+                href="/marketplace"
                 className="py-3 px-4 bg-orange-600 text-white font-medium rounded-md hover:bg-orange-500 transition-colors text-center"
               >
                 Browse Templates

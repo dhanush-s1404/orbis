@@ -1,0 +1,263 @@
+
+> orbis@0.1.0 lint
+> npm run --workspace=frontend lint & npm run --workspace=backend lint
+
+
+> frontend@1.0.0 lint
+> eslint
+
+
+D:\-CODINGS-\website-sales\frontend\src\app\analytics\page.tsx
+  213:12  error  Parsing error: JSX expressions must have one parent element
+
+D:\-CODINGS-\website-sales\frontend\src\app\auth\signin\page.tsx
+  22:14  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+  22:21  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\-CODINGS-\website-sales\frontend\src\app\auth\signup\page.tsx
+  31:7   warning  Do not use `window.location.href` to navigate to internal Next.js pages. Use `redirect()` in the render phase, or `useRouter().push()` in Client Components' event handlers instead. See: https://nextjs.org/docs/messages/no-location-assign-relative-destination  @next/next/no-location-assign-relative-destination
+  32:14  warning  'error' is defined but never used                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+  32:21  error    Unexpected any. Specify a different type                                                                                                                                                                                                                            @typescript-eslint/no-explicit-any
+
+D:\-CODINGS-\website-sales\frontend\src\app\build\page.tsx
+    4:8   warning  'Link' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+  115:34  warning  'e' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+  127:34  warning  'e' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+  141:34  warning  'e' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+  153:34  warning  'e' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+  369:26  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+D:\-CODINGS-\website-sales\frontend\src\app\build\page.tsx:369:26
+  367 |               <div className="text-center">
+  368 |                 <p className="text-zinc-500 text-sm mb-4">Project ID: ORBIS-BUILD-{Math.floor(
+> 369 |                   1000 + Math.random() * 9000
+      |                          ^^^^^^^^^^^^^ Cannot call impure function
+  370 |                 )}</p>
+  371 |                 <button
+  372 |                   onClick={() => setStep(1)}  react-hooks/purity
+
+D:\-CODINGS-\website-sales\frontend\src\app\builder\page.tsx
+  300:17  error  Parsing error: Identifier expected
+
+D:\-CODINGS-\website-sales\frontend\src\app\dashboard\customers\page.tsx
+  147:19  error  Parsing error: Identifier expected
+
+D:\-CODINGS-\website-sales\frontend\src\app\dashboard\orders\page.tsx
+    6:8   warning  'Image' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-unused-vars
+   49:5   error    Error: Cannot access variable before it is declared
+
+`fetchOrders` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+D:\-CODINGS-\website-sales\frontend\src\app\dashboard\orders\page.tsx:49:5
+  47 |       return
+  48 |     }
+> 49 |     fetchOrders()
+     |     ^^^^^^^^^^^ `fetchOrders` accessed before it is declared
+  50 |   }, [isAuthenticated])
+  51 |
+  52 |   const fetchOrders = async () => {
+
+D:\-CODINGS-\website-sales\frontend\src\app\dashboard\orders\page.tsx:52:3
+  50 |   }, [isAuthenticated])
+  51 |
+> 52 |   const fetchOrders = async () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 53 |     if (!user?.id) return
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 54 |     try {
+     ΓÇª
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 74 |     }
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 75 |   }
+     | ^^^^ `fetchOrders` is declared here
+  76 |
+  77 |   const handleSignOut = () => {
+  78 |     // logout()  react-hooks/immutability
+   50:6   warning  React Hook useEffect has a missing dependency: 'fetchOrders'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   react-hooks/exhaustive-deps
+   77:9   warning  'handleSignOut' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-unused-vars
+  178:78  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-explicit-any
+
+D:\-CODINGS-\website-sales\frontend\src\app\dashboard\page.tsx
+  112:10  error  Parsing error: ',' expected
+
+D:\-CODINGS-\website-sales\frontend\src\app\dashboard\store\page.tsx
+  437:29  error  Parsing error: Identifier expected
+
+D:\-CODINGS-\website-sales\frontend\src\app\improve\page.tsx
+    4:8   warning  'Link' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-unused-vars
+   43:9   warning  'handleSubmit' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+   90:52  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                react/no-unescaped-entities
+  379:64  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+D:\-CODINGS-\website-sales\frontend\src\app\improve\page.tsx:379:64
+  377 |               <div className="text-center">
+  378 |                 <p className="text-zinc-500 text-sm mb-4">
+> 379 |                   Request ID: ORBIS-IMPROVE-{Math.floor(1000 + Math.random() * 9000)}
+      |                                                                ^^^^^^^^^^^^^ Cannot call impure function
+  380 |                 </p>
+  381 |                 <button
+  382 |                   onClick={() => setStep(1)}  react-hooks/purity
+
+D:\-CODINGS-\website-sales\frontend\src\app\layout.tsx
+  20:8  warning  'Navbar' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\-CODINGS-\website-sales\frontend\src\app\marketplace\page.tsx
+    4:8   warning  'Link' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @typescript-eslint/no-unused-vars
+   13:21  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+   16:11  warning  'Product' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-unused-vars
+   23:11  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+   24:13  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+   25:13  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+   29:44  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+   40:5   error    Error: Cannot access variable before it is declared
+
+`fetchMarketplace` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+D:\-CODINGS-\website-sales\frontend\src\app\marketplace\page.tsx:40:5
+  38 |
+  39 |   useEffect(() => {
+> 40 |     fetchMarketplace()
+     |     ^^^^^^^^^^^^^^^^ `fetchMarketplace` accessed before it is declared
+  41 |   }, [])
+  42 |
+  43 |   const fetchMarketplace = async () => {
+
+D:\-CODINGS-\website-sales\frontend\src\app\marketplace\page.tsx:43:3
+  41 |   }, [])
+  42 |
+> 43 |   const fetchMarketplace = async () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 44 |     try {
+     | ^^^^^^^^^
+> 45 |       // Fetch categories first
+     ΓÇª
+     | ^^^^^^^^^
+> 71 |     }
+     | ^^^^^^^^^
+> 72 |   }
+     | ^^^^ `fetchMarketplace` is declared here
+  73 |
+  74 |   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  75 |     const { name, type, value } = e.target  react-hooks/immutability
+   41:6   warning  React Hook useEffect has a missing dependency: 'fetchMarketplace'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               react-hooks/exhaustive-deps
+  228:46  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+
+D:\-CODINGS-\website-sales\frontend\src\app\product\[slug]\page.tsx
+  166:14  error  Parsing error: Expected corresponding JSX closing tag for 'Link'
+
+D:\-CODINGS-\website-sales\frontend\src\app\project\[id]\page.tsx
+  258:16  error  Parsing error: ')' expected
+
+D:\-CODINGS-\website-sales\frontend\src\app\published\[slug]\page.tsx
+   3:31  warning  'useSearchParams' is defined but never used  @typescript-eslint/no-unused-vars
+   4:10  warning  'useRouter' is defined but never used        @typescript-eslint/no-unused-vars
+  14:12  error    Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+  15:13  error    Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+  59:12  error    'Link' is not defined                        react/jsx-no-undef
+
+D:\-CODINGS-\website-sales\frontend\src\app\services\page.tsx
+  3:8  warning  'Link' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\-CODINGS-\website-sales\frontend\src\app\stores\page.tsx
+   7:40  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  85:20  error  'Image' is not defined                    react/jsx-no-undef
+
+D:\-CODINGS-\website-sales\frontend\src\app\templates\page.tsx
+   21:17  warning  'setError' is assigned a value but never used                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+  182:19  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\-CODINGS-\website-sales\frontend\src\components\navbar.tsx
+  70:17  error  Parsing error: Identifier expected
+
+D:\-CODINGS-\website-sales\frontend\src\components\renderer\renderer.component.tsx
+   74:36  warning  'slug' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+   83:7   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\-CODINGS-\website-sales\frontend\src\components\renderer\renderer.component.tsx:83:7
+  81 |     const urlPage = urlParams.get("page")
+  82 |     if (urlPage && config.pages.some((p) => p.id === urlPage)) {
+> 83 |       setCurrentPage(urlPage)
+     |       ^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  84 |     }
+  85 |   }, [config.pages])
+  86 |  react-hooks/set-state-in-effect
+  101:14  error    'Link' is not defined                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    react/jsx-no-undef
+  132:12  error    'Link' is not defined                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    react/jsx-no-undef
+
+D:\-CODINGS-\website-sales\frontend\src\components\renderer\sections\cta.component.tsx
+  38:12  error  'Link' is not defined  react/jsx-no-undef
+  47:14  error  'Link' is not defined  react/jsx-no-undef
+
+D:\-CODINGS-\website-sales\frontend\src\components\renderer\sections\features.component.tsx
+  18:66  warning  'backgroundColor' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\-CODINGS-\website-sales\frontend\src\components\renderer\sections\footer.component.tsx
+  30:22  error  'Link' is not defined  react/jsx-no-undef
+
+D:\-CODINGS-\website-sales\frontend\src\components\renderer\sections\hero.component.tsx
+  21:69  warning  'backgroundColor' is defined but never used  @typescript-eslint/no-unused-vars
+  37:14  error    'Link' is not defined                        react/jsx-no-undef
+  45:16  error    'Link' is not defined                        react/jsx-no-undef
+
+D:\-CODINGS-\website-sales\frontend\src\components\renderer\sections\pricing.component.tsx
+  51:68  error  Parsing error: Identifier expected
+
+D:\-CODINGS-\website-sales\frontend\src\components\renderer\sections\testimonials.component.tsx
+  47:19  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\-CODINGS-\website-sales\frontend\src\hooks\use-auth.ts
+   5:8   warning  'Link' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+  10:9   error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-explicit-any
+  14:10  warning  'authState' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-unused-vars
+  26:7   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\-CODINGS-\website-sales\frontend\src\hooks\use-auth.ts:26:7
+  24 |     if (token) {
+  25 |       // Validate token on client side (simple check)
+> 26 |       setAuthState({ isAuthenticated: true, isLoading: false, user: null })
+     |       ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  27 |     } else {
+  28 |       setAuthState({ isAuthenticated: false, isLoading: false, user: null })
+  29 |     }  react-hooks/set-state-in-effect
+  53:14  warning  'error' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+  86:14  warning  'error' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+
+D:\-CODINGS-\website-sales\frontend\tailwind.config.js
+  106:94  error  Parsing error: Unterminated string literal
+
+Γ£û 69 problems (39 errors, 30 warnings)
+
+npm error Lifecycle script `lint` failed with error:
+npm error code 1
+npm error path D:\-CODINGS-\website-sales\frontend
+npm error workspace frontend@1.0.0
+npm error location D:\-CODINGS-\website-sales\frontend
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c eslint
+npm error Lifecycle script `lint` failed with error:
+npm error workspace backend@1.0.0
+npm error location D:\-CODINGS-\website-sales\backend
+npm error Missing script: "lint"
+npm error
+npm error Did you mean this?
+npm error   npm link # Symlink a package folder
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run --workspace=backend@1.0.0
